@@ -1,0 +1,17 @@
+c:\users\brennan\documents\visual studio 2013\Projects\Olaf\Olaf\bin\Debug\Olaf.exe.config
+c:\users\brennan\documents\visual studio 2013\Projects\Olaf\Olaf\bin\Debug\Olaf.exe
+c:\users\brennan\documents\visual studio 2013\Projects\Olaf\Olaf\bin\Debug\Olaf.pdb
+c:\users\brennan\documents\visual studio 2013\Projects\Olaf\Olaf\bin\Debug\clipper_library.dll
+c:\users\brennan\documents\visual studio 2013\Projects\Olaf\Olaf\bin\Debug\LeagueSharp.AppDomainManager.dll
+c:\users\brennan\documents\visual studio 2013\Projects\Olaf\Olaf\bin\Debug\LeagueSharp.Common.dll
+c:\users\brennan\documents\visual studio 2013\Projects\Olaf\Olaf\bin\Debug\LeagueSharp.dll
+c:\users\brennan\documents\visual studio 2013\Projects\Olaf\Olaf\bin\Debug\LibGit2Sharp.dll
+c:\users\brennan\documents\visual studio 2013\Projects\Olaf\Olaf\bin\Debug\SharpDX.Direct3D9.dll
+c:\users\brennan\documents\visual studio 2013\Projects\Olaf\Olaf\bin\Debug\SharpDX.dll
+c:\users\brennan\documents\visual studio 2013\Projects\Olaf\Olaf\bin\Debug\SharpDX.Toolkit.dll
+c:\users\brennan\documents\visual studio 2013\Projects\Olaf\Olaf\bin\Debug\SharpDX.Toolkit.Graphics.dll
+c:\users\brennan\documents\visual studio 2013\Projects\Olaf\Olaf\bin\Debug\SharpDX.Toolkit.xml
+c:\users\brennan\documents\visual studio 2013\Projects\Olaf\Olaf\bin\Debug\SharpDX.Toolkit.Graphics.xml
+c:\users\brennan\documents\visual studio 2013\Projects\Olaf\Olaf\obj\Debug\Olaf.csprojResolveAssemblyReference.cache
+c:\users\brennan\documents\visual studio 2013\Projects\Olaf\Olaf\obj\Debug\Olaf.exe
+c:\users\brennan\documents\visual studio 2013\Projects\Olaf\Olaf\obj\Debug\Olaf.pdb

@@ -1,0 +1,12 @@
+c:\users\brennan\documents\visual studio 2013\Projects\adopted\adopted\bin\Debug\adopted.exe.config
+c:\users\brennan\documents\visual studio 2013\Projects\adopted\adopted\bin\Debug\adopted.exe
+c:\users\brennan\documents\visual studio 2013\Projects\adopted\adopted\bin\Debug\adopted.pdb
+c:\users\brennan\documents\visual studio 2013\Projects\adopted\adopted\bin\Debug\clipper_library.dll
+c:\users\brennan\documents\visual studio 2013\Projects\adopted\adopted\bin\Debug\LeagueSharp.Common.dll
+c:\users\brennan\documents\visual studio 2013\Projects\adopted\adopted\bin\Debug\LeagueSharp.dll
+c:\users\brennan\documents\visual studio 2013\Projects\adopted\adopted\bin\Debug\SharpDX.dll
+c:\users\brennan\documents\visual studio 2013\Projects\adopted\adopted\bin\Debug\SharpDX.Direct3D9.dll
+c:\users\brennan\documents\visual studio 2013\Projects\adopted\adopted\bin\Debug\LeagueSharp.xml
+c:\users\brennan\documents\visual studio 2013\Projects\adopted\adopted\obj\Debug\adopted.csprojResolveAssemblyReference.cache
+c:\users\brennan\documents\visual studio 2013\Projects\adopted\adopted\obj\Debug\adopted.exe
+c:\users\brennan\documents\visual studio 2013\Projects\adopted\adopted\obj\Debug\adopted.pdb
