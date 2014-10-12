@@ -30,8 +30,7 @@ namespace VETERAN_MODE
 
         private static void Game_OnGameProcessPacket(GamePacketEventArgs args)
         {
-            var c = BitConverter.ToString(args.PacketData);
-            if(c[0].ToString() + c[1].ToString() == "87")
+            if(args.PacketData[0] == 0x87)
                 args.Process = false;
         }
     }
