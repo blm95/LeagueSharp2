@@ -56,8 +56,9 @@
     <Reference Include="LeagueSharp.AppDomainManager">
       <HintPath>..\..\..\..\..\Assemblies\System\LeagueSharp.AppDomainManager.dll</HintPath>
     </Reference>
-    <Reference Include="LeagueSharp.Common">
-      <HintPath>..\..\..\..\..\Assemblies\System\LeagueSharp.Common.dll</HintPath>
+    <Reference Include="LeagueSharp.Common, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\Downloads\LeagueSharp\System\LeagueSharp.Common.dll</HintPath>
     </Reference>
     <Reference Include="LibGit2Sharp">
       <HintPath>..\..\..\..\..\Assemblies\System\LibGit2Sharp.dll</HintPath>

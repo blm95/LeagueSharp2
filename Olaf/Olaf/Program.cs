@@ -56,7 +56,7 @@ namespace Olaf
             Menu.SubMenu("Combo").AddItem(new MenuItem("UseE", "Use E").SetValue(true));
             Menu.SubMenu("Combo").AddItem(new MenuItem("UseR", "Use R").SetValue(true));
             Menu.SubMenu("Combo").AddItem(new MenuItem("Ignite", "Use Ignite").SetValue(true));
-            Menu.SubMenu("Combo").AddItem(new MenuItem("RandE", "Use R before E if killable").SetValue(false));
+           // Menu.SubMenu("Combo").AddItem(new MenuItem("RandE", "Use R before E if killable").SetValue(false));
 
             Menu.SubMenu("Combo").AddItem(new MenuItem("ComboActive", "Combo!").SetValue(new KeyBind(32, KeyBindType.Press)));
             //-------------end Combo
@@ -140,7 +140,7 @@ namespace Olaf
             if (ignite)
             {
                 var t = SimpleTs.GetTarget(600, SimpleTs.DamageType.Physical);
-                var igniteDmg = DamageLib.getDmg(t, DamageLib.SpellType.IGNITE);
+                var igniteDmg = ObjectManager.Player.GetSummonerSpellDamage(t, Damage.SummonerSpell.Ignite);//DamageLib.getDmg(t, DamageLib.SpellType.IGNITE);
                 if (t != null && SumIgnite != SpellSlot.Unknown &&
                                 ObjectManager.Player.SummonerSpellbook.CanUseSpell(SumIgnite) == SpellState.Ready)
                 {
@@ -168,42 +168,42 @@ namespace Olaf
 
 
             /* expiremental */
-            if (ER)
-            {
-                if (R.IsReady() && E.IsReady())
-                {
-                    var t = SimpleTs.GetTarget(E.Range, SimpleTs.DamageType.Physical);
-                    if (t.IsValidTarget())
-                    {
-                        var dmg = DamageLib.CalcPhysicalDmg(E.GetDamage(t), t);
-                        if (dmg > t.Health)
-                            return;
-                        //var lvl = R.Level;
-                        var rdmg = new int();
+            //if (ER)
+            //{
+            //    if (R.IsReady() && E.IsReady())
+            //    {
+            //        var t = SimpleTs.GetTarget(E.Range, SimpleTs.DamageType.Physical);
+            //        if (t.IsValidTarget())
+            //        {
+            //            var dmg = DamageLib.CalcPhysicalDmg(E.GetDamage(t), t);
+            //            if (dmg > t.Health)
+            //                return;
+            //            //var lvl = R.Level;
+            //            var rdmg = new int();
 
-                        switch (R.Level)
-                        {
-                            case 1:
-                                rdmg = 40;
-                                break;
-                            case 2:
-                                rdmg = 60;
-                                break;
-                            case 3:
-                                rdmg = 80;
-                                break;
-                        }
+            //            switch (R.Level)
+            //            {
+            //                case 1:
+            //                    rdmg = 40;
+            //                    break;
+            //                case 2:
+            //                    rdmg = 60;
+            //                    break;
+            //                case 3:
+            //                    rdmg = 80;
+            //                    break;
+            //            }
 
-                        var eandrdmg = dmg + (rdmg*.40);
+            //            var eandrdmg = dmg + (rdmg*.40);
 
-                        if (eandrdmg > t.Health)
-                        {
-                            R.Cast();
-                            E.Cast(t);
-                        }
-                    }
-                }
-            }
+            //            if (eandrdmg > t.Health)
+            //            {
+            //                R.Cast();
+            //                E.Cast(t);
+            //            }
+            //        }
+            //    }
+            //}
 
             /* expiremental */
 
@@ -259,7 +259,7 @@ namespace Olaf
             {
                 var Minions = MinionManager.GetMinions(ObjectManager.Player.ServerPosition, 1000, MinionTypes.All,
                     MinionTeam.NotAlly, MinionOrderTypes.Health);
-                foreach (var minion in from minion in Minions where minion != null let targetEDam = DamageLib.getDmg(minion, DamageLib.SpellType.E, DamageLib.StageType.Default) where (minion.Health < targetEDam) select minion)
+                foreach (var minion in from minion in Minions where minion != null let targetQDam = Damage.GetDamageSpell(ObjectManager.Player, minion, SpellSlot.Q) where (minion.Health < targetQDam.CalculatedDamage) select minion)
                 {
                     Utility.DrawCircle(minion.ServerPosition, 150, System.Drawing.Color.Red);
                     if (minion.IsValidTarget(E.Range) && (E.IsReady()))

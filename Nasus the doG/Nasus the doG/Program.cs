@@ -183,41 +183,9 @@ namespace nasus
             {
                 var Minions = MinionManager.GetMinions(ObjectManager.Player.ServerPosition, 1000, MinionTypes.All,
                     MinionTeam.NotAlly, MinionOrderTypes.Health);
-                foreach (var minion in Minions)
+                foreach (var minion in from minion in Minions where minion != null let targetQDam = Damage.GetDamageSpell(ObjectManager.Player, minion, SpellSlot.Q) where (minion.Health < targetQDam.CalculatedDamage) select minion)
                 {
-                    if (minion != null)
-                    {
-
-                        var targetQDam = DamageLib.getDmg(minion, DamageLib.SpellType.Q, DamageLib.StageType.Default);
-                        var targetQandAAdmg = DamageLib.getDmg(minion, DamageLib.SpellType.AD) +
-                                              DamageLib.getDmg(minion, DamageLib.SpellType.Q,
-                                                  DamageLib.StageType.Default);
-
-                        if ((minion.Health < targetQDam))
-                        {
-                            Utility.DrawCircle(minion.ServerPosition, 150, System.Drawing.Color.Red);
-                            if (minion.IsValidTarget(Q.Range) && (Q.IsReady()))
-                            {
-                                Q.Cast();
-                                Player.IssueOrder(GameObjectOrder.AttackUnit, minion);
-                            }
-                        }
-
-                        else
-                        {
-                            if (targetQandAAdmg > minion.Health)
-                            {
-                                Utility.DrawCircle(minion.ServerPosition, 200, System.Drawing.Color.Blue);
-                                if (minion.IsValidTarget(Q.Range) && (Q.IsReady()))
-                                {
-                                    Player.IssueOrder(GameObjectOrder.AttackUnit, minion);
-                                    Q.Cast();
-                                    Player.IssueOrder(GameObjectOrder.AttackUnit, minion);
-                                }
-                            }
-                        }
-                    }
-
+                    Q.Cast(minion);
                 }
             }
         }
