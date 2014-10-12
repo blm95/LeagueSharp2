@@ -24,6 +24,7 @@ namespace VETERAN_MODE
 
         public static void Game_OnGameLoad(EventArgs args)
         {
+            Game.PrintChat("VETERAN MODE ENABLED");
             Game.OnGameProcessPacket += Game_OnGameProcessPacket;
         }
 
