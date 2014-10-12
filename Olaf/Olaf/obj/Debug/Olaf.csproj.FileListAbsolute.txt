@@ -15,3 +15,13 @@ c:\users\brennan\documents\visual studio 2013\Projects\Olaf\Olaf\bin\Debug\Sharp
 c:\users\brennan\documents\visual studio 2013\Projects\Olaf\Olaf\obj\Debug\Olaf.csprojResolveAssemblyReference.cache
 c:\users\brennan\documents\visual studio 2013\Projects\Olaf\Olaf\obj\Debug\Olaf.exe
 c:\users\brennan\documents\visual studio 2013\Projects\Olaf\Olaf\obj\Debug\Olaf.pdb
+C:\Users\Brennan\LeagueSharp2\Olaf\Olaf\bin\Debug\Olaf.exe.config
+C:\Users\Brennan\LeagueSharp2\Olaf\Olaf\obj\Debug\Olaf.exe
+C:\Users\Brennan\LeagueSharp2\Olaf\Olaf\obj\Debug\Olaf.pdb
+C:\Users\Brennan\LeagueSharp2\Olaf\Olaf\bin\Debug\Olaf.exe
+C:\Users\Brennan\LeagueSharp2\Olaf\Olaf\bin\Debug\Olaf.pdb
+C:\Users\Brennan\LeagueSharp2\Olaf\Olaf\bin\Debug\LeagueSharp.Common.dll
+C:\Users\Brennan\LeagueSharp2\Olaf\Olaf\bin\Debug\LeagueSharp.xml
+C:\Users\Brennan\LeagueSharp2\Olaf\Olaf\bin\Debug\SharpDX.Toolkit.xml
+C:\Users\Brennan\LeagueSharp2\Olaf\Olaf\bin\Debug\SharpDX.Toolkit.Graphics.xml
+C:\Users\Brennan\LeagueSharp2\Olaf\Olaf\obj\Debug\Olaf.csprojResolveAssemblyReference.cache

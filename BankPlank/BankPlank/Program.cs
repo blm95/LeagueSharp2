@@ -136,9 +136,10 @@ namespace BankPlank
             var farmActive = Menu.Item("FarmActive").GetValue<KeyBind>().Active;
             if ((useQ && farmActive))
             {
+                
                 var Minions = MinionManager.GetMinions(ObjectManager.Player.ServerPosition, 1000, MinionTypes.All,
                     MinionTeam.NotAlly, MinionOrderTypes.Health);
-                foreach (var minion in from minion in Minions where minion != null let targetQDam = DamageLib.getDmg(minion, DamageLib.SpellType.Q, DamageLib.StageType.Default) where (minion.Health < targetQDam) select minion)
+                foreach (var minion in from minion in Minions where minion != null let targetQDam = Damage.GetDamageSpell(ObjectManager.Player,minion, SpellSlot.Q) where (minion.Health < targetQDam.CalculatedDamage) select minion)//DamageLib.getDmg(minion, DamageLib.SpellType.Q, DamageLib.StageType.Default) where (minion.Health < targetQDam) select minion)
                 {
                     Utility.DrawCircle(minion.ServerPosition, 150, System.Drawing.Color.Red);
                     if (minion.IsValidTarget(Q.Range) && (Q.IsReady()))
