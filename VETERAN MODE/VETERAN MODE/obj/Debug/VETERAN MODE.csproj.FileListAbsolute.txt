@@ -1,5 +1,4 @@
 c:\users\brennan\documents\visual studio 2013\Projects\VETERAN MODE\VETERAN MODE\bin\Debug\VETERAN MODE.exe.config
-c:\users\brennan\documents\visual studio 2013\Projects\VETERAN MODE\VETERAN MODE\obj\Debug\VETERAN MODE.csprojResolveAssemblyReference.cache
 c:\users\brennan\documents\visual studio 2013\Projects\VETERAN MODE\VETERAN MODE\bin\Debug\VETERAN MODE.exe
 c:\users\brennan\documents\visual studio 2013\Projects\VETERAN MODE\VETERAN MODE\bin\Debug\VETERAN MODE.pdb
 c:\users\brennan\documents\visual studio 2013\Projects\VETERAN MODE\VETERAN MODE\bin\Debug\LeagueSharp.Common.dll
@@ -9,3 +8,11 @@ c:\users\brennan\documents\visual studio 2013\Projects\VETERAN MODE\VETERAN MODE
 c:\users\brennan\documents\visual studio 2013\Projects\VETERAN MODE\VETERAN MODE\bin\Debug\LeagueSharp.xml
 c:\users\brennan\documents\visual studio 2013\Projects\VETERAN MODE\VETERAN MODE\obj\Debug\VETERAN MODE.exe
 c:\users\brennan\documents\visual studio 2013\Projects\VETERAN MODE\VETERAN MODE\obj\Debug\VETERAN MODE.pdb
+C:\Users\Brennan\Documents\Visual Studio 2013\Projects\VETERAN MODE\VETERAN MODE\bin\Release\VETERAN MODE.exe.config
+C:\Users\Brennan\Documents\Visual Studio 2013\Projects\VETERAN MODE\VETERAN MODE\bin\Release\VETERAN MODE.exe
+C:\Users\Brennan\Documents\Visual Studio 2013\Projects\VETERAN MODE\VETERAN MODE\bin\Release\VETERAN MODE.pdb
+C:\Users\Brennan\Documents\Visual Studio 2013\Projects\VETERAN MODE\VETERAN MODE\bin\Release\LeagueSharp.Common.dll
+C:\Users\Brennan\Documents\Visual Studio 2013\Projects\VETERAN MODE\VETERAN MODE\bin\Release\LeagueSharp.dll
+C:\Users\Brennan\Documents\Visual Studio 2013\Projects\VETERAN MODE\VETERAN MODE\bin\Release\SharpDX.Direct3D9.dll
+C:\Users\Brennan\Documents\Visual Studio 2013\Projects\VETERAN MODE\VETERAN MODE\bin\Release\SharpDX.dll
+C:\Users\Brennan\Documents\Visual Studio 2013\Projects\VETERAN MODE\VETERAN MODE\bin\Release\LeagueSharp.xml
