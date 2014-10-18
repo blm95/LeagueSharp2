@@ -1,0 +1,83 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{38149233-8290-4638-94FA-06D726EC086F}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>dmgLib2</RootNamespace>
+    <AssemblyName>dmgLib2</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="clipper_library">
+      <HintPath>..\..\..\..\..\Assemblies\System\clipper_library.dll</HintPath>
+    </Reference>
+    <Reference Include="isCCd">
+      <HintPath>..\..\..\..\..\Assemblies\System\isCCd.dll</HintPath>
+    </Reference>
+    <Reference Include="LeagueSharp">
+      <HintPath>..\..\..\..\..\Assemblies\System\LeagueSharp.dll</HintPath>
+    </Reference>
+    <Reference Include="LeagueSharp.AppDomainManager">
+      <HintPath>..\..\..\..\..\Assemblies\System\LeagueSharp.AppDomainManager.dll</HintPath>
+    </Reference>
+    <Reference Include="LeagueSharp.Common">
+      <HintPath>..\..\..\..\..\Assemblies\System\LeagueSharp.Common.dll</HintPath>
+    </Reference>
+    <Reference Include="LibGit2Sharp">
+      <HintPath>..\..\..\..\..\Assemblies\System\LibGit2Sharp.dll</HintPath>
+    </Reference>
+    <Reference Include="SharpDX">
+      <HintPath>..\..\..\..\..\Assemblies\System\SharpDX.dll</HintPath>
+    </Reference>
+    <Reference Include="SharpDX.Direct3D9">
+      <HintPath>..\..\..\..\..\Assemblies\System\SharpDX.Direct3D9.dll</HintPath>
+    </Reference>
+    <Reference Include="SharpDX.Toolkit">
+      <HintPath>..\..\..\..\..\Assemblies\System\SharpDX.Toolkit.dll</HintPath>
+    </Reference>
+    <Reference Include="SharpDX.Toolkit.Graphics">
+      <HintPath>..\..\..\..\..\Assemblies\System\SharpDX.Toolkit.Graphics.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Class1.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
