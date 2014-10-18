@@ -755,6 +755,7 @@ namespace SpellNamesandSlots
 
             menu.AddItem(new MenuItem("percent", "Shield if dmg >").SetValue(new Slider(20, 1, 100)));
             menu.AddItem(new MenuItem("killable", "Always shield Killable").SetValue(true));
+            menu.AddItem(new MenuItem("skillshots", "Shield Skillshots?").SetValue(true));
             menu.AddSubMenu(new Menu("Keys to Use", "keys"));
             menu.SubMenu("keys").AddItem(new MenuItem("1", "1")).SetValue(false);
             menu.SubMenu("keys").AddItem(new MenuItem("1t", "^ targetted?")).SetValue(false);
@@ -857,7 +858,7 @@ namespace SpellNamesandSlots
 
             if (spellList.Any(str => str.Contains(args.SData.Name)) && menu.Item(args.SData.Name).GetValue<bool>())
             {
-               if (Vector3.Distance(ObjectManager.Player.Position, args.End) <= 200)
+                if ((Vector3.Distance(ObjectManager.Player.Position, args.End) <= 200 && menu.Item("skillshots").GetValue<bool>()) || Vector3.Distance(ObjectManager.Player.Position, args.End) <= 5)
                 {
 
                         if (menu.Item("heal").GetValue<bool>())
