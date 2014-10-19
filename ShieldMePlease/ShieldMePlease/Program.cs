@@ -855,7 +855,25 @@ namespace SpellNamesandSlots
             //Game.PrintChat(menu.Item("range").GetValue<Slider>().Value.ToString());
             //Game.PrintChat(Vector3.Distance(ObjectManager.Player.Position, y.Position).ToString());
             // 
-
+            if (args.SData.Name == "zedult" && args.Target == target)
+            {
+                if (Items.CanUseItem(3140))
+                {
+                     Items.UseItem(3140);
+                }
+                if (Items.CanUseItem(3137))
+                {
+                    Items.UseItem(3137);
+                }
+                if (Items.CanUseItem(3139))
+                {
+                    Items.UseItem(3139);
+                }
+                if (Items.CanUseItem(3157))
+                {
+                    Items.UseItem(3157);
+                }
+            }
             if (spellList.Any(str => str.Contains(args.SData.Name)) && menu.Item(args.SData.Name).GetValue<bool>())
             {
                 if ((Vector3.Distance(ObjectManager.Player.Position, args.End) <= 200 && menu.Item("skillshots").GetValue<bool>()) || Vector3.Distance(ObjectManager.Player.Position, args.End) <= 5)
@@ -952,7 +970,7 @@ namespace SpellNamesandSlots
                 menu.Item("range").GetValue<Slider>().Value
                 )
             {
-                if (Vector3.Distance(ObjectManager.Player.Position, args.End) <= 200)
+                if (Vector3.Distance(ObjectManager.Player.Position, args.End) <= 200 || Vector3.Distance(ObjectManager.Player.Position, args.End) <= 5)
                 {
 
                     //Game.PrintChat("spell in range");
