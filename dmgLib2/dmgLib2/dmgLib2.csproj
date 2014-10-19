@@ -33,9 +33,6 @@
     <Reference Include="clipper_library">
       <HintPath>..\..\..\..\..\Assemblies\System\clipper_library.dll</HintPath>
     </Reference>
-    <Reference Include="isCCd">
-      <HintPath>..\..\..\..\..\Assemblies\System\isCCd.dll</HintPath>
-    </Reference>
     <Reference Include="LeagueSharp">
       <HintPath>..\..\..\..\..\Assemblies\System\LeagueSharp.dll</HintPath>
     </Reference>
