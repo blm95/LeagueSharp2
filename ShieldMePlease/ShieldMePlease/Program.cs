@@ -21,12 +21,13 @@ namespace SpellNamesandSlots
         //public static SpellSlot slots;
         //public static List<spellData> spells = new List<spellData>();
         //public static List<string> names;
-       // public static string champname;
+        // public static string champname;
         public static Obj_AI_Base target;
         public static Dictionary<string, SpellSlot> spellData;
         public static float alldmg;
         public static Menu menu;
         private static string[] spellList;
+        private static string[] onlyuse5;
         //private static readonly List<Enemy> EnemyList = new List<Enemy>();
 
         //public class spellData
@@ -67,7 +68,41 @@ namespace SpellNamesandSlots
             {
                 menu = new Menu("Shield Me Please", "dmg", true);
                 menu.AddItem(new MenuItem("range", "Range to check").SetValue(new Slider(600, 100, 2500)));
+                var hp = new Menu("% HP Check", "hpcheck");
+                hp.AddItem(new MenuItem("checkhp", "Only shield at % hp?").SetValue(false));
+                hp.AddItem(new MenuItem("php", "Minimum % hp").SetValue(new Slider(30, 0, 100)));
+                
+
+                //menu.AddSubMenu(new Menu("% HP Check", "hpcheck"));
+
+                var onlyshield =  new Menu("Only shield X Spell(s)?", "only");
+                onlyshield.AddItem(new MenuItem("onlyuse", "Only shield these skills?").SetValue(false));
+                //menu.AddSubMenu(new Menu("Only shield X Spell(s)?", "only"));
+
+                var allysupp = new Menu("Ally Support?", "allies");
+                //menu.AddSubMenu(new Menu("Ally Support?", "allies"));
+                allysupp.AddItem(new MenuItem("suppall", "Support allies?").SetValue(false));
+                allysupp.AddSubMenu(new Menu("Only shield X Spell(s)?", "onlyallies"));
+                allysupp.AddItem(new MenuItem("acheckhp", "Only shield at % hp?").SetValue(false));
+                allysupp.AddItem(new MenuItem("aphp", "Minimum % hp").SetValue(new Slider(30, 0, 100)));
+
+               
+                //menu.SubMenu("allies").AddItem(new MenuItem("acheckhp", "Only shield at % hp?").SetValue(false));
+                //menu.SubMenu("allies").AddItem(new MenuItem("aphp", "Minimum % hp").SetValue(new Slider(30, 0, 100)));
+                // 
+                allysupp.SubMenu("onlyallies").AddItem(new MenuItem("aonlyuse", "Only shield these skills?").SetValue(false));
+                
+                foreach (var n in ObjectManager.Get<Obj_AI_Hero>().Where(x => x.IsAlly && !x.IsMe))
+                {
+                    allysupp.AddSubMenu(new Menu(n.ChampionName, n.ChampionName));
+
+                    allysupp.SubMenu(n.ChampionName)
+                        .AddItem(new MenuItem("shield" + n.ChampionName, "Try to shield?").SetValue(false));
+                }
+                
+                
                 spellData = new Dictionary<string, SpellSlot>();
+                menu.AddSubMenu(hp);
                 //Game.PrintChat("started");
 
                 foreach (var n in ObjectManager.Get<Obj_AI_Hero>().Where(n => n.IsEnemy))
@@ -747,69 +782,70 @@ namespace SpellNamesandSlots
                     }
                 }
 
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine("test: " + e.ToString());
-            }
+                menu.AddSubMenu(new Menu("Items/Spells", "slots"));
+                menu.AddItem(new MenuItem("percent", "Shield if dmg >").SetValue(new Slider(20, 1, 100)));
+                menu.AddItem(new MenuItem("killable", "Always shield Killable").SetValue(true));
+                menu.AddItem(new MenuItem("skillshots", "Shield Skillshots?").SetValue(true));
+                menu.SubMenu("slots").AddSubMenu(new Menu("Item Slots to use", "keys"));
+                menu.SubMenu("slots").SubMenu("keys").AddItem(new MenuItem("1", "1")).SetValue(false);
+                menu.SubMenu("slots").SubMenu("keys").AddItem(new MenuItem("1t", "^ targeted?")).SetValue(false);
+                menu.SubMenu("slots").SubMenu("keys").AddItem(new MenuItem("2", "2")).SetValue(false);
+                menu.SubMenu("slots").SubMenu("keys").AddItem(new MenuItem("2t", "^ targeted?")).SetValue(false);
+                menu.SubMenu("slots").SubMenu("keys").AddItem(new MenuItem("3", "3")).SetValue(false);
+                menu.SubMenu("slots").SubMenu("keys").AddItem(new MenuItem("3t", "^ targeted?")).SetValue(false);
+                menu.SubMenu("slots").SubMenu("keys").AddItem(new MenuItem("5", "5")).SetValue(false);
+                menu.SubMenu("slots").SubMenu("keys").AddItem(new MenuItem("5t", "^ targeted?")).SetValue(false);
+                menu.SubMenu("slots").SubMenu("keys").AddItem(new MenuItem("6", "6")).SetValue(false);
+                menu.SubMenu("slots").SubMenu("keys").AddItem(new MenuItem("6t", "^ targeted?")).SetValue(false);
+                menu.SubMenu("slots").SubMenu("keys").AddItem(new MenuItem("7", "7")).SetValue(false);
+                menu.SubMenu("slots").SubMenu("keys").AddItem(new MenuItem("7t", "^ targeted?")).SetValue(false);
+                menu.SubMenu("slots").AddSubMenu(new Menu("Spell Slots to use", "keys2"));
+                menu.SubMenu("slots").SubMenu("keys2").AddItem(new MenuItem("Q", "Q")).SetValue(false);
+                menu.SubMenu("slots").SubMenu("keys2").AddItem(new MenuItem("qt", "^ targeted?")).SetValue(false);
+                menu.SubMenu("slots").SubMenu("keys2").AddItem(new MenuItem("W", "W")).SetValue(false);
+                menu.SubMenu("slots").SubMenu("keys2").AddItem(new MenuItem("wt", "^ targeted?")).SetValue(false);
+                menu.SubMenu("slots").SubMenu("keys2").AddItem(new MenuItem("E", "E")).SetValue(false);
+                menu.SubMenu("slots").SubMenu("keys2").AddItem(new MenuItem("et", "^ targeted?")).SetValue(false);
+                menu.SubMenu("slots").SubMenu("keys2").AddItem(new MenuItem("R.", "R.")).SetValue(false);
+                menu.SubMenu("slots").SubMenu("keys2").AddItem(new MenuItem("rt", "^ targeted?")).SetValue(false);
 
-            menu.AddItem(new MenuItem("percent", "Shield if dmg >").SetValue(new Slider(20, 1, 100)));
-            menu.AddItem(new MenuItem("killable", "Always shield Killable").SetValue(true));
-            menu.AddItem(new MenuItem("skillshots", "Shield Skillshots?").SetValue(true));
-            menu.AddSubMenu(new Menu("Keys to Use", "keys"));
-            menu.SubMenu("keys").AddItem(new MenuItem("1", "1")).SetValue(false);
-            menu.SubMenu("keys").AddItem(new MenuItem("1t", "^ targetted?")).SetValue(false);
-            menu.SubMenu("keys").AddItem(new MenuItem("2", "2")).SetValue(false);
-            menu.SubMenu("keys").AddItem(new MenuItem("2t", "^ targetted?")).SetValue(false);
-            menu.SubMenu("keys").AddItem(new MenuItem("3", "3")).SetValue(false);
-            menu.SubMenu("keys").AddItem(new MenuItem("3t", "^ targetted?")).SetValue(false);
-            menu.SubMenu("keys").AddItem(new MenuItem("5", "5")).SetValue(false);
-            menu.SubMenu("keys").AddItem(new MenuItem("5t", "^ targetted?")).SetValue(false);
-            menu.SubMenu("keys").AddItem(new MenuItem("6", "6")).SetValue(false);
-            menu.SubMenu("keys").AddItem(new MenuItem("6t", "^ targetted?")).SetValue(false);
-            menu.SubMenu("keys").AddItem(new MenuItem("7", "7")).SetValue(false);
-            menu.SubMenu("keys").AddItem(new MenuItem("7t", "^ targetted?")).SetValue(false);
+               menu.SubMenu("slots").SubMenu("keys2").AddItem(new MenuItem("heal", "Heal")).SetValue(false);
+                menu.SubMenu("slots").SubMenu("keys2").AddItem(new MenuItem("bar", "Barrier")).SetValue(false);
+                //foreach (var c in spellData)
+                //{
+                //    menu.AddSubMenu(new Menu("Champions", "champs"));
+                //    menu.SubMenu("champs").AddItem(new MenuItem("
+                //}
+                menu.AddSubMenu(new Menu("Always Shield:", "always"));
+                int d = 0;
+                spellList = new string[spellData.Keys.Count];
+                onlyuse5 = new string[spellData.Keys.Count];
 
-            menu.SubMenu("keys").AddItem(new MenuItem("Q", "Q")).SetValue(false);
-            menu.SubMenu("keys").AddItem(new MenuItem("qt", "^ targetted?")).SetValue(false);
-            menu.SubMenu("keys").AddItem(new MenuItem("W", "W")).SetValue(false);
-            menu.SubMenu("keys").AddItem(new MenuItem("wt", "^ targetted?")).SetValue(false);
-            menu.SubMenu("keys").AddItem(new MenuItem("E", "E")).SetValue(false);
-            menu.SubMenu("keys").AddItem(new MenuItem("et", "^ targetted?")).SetValue(false);
-            menu.SubMenu("keys").AddItem(new MenuItem("R", "R")).SetValue(false);
-            menu.SubMenu("keys").AddItem(new MenuItem("rt", "^ targetted?")).SetValue(false);
-
-            menu.SubMenu("keys").AddItem(new MenuItem("heal", "Heal")).SetValue(false);
-            menu.SubMenu("keys").AddItem(new MenuItem("bar", "Barrier")).SetValue(false);
-            //foreach (var c in spellData)
-            //{
-            //    menu.AddSubMenu(new Menu("Champions", "champs"));
-            //    menu.SubMenu("champs").AddItem(new MenuItem("
-            //}
-            menu.AddSubMenu(new Menu("Always Shield:", "always"));
-            int d = 0;
-            spellList = new string[spellData.Keys.Count];
-            try
-            {
                 foreach (var c in spellData.Keys)
                 {
                     spellList[d] = c;
+                    //onlyuse5[d] = c;
                     d++;
                     //menu.SubMenu("always").AddItem(new MenuItem(c.Key, c.Key)).SetValue(false);
-                } 
-                
+                }
+
                 for (int i = 0; i < spellList.Length; i++)
                 {
+                    allysupp.SubMenu("onlyallies").AddItem(new MenuItem(spellList[i], spellList[i]).SetValue(false));
+                    onlyshield.AddItem(new MenuItem(spellList[i], spellList[i]).SetValue(false));
                     menu.SubMenu("always").AddItem(new MenuItem(spellList[i], spellList[i])).SetValue(false);
                 }
+                menu.AddSubMenu(onlyshield);
+                menu.AddSubMenu(allysupp);
             }
+
             catch (Exception e)
             {
-
                 Console.WriteLine(e);
             }
-
             
+
+
             menu.AddToMainMenu();
             alldmg = new float();
 
@@ -844,7 +880,7 @@ namespace SpellNamesandSlots
             target = ObjectManager.Player;
             //spellData[args.SData.Name].ToString().
             var y = (Obj_AI_Hero) hero;
-            
+
             //Game.PrintChat(args.SData.Name);
             //if (spellData.ContainsKey(args.SData.Name))
             //{
@@ -859,7 +895,7 @@ namespace SpellNamesandSlots
             {
                 if (Items.CanUseItem(3140))
                 {
-                     Items.UseItem(3140);
+                    Items.UseItem(3140);
                 }
                 if (Items.CanUseItem(3137))
                 {
@@ -876,113 +912,237 @@ namespace SpellNamesandSlots
             }
             if (spellList.Any(str => str.Contains(args.SData.Name)) && menu.Item(args.SData.Name).GetValue<bool>())
             {
-                if ((Vector3.Distance(ObjectManager.Player.Position, args.End) <= 200 && menu.Item("skillshots").GetValue<bool>()) || Vector3.Distance(ObjectManager.Player.Position, args.End) <= 5)
+                if ((Vector3.Distance(ObjectManager.Player.Position, args.End) <= 200 &&
+                     menu.Item("skillshots").GetValue<bool>()) ||
+                    Vector3.Distance(ObjectManager.Player.Position, args.End) <= 5)
                 {
 
-                        if (menu.Item("heal").GetValue<bool>())
+                    if (menu.Item("heal").GetValue<bool>())
+                    {
+                        foreach (var spell in ObjectManager.Player.SummonerSpellbook.Spells)
                         {
-                            foreach (var spell in ObjectManager.Player.SummonerSpellbook.Spells)
-                            {
-                                if (spell.Name.ToLower().Contains("heal") && spell.State == SpellState.Ready)
-                                    Packet.C2S.Cast.Encoded(new Packet.C2S.Cast.Struct(0, spell.Slot));
-                            }
+                            if (spell.Name.ToLower().Contains("heal") && spell.State == SpellState.Ready)
+                                Packet.C2S.Cast.Encoded(new Packet.C2S.Cast.Struct(0, spell.Slot));
+                        }
+                    }
+
+                    if (menu.Item("bar").GetValue<bool>())
+                    {
+                        foreach (var spell in ObjectManager.Player.SummonerSpellbook.Spells)
+                        {
+                            if (spell.Name.ToLower().Contains("barrier") && spell.State == SpellState.Ready)
+                                Packet.C2S.Cast.Encoded(new Packet.C2S.Cast.Struct(0, spell.Slot));
+                        }
+                    }
+
+                    if (menu.Item("1").GetValue<bool>())
+                        if (menu.Item("1t").GetValue<bool>())
+                            Packet.C2S.Cast.Encoded(new Packet.C2S.Cast.Struct(ObjectManager.Player.NetworkId,
+                                SpellSlot.Item1)).Send();
+                        else
+                        {
+                            Packet.C2S.Cast.Encoded(new Packet.C2S.Cast.Struct(0, SpellSlot.Item1)).Send();
                         }
 
-                        if (menu.Item("bar").GetValue<bool>())
+                    if (menu.Item("2").GetValue<bool>())
+                        if (menu.Item("3t").GetValue<bool>())
+                            Packet.C2S.Cast.Encoded(new Packet.C2S.Cast.Struct(ObjectManager.Player.NetworkId,
+                                SpellSlot.Item2)).Send();
+                        else
                         {
-                            foreach (var spell in ObjectManager.Player.SummonerSpellbook.Spells)
-                            {
-                                if (spell.Name.ToLower().Contains("barrier") && spell.State == SpellState.Ready)
-                                    Packet.C2S.Cast.Encoded(new Packet.C2S.Cast.Struct(0, spell.Slot));
-                            }
+                            Packet.C2S.Cast.Encoded(new Packet.C2S.Cast.Struct(0, SpellSlot.Item2)).Send();
                         }
-                        
-                        if (menu.Item("1").GetValue<bool>())
-                            if (menu.Item("1t").GetValue<bool>())
-                                Packet.C2S.Cast.Encoded(new Packet.C2S.Cast.Struct(ObjectManager.Player.NetworkId,
-                                    SpellSlot.Item1)).Send();
-                            else
-                            {
-                                Packet.C2S.Cast.Encoded(new Packet.C2S.Cast.Struct(0, SpellSlot.Item1)).Send();
-                            }
 
-                        if (menu.Item("2").GetValue<bool>())
-                            if (menu.Item("3t").GetValue<bool>())
-                                Packet.C2S.Cast.Encoded(new Packet.C2S.Cast.Struct(ObjectManager.Player.NetworkId,
-                                    SpellSlot.Item2)).Send();
-                            else
-                            {
-                                Packet.C2S.Cast.Encoded(new Packet.C2S.Cast.Struct(0, SpellSlot.Item2)).Send();
-                            }
+                    if (menu.Item("3").GetValue<bool>())
+                        if (menu.Item("3t").GetValue<bool>())
+                            Packet.C2S.Cast.Encoded(new Packet.C2S.Cast.Struct(ObjectManager.Player.NetworkId,
+                                SpellSlot.Item3)).Send();
+                    Packet.C2S.Cast.Encoded(new Packet.C2S.Cast.Struct(0, SpellSlot.Item3)).Send();
+                    if (menu.Item("5").GetValue<bool>())
+                        if (menu.Item("5t").GetValue<bool>())
+                            Packet.C2S.Cast.Encoded(new Packet.C2S.Cast.Struct(ObjectManager.Player.NetworkId,
+                                SpellSlot.Item4)).Send();
+                        else
+                            Packet.C2S.Cast.Encoded(new Packet.C2S.Cast.Struct(0, SpellSlot.Item4)).Send();
+                    if (menu.Item("6").GetValue<bool>())
+                        if (menu.Item("6t").GetValue<bool>())
+                            Packet.C2S.Cast.Encoded(new Packet.C2S.Cast.Struct(ObjectManager.Player.NetworkId,
+                                SpellSlot.Item5)).Send();
+                        else
+                            Packet.C2S.Cast.Encoded(new Packet.C2S.Cast.Struct(0, SpellSlot.Item5)).Send();
+                    if (menu.Item("7").GetValue<bool>())
+                        if (menu.Item("7t").GetValue<bool>())
+                            Packet.C2S.Cast.Encoded(new Packet.C2S.Cast.Struct(ObjectManager.Player.NetworkId,
+                                SpellSlot.Item6)).Send();
+                        else
+                            Packet.C2S.Cast.Encoded(new Packet.C2S.Cast.Struct(0, SpellSlot.Item6)).Send();
 
-                        if (menu.Item("3").GetValue<bool>())
-                            if (menu.Item("3t").GetValue<bool>())
-                                Packet.C2S.Cast.Encoded(new Packet.C2S.Cast.Struct(ObjectManager.Player.NetworkId,
-                                    SpellSlot.Item3)).Send();
-                        Packet.C2S.Cast.Encoded(new Packet.C2S.Cast.Struct(0, SpellSlot.Item3)).Send();
-                        if (menu.Item("5").GetValue<bool>())
-                            if (menu.Item("5t").GetValue<bool>())
-                                Packet.C2S.Cast.Encoded(new Packet.C2S.Cast.Struct(ObjectManager.Player.NetworkId,
-                                    SpellSlot.Item4)).Send();
-                            else
-                                Packet.C2S.Cast.Encoded(new Packet.C2S.Cast.Struct(0, SpellSlot.Item4)).Send();
-                        if (menu.Item("6").GetValue<bool>())
-                            if (menu.Item("6t").GetValue<bool>())
-                                Packet.C2S.Cast.Encoded(new Packet.C2S.Cast.Struct(ObjectManager.Player.NetworkId,
-                                    SpellSlot.Item5)).Send();
-                            else
-                                Packet.C2S.Cast.Encoded(new Packet.C2S.Cast.Struct(0, SpellSlot.Item5)).Send();
-                        if (menu.Item("7").GetValue<bool>())
-                            if (menu.Item("7t").GetValue<bool>())
-                                Packet.C2S.Cast.Encoded(new Packet.C2S.Cast.Struct(ObjectManager.Player.NetworkId,
-                                    SpellSlot.Item6)).Send();
-                            else
-                                Packet.C2S.Cast.Encoded(new Packet.C2S.Cast.Struct(0, SpellSlot.Item6)).Send();
-
-                        if (menu.Item("Q").GetValue<bool>())
-                            if (menu.Item("qt").GetValue<bool>())
-                                Packet.C2S.Cast.Encoded(new Packet.C2S.Cast.Struct(ObjectManager.Player.NetworkId,
-                                    SpellSlot.Q)).Send();
-                            else
-                                Packet.C2S.Cast.Encoded(new Packet.C2S.Cast.Struct(0, SpellSlot.Q)).Send();
-                        if (menu.Item("W").GetValue<bool>())
-                            if (menu.Item("wt").GetValue<bool>())
-                                Packet.C2S.Cast.Encoded(new Packet.C2S.Cast.Struct(ObjectManager.Player.NetworkId,
-                                    SpellSlot.W)).Send();
-                            else
-                                Packet.C2S.Cast.Encoded(new Packet.C2S.Cast.Struct(0, SpellSlot.W)).Send();
-                        if (menu.Item("E").GetValue<bool>())
-                            if (menu.Item("et").GetValue<bool>())
-                                Packet.C2S.Cast.Encoded(new Packet.C2S.Cast.Struct(ObjectManager.Player.NetworkId,
-                                    SpellSlot.E)).Send();
-                            else
-                                Packet.C2S.Cast.Encoded(new Packet.C2S.Cast.Struct(0, SpellSlot.E)).Send();
-                        if (menu.Item("R").GetValue<bool>())
-                            if (menu.Item("rt").GetValue<bool>())
-                                Packet.C2S.Cast.Encoded(new Packet.C2S.Cast.Struct(ObjectManager.Player.NetworkId,
-                                    SpellSlot.R)).Send();
-                            else
-                                Packet.C2S.Cast.Encoded(new Packet.C2S.Cast.Struct(0, SpellSlot.R)).Send();
-                    } 
+                    if (menu.Item("Q").GetValue<bool>())
+                        if (menu.Item("qt").GetValue<bool>())
+                            Packet.C2S.Cast.Encoded(new Packet.C2S.Cast.Struct(ObjectManager.Player.NetworkId,
+                                SpellSlot.Q)).Send();
+                        else
+                            Packet.C2S.Cast.Encoded(new Packet.C2S.Cast.Struct(0, SpellSlot.Q)).Send();
+                    if (menu.Item("W").GetValue<bool>())
+                        if (menu.Item("wt").GetValue<bool>())
+                            Packet.C2S.Cast.Encoded(new Packet.C2S.Cast.Struct(ObjectManager.Player.NetworkId,
+                                SpellSlot.W)).Send();
+                        else
+                            Packet.C2S.Cast.Encoded(new Packet.C2S.Cast.Struct(0, SpellSlot.W)).Send();
+                    if (menu.Item("E").GetValue<bool>())
+                        if (menu.Item("et").GetValue<bool>())
+                            Packet.C2S.Cast.Encoded(new Packet.C2S.Cast.Struct(ObjectManager.Player.NetworkId,
+                                SpellSlot.E)).Send();
+                        else
+                            Packet.C2S.Cast.Encoded(new Packet.C2S.Cast.Struct(0, SpellSlot.E)).Send();
+                    if (menu.Item("R.").GetValue<bool>())
+                        if (menu.Item("rt").GetValue<bool>())
+                            Packet.C2S.Cast.Encoded(new Packet.C2S.Cast.Struct(ObjectManager.Player.NetworkId,
+                                SpellSlot.R)).Send();
+                        else
+                            Packet.C2S.Cast.Encoded(new Packet.C2S.Cast.Struct(0, SpellSlot.R)).Send();
+                }
             }
 
             if (Vector3.Distance(ObjectManager.Player.Position, y.Position) <=
                 menu.Item("range").GetValue<Slider>().Value
                 )
             {
-                if (Vector3.Distance(ObjectManager.Player.Position, args.End) <= 200 || Vector3.Distance(ObjectManager.Player.Position, args.End) <= 5)
+                if (Vector3.Distance(ObjectManager.Player.Position, args.End) <= 200 ||
+                    Vector3.Distance(ObjectManager.Player.Position, args.End) <= 5)
                 {
-
-                    //Game.PrintChat("spell in range");
-                    var percenthp = ((ObjectManager.Player.Health -
-                                      dmgLib2.Class1.calcDmg(y, spellData[args.SData.Name], ObjectManager.Player))/
-                                     ObjectManager.Player.MaxHealth)*100;
-                    if (percenthp >= menu.Item("percent").GetValue<Slider>().Value ||
-                        (menu.Item("killable").GetValue<bool>() &&
-                         dmgLib2.Class1.calcDmg(y, spellData[args.SData.Name], ObjectManager.Player) >
-                         ObjectManager.Player.Health))
+                    if ((menu.Item("checkhp").GetValue<bool>() &&
+                         ((ObjectManager.Player.Health/ObjectManager.Player.MaxHealth)*100 <
+                          menu.Item("php").GetValue<Slider>().Value)) || !menu.Item("checkhp").GetValue<bool>())
                     {
-                        //Game.PrintChat("using key");
+                        if ((onlyuse5.Any(str => str.Contains(args.SData.Name)) &&
+                             menu.Item(args.SData.Name).GetValue<bool>() && menu.Item("onlyuse").GetValue<bool>()) ||
+                            !menu.Item("onlyuse").GetValue<bool>())
+                        {
+                            //Game.PrintChat("spell in range");
+                            var percenthp = ((ObjectManager.Player.Health -
+                                              dmgLib2.Class1.calcDmg(y, spellData[args.SData.Name], ObjectManager.Player))/
+                                             ObjectManager.Player.MaxHealth)*100;
+                            if (percenthp >= menu.Item("percent").GetValue<Slider>().Value ||
+                                (menu.Item("killable").GetValue<bool>() &&
+                                 dmgLib2.Class1.calcDmg(y, spellData[args.SData.Name], ObjectManager.Player) >
+                                 ObjectManager.Player.Health))
+                            {
+                                //Game.PrintChat("using key");
+                                if (menu.Item("heal").GetValue<bool>())
+                                {
+                                    foreach (var spell in ObjectManager.Player.SummonerSpellbook.Spells)
+                                    {
+                                        if (spell.Name.ToLower().Contains("heal") && spell.State == SpellState.Ready)
+                                            Packet.C2S.Cast.Encoded(new Packet.C2S.Cast.Struct(0, spell.Slot));
+                                    }
+                                }
+
+                                if (menu.Item("bar").GetValue<bool>())
+                                {
+                                    foreach (var spell in ObjectManager.Player.SummonerSpellbook.Spells)
+                                    {
+                                        if (spell.Name.ToLower().Contains("barrier") && spell.State == SpellState.Ready)
+                                            Packet.C2S.Cast.Encoded(new Packet.C2S.Cast.Struct(0, spell.Slot));
+                                    }
+                                }
+
+                                if (menu.Item("1").GetValue<bool>())
+                                    if (menu.Item("1t").GetValue<bool>())
+                                        Packet.C2S.Cast.Encoded(
+                                            new Packet.C2S.Cast.Struct(ObjectManager.Player.NetworkId,
+                                                SpellSlot.Item1)).Send();
+                                    else
+                                    {
+                                        Packet.C2S.Cast.Encoded(new Packet.C2S.Cast.Struct(0, SpellSlot.Item1)).Send();
+                                    }
+
+                                if (menu.Item("2").GetValue<bool>())
+                                    if (menu.Item("3t").GetValue<bool>())
+                                        Packet.C2S.Cast.Encoded(
+                                            new Packet.C2S.Cast.Struct(ObjectManager.Player.NetworkId,
+                                                SpellSlot.Item2)).Send();
+                                    else
+                                    {
+                                        Packet.C2S.Cast.Encoded(new Packet.C2S.Cast.Struct(0, SpellSlot.Item2)).Send();
+                                    }
+
+                                if (menu.Item("3").GetValue<bool>())
+                                    if (menu.Item("3t").GetValue<bool>())
+                                        Packet.C2S.Cast.Encoded(
+                                            new Packet.C2S.Cast.Struct(ObjectManager.Player.NetworkId,
+                                                SpellSlot.Item3)).Send();
+                                Packet.C2S.Cast.Encoded(new Packet.C2S.Cast.Struct(0, SpellSlot.Item3)).Send();
+                                if (menu.Item("5").GetValue<bool>())
+                                    if (menu.Item("5t").GetValue<bool>())
+                                        Packet.C2S.Cast.Encoded(
+                                            new Packet.C2S.Cast.Struct(ObjectManager.Player.NetworkId,
+                                                SpellSlot.Item4)).Send();
+                                    else
+                                        Packet.C2S.Cast.Encoded(new Packet.C2S.Cast.Struct(0, SpellSlot.Item4)).Send();
+                                if (menu.Item("6").GetValue<bool>())
+                                    if (menu.Item("6t").GetValue<bool>())
+                                        Packet.C2S.Cast.Encoded(
+                                            new Packet.C2S.Cast.Struct(ObjectManager.Player.NetworkId,
+                                                SpellSlot.Item5)).Send();
+                                    else
+                                        Packet.C2S.Cast.Encoded(new Packet.C2S.Cast.Struct(0, SpellSlot.Item5)).Send();
+                                if (menu.Item("7").GetValue<bool>())
+                                    if (menu.Item("7t").GetValue<bool>())
+                                        Packet.C2S.Cast.Encoded(
+                                            new Packet.C2S.Cast.Struct(ObjectManager.Player.NetworkId,
+                                                SpellSlot.Item6)).Send();
+                                    else
+                                        Packet.C2S.Cast.Encoded(new Packet.C2S.Cast.Struct(0, SpellSlot.Item6)).Send();
+
+                                if (menu.Item("Q").GetValue<bool>())
+                                    if (menu.Item("qt").GetValue<bool>())
+                                        Packet.C2S.Cast.Encoded(
+                                            new Packet.C2S.Cast.Struct(ObjectManager.Player.NetworkId,
+                                                SpellSlot.Q)).Send();
+                                    else
+                                        Packet.C2S.Cast.Encoded(new Packet.C2S.Cast.Struct(0, SpellSlot.Q)).Send();
+                                if (menu.Item("W").GetValue<bool>())
+                                    if (menu.Item("wt").GetValue<bool>())
+                                        Packet.C2S.Cast.Encoded(
+                                            new Packet.C2S.Cast.Struct(ObjectManager.Player.NetworkId,
+                                                SpellSlot.W)).Send();
+                                    else
+                                        Packet.C2S.Cast.Encoded(new Packet.C2S.Cast.Struct(0, SpellSlot.W)).Send();
+                                if (menu.Item("E").GetValue<bool>())
+                                    if (menu.Item("et").GetValue<bool>())
+                                        Packet.C2S.Cast.Encoded(
+                                            new Packet.C2S.Cast.Struct(ObjectManager.Player.NetworkId,
+                                                SpellSlot.E)).Send();
+                                    else
+                                        Packet.C2S.Cast.Encoded(new Packet.C2S.Cast.Struct(0, SpellSlot.E)).Send();
+                                if (menu.Item("R.").GetValue<bool>())
+                                    if (menu.Item("rt").GetValue<bool>())
+                                        Packet.C2S.Cast.Encoded(
+                                            new Packet.C2S.Cast.Struct(ObjectManager.Player.NetworkId,
+                                                SpellSlot.R)).Send();
+                                    else
+                                        Packet.C2S.Cast.Encoded(new Packet.C2S.Cast.Struct(0, SpellSlot.R)).Send();
+                            }
+                        }
+                    }
+                }
+            }
+
+            if (menu.Item("allsupp").GetValue<bool>())
+            {
+                foreach (var c in ObjectManager.Get<Obj_AI_Hero>().Where(x=>x.IsAlly && Vector3.Distance(x.Position,target.Position) < 600 && x.IsValid))
+                {
+                    if ((spellList.Any(str => str.Contains(args.SData.Name)) &&
+                        menu.Item(args.SData.Name).GetValue<bool>() && menu.Item("aonlyuse").GetValue<bool>()) || !menu.Item("aonlyuse").GetValue<bool>())
+                    {
+                        if (menu.Item("acheckhp").GetValue<bool>())
+                        {
+                            if ((c.Health/c.MaxHealth)*100 > menu.Item("aphp").GetValue<Slider>().Value)
+                            {
+                                return;
+                            }
+                        }
                         if (menu.Item("heal").GetValue<bool>())
                         {
                             foreach (var spell in ObjectManager.Player.SummonerSpellbook.Spells)
@@ -992,18 +1152,9 @@ namespace SpellNamesandSlots
                             }
                         }
 
-                        if (menu.Item("bar").GetValue<bool>())
-                        {
-                            foreach (var spell in ObjectManager.Player.SummonerSpellbook.Spells)
-                            {
-                                if (spell.Name.ToLower().Contains("barrier") && spell.State == SpellState.Ready)
-                                    Packet.C2S.Cast.Encoded(new Packet.C2S.Cast.Struct(0, spell.Slot));
-                            }
-                        }
-                        
                         if (menu.Item("1").GetValue<bool>())
                             if (menu.Item("1t").GetValue<bool>())
-                                Packet.C2S.Cast.Encoded(new Packet.C2S.Cast.Struct(ObjectManager.Player.NetworkId,
+                                Packet.C2S.Cast.Encoded(new Packet.C2S.Cast.Struct(c.NetworkId,
                                     SpellSlot.Item1)).Send();
                             else
                             {
@@ -1012,7 +1163,7 @@ namespace SpellNamesandSlots
 
                         if (menu.Item("2").GetValue<bool>())
                             if (menu.Item("3t").GetValue<bool>())
-                                Packet.C2S.Cast.Encoded(new Packet.C2S.Cast.Struct(ObjectManager.Player.NetworkId,
+                                Packet.C2S.Cast.Encoded(new Packet.C2S.Cast.Struct(c.NetworkId,
                                     SpellSlot.Item2)).Send();
                             else
                             {
@@ -1021,49 +1172,49 @@ namespace SpellNamesandSlots
 
                         if (menu.Item("3").GetValue<bool>())
                             if (menu.Item("3t").GetValue<bool>())
-                                Packet.C2S.Cast.Encoded(new Packet.C2S.Cast.Struct(ObjectManager.Player.NetworkId,
+                                Packet.C2S.Cast.Encoded(new Packet.C2S.Cast.Struct(c.NetworkId,
                                     SpellSlot.Item3)).Send();
                         Packet.C2S.Cast.Encoded(new Packet.C2S.Cast.Struct(0, SpellSlot.Item3)).Send();
                         if (menu.Item("5").GetValue<bool>())
                             if (menu.Item("5t").GetValue<bool>())
-                                Packet.C2S.Cast.Encoded(new Packet.C2S.Cast.Struct(ObjectManager.Player.NetworkId,
+                                Packet.C2S.Cast.Encoded(new Packet.C2S.Cast.Struct(c.NetworkId,
                                     SpellSlot.Item4)).Send();
                             else
                                 Packet.C2S.Cast.Encoded(new Packet.C2S.Cast.Struct(0, SpellSlot.Item4)).Send();
                         if (menu.Item("6").GetValue<bool>())
                             if (menu.Item("6t").GetValue<bool>())
-                                Packet.C2S.Cast.Encoded(new Packet.C2S.Cast.Struct(ObjectManager.Player.NetworkId,
+                                Packet.C2S.Cast.Encoded(new Packet.C2S.Cast.Struct(c.NetworkId,
                                     SpellSlot.Item5)).Send();
                             else
                                 Packet.C2S.Cast.Encoded(new Packet.C2S.Cast.Struct(0, SpellSlot.Item5)).Send();
                         if (menu.Item("7").GetValue<bool>())
                             if (menu.Item("7t").GetValue<bool>())
-                                Packet.C2S.Cast.Encoded(new Packet.C2S.Cast.Struct(ObjectManager.Player.NetworkId,
+                                Packet.C2S.Cast.Encoded(new Packet.C2S.Cast.Struct(c.NetworkId,
                                     SpellSlot.Item6)).Send();
                             else
                                 Packet.C2S.Cast.Encoded(new Packet.C2S.Cast.Struct(0, SpellSlot.Item6)).Send();
 
                         if (menu.Item("Q").GetValue<bool>())
                             if (menu.Item("qt").GetValue<bool>())
-                                Packet.C2S.Cast.Encoded(new Packet.C2S.Cast.Struct(ObjectManager.Player.NetworkId,
+                                Packet.C2S.Cast.Encoded(new Packet.C2S.Cast.Struct(c.NetworkId,
                                     SpellSlot.Q)).Send();
                             else
                                 Packet.C2S.Cast.Encoded(new Packet.C2S.Cast.Struct(0, SpellSlot.Q)).Send();
                         if (menu.Item("W").GetValue<bool>())
                             if (menu.Item("wt").GetValue<bool>())
-                                Packet.C2S.Cast.Encoded(new Packet.C2S.Cast.Struct(ObjectManager.Player.NetworkId,
+                                Packet.C2S.Cast.Encoded(new Packet.C2S.Cast.Struct(c.NetworkId,
                                     SpellSlot.W)).Send();
                             else
                                 Packet.C2S.Cast.Encoded(new Packet.C2S.Cast.Struct(0, SpellSlot.W)).Send();
                         if (menu.Item("E").GetValue<bool>())
                             if (menu.Item("et").GetValue<bool>())
-                                Packet.C2S.Cast.Encoded(new Packet.C2S.Cast.Struct(ObjectManager.Player.NetworkId,
+                                Packet.C2S.Cast.Encoded(new Packet.C2S.Cast.Struct(c.NetworkId,
                                     SpellSlot.E)).Send();
                             else
                                 Packet.C2S.Cast.Encoded(new Packet.C2S.Cast.Struct(0, SpellSlot.E)).Send();
-                        if (menu.Item("R").GetValue<bool>())
+                        if (menu.Item("R.").GetValue<bool>())
                             if (menu.Item("rt").GetValue<bool>())
-                                Packet.C2S.Cast.Encoded(new Packet.C2S.Cast.Struct(ObjectManager.Player.NetworkId,
+                                Packet.C2S.Cast.Encoded(new Packet.C2S.Cast.Struct(c.NetworkId,
                                     SpellSlot.R)).Send();
                             else
                                 Packet.C2S.Cast.Encoded(new Packet.C2S.Cast.Struct(0, SpellSlot.R)).Send();
@@ -1071,7 +1222,6 @@ namespace SpellNamesandSlots
                 }
             }
         }
-
     }
 }
 
