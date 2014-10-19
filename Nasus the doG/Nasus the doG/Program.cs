@@ -126,7 +126,7 @@ namespace nasus
                 }
             }
             var comboActive = Menu.Item("ComboActive").GetValue<KeyBind>().Active;
-         
+
             if ((!comboActive || (!Orbwalking.CanMove(100))))
                 return;
             var useQ5 = Menu.Item("UseQ").GetValue<bool>();
@@ -183,14 +183,13 @@ namespace nasus
             {
                 var Minions = MinionManager.GetMinions(ObjectManager.Player.ServerPosition, 1000, MinionTypes.All,
                     MinionTeam.NotAlly, MinionOrderTypes.Health);
-                foreach (var minion in from minion in Minions where minion != null let targetQDam = Damage.GetDamageSpell(ObjectManager.Player, minion, SpellSlot.Q) where (minion.Health < targetQDam.CalculatedDamage) select minion)
+                foreach (var minion in from minion in Minions where minion != null let targetQDam = ObjectManager.Player.GetDamageSpell(minion, SpellSlot.Q) where (minion.Health < targetQDam.CalculatedDamage) select minion)
                 {
-                    Q.Cast(minion);
+                    Q.Cast();
+                    Player.IssueOrder(GameObjectOrder.AttackUnit, minion);
                 }
             }
         }
 
     }
 }
-
-
