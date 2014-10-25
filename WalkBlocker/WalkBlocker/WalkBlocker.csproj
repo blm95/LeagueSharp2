@@ -7,8 +7,8 @@
     <ProjectGuid>{253A4FA8-CDBC-4D32-9ADE-193EE7899E69}</ProjectGuid>
     <OutputType>Exe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>WalkBlocker</RootNamespace>
-    <AssemblyName>WalkBlocker</AssemblyName>
+    <RootNamespace>SafeZone</RootNamespace>
+    <AssemblyName>SafeZone</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <PreBuildEvent />

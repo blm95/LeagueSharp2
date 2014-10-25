@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using LeagueSharp.Common;
 //using Test = Test.Test;
 
-namespace WalkBlocker
+namespace SafeZone
 {
     class Program
     {
