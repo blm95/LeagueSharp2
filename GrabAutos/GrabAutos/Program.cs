@@ -51,7 +51,7 @@ namespace GrabAutos
                             var l = LeagueSharp.Common.Collision.GetCollision(v, p);
                             if (l.Count == 0)
                             {
-                                Game.PrintChat("casting q");
+                                //Game.PrintChat("casting q");
                                 ObjectManager.Player.Spellbook.CastSpell(SpellSlot.Q, k.Position);
                             }
                         }
