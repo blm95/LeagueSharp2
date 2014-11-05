@@ -40,19 +40,22 @@ namespace GrabAutos
                 GamePacket g = new GamePacket(args.PacketData);
                 if (g.Header == 0xFE)
                 {
-                    g.Position = 1;
-                    var k = ObjectManager.GetUnitByNetworkId<Obj_AI_Base>(g.ReadInteger());
-                    if (k is Obj_AI_Hero && k.IsEnemy)
+                    if (Packet.MultiPacket.OnAttack.Decoded(args.PacketData).Type == Packet.AttackTypePacket.TargetedAA)
                     {
-                        if (Vector3.Distance(k.Position, ObjectManager.Player.Position) <= 925)
+                        g.Position = 1;
+                        var k = ObjectManager.GetUnitByNetworkId<Obj_AI_Base>(g.ReadInteger());
+                        if (k is Obj_AI_Hero && k.IsEnemy)
                         {
-                            //Game.PrintChat(k.Name + " auto'd");
-                            List<Vector3> v = new List<Vector3> {k.Position};
-                            var l = LeagueSharp.Common.Collision.GetCollision(v, p);
-                            if (l.Count == 0)
+                            if (Vector3.Distance(k.Position, ObjectManager.Player.Position) <= 925)
                             {
-                                //Game.PrintChat("casting q");
-                                ObjectManager.Player.Spellbook.CastSpell(SpellSlot.Q, k.Position);
+                                //Game.PrintChat(k.Name + " auto'd");
+                                List<Vector3> v = new List<Vector3> {k.Position};
+                                var l = LeagueSharp.Common.Collision.GetCollision(v, p);
+                                if (l.Count == 0)
+                                {
+                                    //Game.PrintChat("casting q");
+                                    ObjectManager.Player.Spellbook.CastSpell(SpellSlot.Q, k.Position);
+                                }
                             }
                         }
                     }
