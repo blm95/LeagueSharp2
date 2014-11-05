@@ -1,0 +1,11 @@
+c:\users\brennan\documents\visual studio 2013\Projects\GrabAutos\GrabAutos\bin\Release\GrabAutos.exe.config
+c:\users\brennan\documents\visual studio 2013\Projects\GrabAutos\GrabAutos\bin\Release\GrabAutos.exe
+c:\users\brennan\documents\visual studio 2013\Projects\GrabAutos\GrabAutos\bin\Release\GrabAutos.pdb
+c:\users\brennan\documents\visual studio 2013\Projects\GrabAutos\GrabAutos\bin\Release\LeagueSharp.Common.dll
+c:\users\brennan\documents\visual studio 2013\Projects\GrabAutos\GrabAutos\bin\Release\LeagueSharp.dll
+c:\users\brennan\documents\visual studio 2013\Projects\GrabAutos\GrabAutos\bin\Release\SharpDX.dll
+c:\users\brennan\documents\visual studio 2013\Projects\GrabAutos\GrabAutos\bin\Release\SharpDX.Direct3D9.dll
+c:\users\brennan\documents\visual studio 2013\Projects\GrabAutos\GrabAutos\bin\Release\LeagueSharp.xml
+c:\users\brennan\documents\visual studio 2013\Projects\GrabAutos\GrabAutos\obj\Debug\GrabAutos.exe
+c:\users\brennan\documents\visual studio 2013\Projects\GrabAutos\GrabAutos\obj\Debug\GrabAutos.pdb
+c:\users\brennan\documents\visual studio 2013\Projects\GrabAutos\GrabAutos\obj\Debug\GrabAutos.csprojResolveAssemblyReference.cache
