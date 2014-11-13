@@ -186,6 +186,7 @@ namespace nasus
                     MinionTeam.NotAlly, MinionOrderTypes.Health);
                 foreach (var minion in from minion in Minions where minion != null let targetQDam = ObjectManager.Player.GetDamageSpell(minion, SpellSlot.Q) where (minion.Health < targetQDam.CalculatedDamage) select minion)
                 {
+                    Utility.DrawCircle(minion.Position,100,System.Drawing.Color.Red);
                     Q.Cast();
                     Player.IssueOrder(GameObjectOrder.AttackUnit, minion);
                 }
