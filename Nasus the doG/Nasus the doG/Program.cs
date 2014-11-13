@@ -175,6 +175,7 @@ namespace nasus
 
         private static void Drawing_OnDraw(EventArgs args)
         {
+            if (!Q.IsReady()) return;
             useQ = Menu.Item("UseQFarm").GetValue<bool>();
             var clearActive = Menu.Item("ClearActive").GetValue<KeyBind>().Active;
             var useQ2 = Menu.Item("UseQFarm2").GetValue<bool>();
