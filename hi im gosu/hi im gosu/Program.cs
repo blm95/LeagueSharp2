@@ -23,12 +23,12 @@ namespace hi_im_gosu
         public static string[] notarget;
         public static string[] gapcloser;
         public static Obj_AI_Hero tar;
+        public const string ChampName = "Vayne";
+        public static Obj_AI_Hero Player;
+        
 
         static void Main(string[] args)
         {
-            //if (ObjectManager.Player.ChampionName != CharName)
-            // return;
-            /* CallBAcks */
             try
             {
                 CustomEvents.Game.OnGameLoad += Game_OnGameLoad;
@@ -43,7 +43,9 @@ namespace hi_im_gosu
 
         public static void Game_OnGameLoad(EventArgs args)
         {
+            Player = ObjectManager.Player;
             //Utils.PrintMessage("Vayne loaded");
+            if (Player.ChampionName != ChampName) return;
             spellData = new Dictionary<string, SpellSlot>();
             //Game.PrintChat("Riven");
             menu = new Menu("Gosu", "Gosu", true);
@@ -103,7 +105,9 @@ namespace hi_im_gosu
             {
                 menu.SubMenu("int").AddItem(new MenuItem(interrupt[i], interrupt[i])).SetValue(true);
             }
-
+            menu.AddSubMenu(new Menu("Harass Options", "harass"));
+            menu.SubMenu("harass").AddItem(new MenuItem("hq", "Use Q Harass").SetValue(true));
+            menu.SubMenu("harass").AddItem(new MenuItem("he", "Use E Harass").SetValue(true));
             E.SetTargetted(0.25f, 2200f);
             Obj_AI_Base.OnProcessSpellCast += Game_ProcessSpell;
             Game.OnGameUpdate += Game_OnGameUpdate;
@@ -149,8 +153,8 @@ namespace hi_im_gosu
                     menu.Item("UseEaa").SetValue<KeyBind>(new KeyBind("G".ToCharArray()[0], KeyBindType.Toggle));
                 }
 
-                if (orbwalker.ActiveMode.ToString() == "Combo" && menu.Item("UseQC").GetValue<bool>() &&
-                    Q.IsReady())
+                if (((orbwalker.ActiveMode.ToString() == "Combo" && menu.Item("UseQC").GetValue<bool>()) || (orbwalker.ActiveMode.ToString() == "Harass" && menu.Item("hq").GetValue<bool>()) &&
+                    Q.IsReady()))
                 {
                     var after = ObjectManager.Player.Position +
                                 Normalize(Game.CursorPos - ObjectManager.Player.Position)*300;
@@ -180,10 +184,10 @@ namespace hi_im_gosu
 
         public static void Game_OnGameUpdate(EventArgs args)
         {
-            if ((!E.IsReady()) ||
-                ((orbwalker.ActiveMode.ToString() != "Combo" || !menu.Item("UseEC").GetValue<bool>()) &&
-                 !menu.Item("UseET").GetValue<KeyBind>().Active)) return;
-
+            if (!E.IsReady()) return; //||
+                //(orbwalker.ActiveMode.ToString() != "Combo" || !menu.Item("UseEC").GetValue<bool>()) &&
+                 //!menu.Item("UseET").GetValue<KeyBind>().Active)) return;
+            if (((orbwalker.ActiveMode.ToString() == "Combo" && menu.Item("UseEC").GetValue<bool>()) || (orbwalker.ActiveMode.ToString() == "Harass" && menu.Item("he").GetValue<bool>()) || menu.Item("UseET").GetValue<KeyBind>().Active))
             foreach (var hero in from hero in ObjectManager.Get<Obj_AI_Hero>().Where(hero => hero.IsValidTarget(550f))
                 let prediction = E.GetPrediction(hero)
                 where NavMesh.GetCollisionFlags(
