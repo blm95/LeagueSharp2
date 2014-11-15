@@ -153,7 +153,7 @@ namespace hi_im_gosu
                     menu.Item("UseEaa").SetValue<KeyBind>(new KeyBind("G".ToCharArray()[0], KeyBindType.Toggle));
                 }
 
-                if (((orbwalker.ActiveMode.ToString() == "Combo" && menu.Item("UseQC").GetValue<bool>()) || (orbwalker.ActiveMode.ToString() == "Harass" && menu.Item("hq").GetValue<bool>()) &&
+                if (((orbwalker.ActiveMode.ToString() == "Combo" && menu.Item("UseQC").GetValue<bool>()) || (orbwalker.ActiveMode.ToString() == "Mixed" && menu.Item("hq").GetValue<bool>()) &&
                     Q.IsReady()))
                 {
                     var after = ObjectManager.Player.Position +
@@ -187,7 +187,7 @@ namespace hi_im_gosu
             if (!E.IsReady()) return; //||
                 //(orbwalker.ActiveMode.ToString() != "Combo" || !menu.Item("UseEC").GetValue<bool>()) &&
                  //!menu.Item("UseET").GetValue<KeyBind>().Active)) return;
-            if (((orbwalker.ActiveMode.ToString() == "Combo" && menu.Item("UseEC").GetValue<bool>()) || (orbwalker.ActiveMode.ToString() == "Harass" && menu.Item("he").GetValue<bool>()) || menu.Item("UseET").GetValue<KeyBind>().Active))
+            if (((orbwalker.ActiveMode.ToString() == "Combo" && menu.Item("UseEC").GetValue<bool>()) || (orbwalker.ActiveMode.ToString() == "Mixed" && menu.Item("he").GetValue<bool>()) || menu.Item("UseET").GetValue<KeyBind>().Active))
             foreach (var hero in from hero in ObjectManager.Get<Obj_AI_Hero>().Where(hero => hero.IsValidTarget(550f))
                 let prediction = E.GetPrediction(hero)
                 where NavMesh.GetCollisionFlags(
