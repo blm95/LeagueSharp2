@@ -255,6 +255,7 @@ namespace SpellNamesandSlots
                             //Game.PrintChat("R added");
                             break;
                         case "FiddleSticks":
+                            spellData.Add("Terrify", SpellSlot.Q);
                             spellData.Add("Drain", SpellSlot.W);
                             spellData.Add("FiddlesticksDarkWind", SpellSlot.E);
                             spellData.Add("Crowstorm", SpellSlot.R);
@@ -562,6 +563,7 @@ namespace SpellNamesandSlots
                         case "Rammus":
                             spellData.Add("PowerBall", SpellSlot.Q);
                             spellData.Add("DefensiveBallCurl", SpellSlot.W);
+                            spellData.Add("PuncturingTaunt",SpellSlot.E);
                             spellData.Add("Tremors2", SpellSlot.R);
                             break;
                         case "Renekton":
@@ -794,6 +796,7 @@ namespace SpellNamesandSlots
                             break;
                         case "Zilean":
                             spellData.Add("TimeBomb", SpellSlot.Q);
+                            spellData.Add("TimeWarp", SpellSlot.E);
                             break;
                         case "Zyra":
                             spellData.Add("ZyraQFissure", SpellSlot.Q);
