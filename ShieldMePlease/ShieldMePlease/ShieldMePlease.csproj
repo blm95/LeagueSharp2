@@ -36,19 +36,19 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="clipper_library">
-      <HintPath>C:\Users\Brennan\Downloads\LeagueSharp5\System\clipper_library.dll</HintPath>
+      <HintPath>C:\Users\Brennan\Downloads\LeagueSharp5\\System\clipper_library.dll</HintPath>
     </Reference>
     <Reference Include="dmgLib2">
-      <HintPath>C:\Users\Brennan\Downloads\LeagueSharp5\System\dmgLib2.dll</HintPath>
+      <HintPath>C:\Users\Brennan\Downloads\LeagueSharp5\\System\dmgLib2.dll</HintPath>
     </Reference>
     <Reference Include="LeagueSharp">
-      <HintPath>C:\Users\Brennan\Downloads\LeagueSharp5\System\LeagueSharp.dll</HintPath>
+      <HintPath>C:\Users\Brennan\Downloads\LeagueSharp5\\System\LeagueSharp.dll</HintPath>
     </Reference>
     <Reference Include="LeagueSharp.Common">
-      <HintPath>C:\Users\Brennan\Downloads\LeagueSharp5\System\LeagueSharp.Common.dll</HintPath>
+      <HintPath>C:\Users\Brennan\Downloads\LeagueSharp5\\System\LeagueSharp.Common.dll</HintPath>
     </Reference>
     <Reference Include="SharpDX">
-      <HintPath>C:\Users\Brennan\Downloads\LeagueSharp5\System\SharpDX.dll</HintPath>
+      <HintPath>C:\Users\Brennan\Downloads\LeagueSharp5\\System\SharpDX.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
