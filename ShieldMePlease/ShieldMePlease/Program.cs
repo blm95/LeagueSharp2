@@ -223,6 +223,7 @@ namespace SpellNamesandSlots
                         case "Diana":
                             spellData.Add("DianaArc", SpellSlot.Q);
                             spellData.Add("DianaOrbs", SpellSlot.W);
+                            spellData.Add("DianaVortex", SpellSlot.E);
                             spellData.Add("DianaTeleport", SpellSlot.R);
                             break;
                         case "DrMundo":
@@ -251,6 +252,7 @@ namespace SpellNamesandSlots
                             //Game.PrintChat("added");
                             spellData.Add("EzrealEssenceFlux", SpellSlot.W);
                             //Game.PrintChat("W added");
+                            spellData.Add("EzrealArcaneShift", SpellSlot.E);
                             spellData.Add("EzrealTrueshotBarrage", SpellSlot.R);
                             //Game.PrintChat("R added");
                             break;
@@ -360,6 +362,7 @@ namespace SpellNamesandSlots
                         case "Karthus":
                             spellData.Add("LayWaste", SpellSlot.Q);
                             spellData.Add("KarthusLayWasteA2", SpellSlot.Q);
+                            spellData.Add("WallOfPain", SpellSlot.W);
                             spellData.Add("Defile", SpellSlot.E);
                             spellData.Add("FallenOne", SpellSlot.R);
                             break;
@@ -435,6 +438,7 @@ namespace SpellNamesandSlots
                             break;
                         case "Lulu":
                             spellData.Add("LuluQ", SpellSlot.Q);
+                            spellData.Add("LuluW", SpellSlot.W);
                             spellData.Add("LuluE", SpellSlot.E);
                             spellData.Add("LuluQMissle", SpellSlot.Q);
                             break;
@@ -487,6 +491,7 @@ namespace SpellNamesandSlots
                             break;
                         case "Nasus":
                             spellData.Add("NasusQ", SpellSlot.Q);
+                            spellData.Add("NasusW", SpellSlot.W);
                             spellData.Add("NasusE", SpellSlot.E);
                             spellData.Add("NasusR", SpellSlot.R);
                             break;
@@ -551,6 +556,7 @@ namespace SpellNamesandSlots
                         case "Riven":
                             spellData.Add("RivenTriCleave", SpellSlot.Q);
                             spellData.Add("RivenTriCleave_03", SpellSlot.Q);
+                            spellData.Add("RivenMartyr", SpellSlot.W);
                             spellData.Add("rivenizunablade", SpellSlot.R);
                             spellData.Add("RivenFengShuiEngine", SpellSlot.R);
                             break;
@@ -563,7 +569,7 @@ namespace SpellNamesandSlots
                         case "Rammus":
                             spellData.Add("PowerBall", SpellSlot.Q);
                             spellData.Add("DefensiveBallCurl", SpellSlot.W);
-                            spellData.Add("PuncturingTaunt",SpellSlot.E);
+                            spellData.Add("PuncturingTaunt", SpellSlot.E);
                             spellData.Add("Tremors2", SpellSlot.R);
                             break;
                         case "Renekton":
@@ -677,11 +683,15 @@ namespace SpellNamesandSlots
                             spellData.Add("TrundlePain", SpellSlot.R);
                             break;
                         case "Tryndamere":
+                            spellData.Add("MockingShout", SpellSlot.W);
                             spellData.Add("slashCast", SpellSlot.E);
                             break;
                         case "TwistedFate":
                             spellData.Add("WildCards", SpellSlot.Q);
                             spellData.Add("PickACard", SpellSlot.W);
+                            spellData.Add("goldcardpreattack", SpellSlot.W);
+                            spellData.Add("redcardpreattack", SpellSlot.W);
+                            spellData.Add("bluecardpreattack", SpellSlot.W);
                             spellData.Add("CardmasterStack ", SpellSlot.E);
                             break;
                         case "Twitch":
@@ -690,11 +700,15 @@ namespace SpellNamesandSlots
                             break;
                         case "Udyr":
                             spellData.Add("UdyrTigerStance", SpellSlot.Q);
+                            spellData.Add("UdyrBearStance", SpellSlot.E);
                             spellData.Add("UdyrPhoenixStance", SpellSlot.R);
                             break;
                         case "Urgot":
                             spellData.Add("UrgotHeatseekingLineMissile", SpellSlot.Q);
+                            spellData.Add("UrgotHeatseekingLineqqMissile", SpellSlot.Q);
                             spellData.Add("UrgotPlasmaGrenade", SpellSlot.E);
+                            spellData.Add("UrgotPlasmaGrenadeBoom", SpellSlot.E);
+                            spellData.Add("UrgotSwap2", SpellSlot.R);
                             break;
                         case "Varus":
                             spellData.Add("VarusQMissilee", SpellSlot.Q);
@@ -907,7 +921,7 @@ namespace SpellNamesandSlots
         {
             target = ObjectManager.Player;
             //spellData[args.SData.Name].ToString().
-            var y = (Obj_AI_Hero) hero;
+            var y = (Obj_AI_Hero)hero;
 
             //Game.PrintChat(args.SData.Name);
             //if (spellData.ContainsKey(args.SData.Name))
@@ -1033,7 +1047,7 @@ namespace SpellNamesandSlots
                     Vector3.Distance(ObjectManager.Player.Position, args.End) <= 5)
                 {
                     if ((menu.Item("checkhp").GetValue<bool>() &&
-                         ((ObjectManager.Player.Health/ObjectManager.Player.MaxHealth)*100 <
+                         ((ObjectManager.Player.Health / ObjectManager.Player.MaxHealth) * 100 <
                           menu.Item("php").GetValue<Slider>().Value)) || !menu.Item("checkhp").GetValue<bool>())
                     {
                         if ((onlyuse5.Any(str => str.Contains(args.SData.Name)) &&
@@ -1042,8 +1056,8 @@ namespace SpellNamesandSlots
                         {
                             //Game.PrintChat("spell in range");
                             var percenthp = ((ObjectManager.Player.Health -
-                                              dmgLib2.Class1.calcDmg(y, spellData[args.SData.Name], ObjectManager.Player))/
-                                             ObjectManager.Player.MaxHealth)*100;
+                                              dmgLib2.Class1.calcDmg(y, spellData[args.SData.Name], ObjectManager.Player)) /
+                                             ObjectManager.Player.MaxHealth) * 100;
                             if (percenthp >= menu.Item("percent").GetValue<Slider>().Value ||
                                 (menu.Item("killable").GetValue<bool>() &&
                                  dmgLib2.Class1.calcDmg(y, spellData[args.SData.Name], ObjectManager.Player) >
@@ -1152,7 +1166,7 @@ namespace SpellNamesandSlots
                             {
                                 if (menu.Item("acheckhp").GetValue<bool>())
                                 {
-                                    if ((c.Health/c.MaxHealth)*100 > menu.Item("aphp").GetValue<Slider>().Value)
+                                    if ((c.Health / c.MaxHealth) * 100 > menu.Item("aphp").GetValue<Slider>().Value)
                                     {
                                         return;
                                     }
@@ -1234,4 +1248,3 @@ namespace SpellNamesandSlots
     }
 }
 
- 
