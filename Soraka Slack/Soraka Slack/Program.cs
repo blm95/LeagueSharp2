@@ -85,7 +85,7 @@ namespace TeachingLeagueSharp
             menu.AddSubMenu(new Menu("Follow:", "follower"));
             foreach (var ally in ObjectManager.Get<Obj_AI_Hero>().Where(x => x.IsAlly))
             {
-                if(ad.Contains(ally.ChampionName))
+                if (ad.Contains(ally.ChampionName))
                     menu.SubMenu("follower").AddItem(new MenuItem(ally.ChampionName, ally.ChampionName).SetValue(true));
                 else
                     menu.SubMenu("follower").AddItem(new MenuItem(ally.ChampionName, ally.ChampionName).SetValue(false));
@@ -109,15 +109,54 @@ namespace TeachingLeagueSharp
             Packet.C2S.BuyItem.Encoded(new Packet.C2S.BuyItem.Struct(2003)).Send();
             Packet.C2S.BuyItem.Encoded(new Packet.C2S.BuyItem.Struct(2003)).Send();
             Packet.C2S.BuyItem.Encoded(new Packet.C2S.BuyItem.Struct(2003)).Send();
+            Game.OnGameProcessPacket += Game_OnGameProcessPacket;
             Game.OnGameUpdate += Game_OnGameUpdate;
 
             //follow = ObjectManager.Get<Obj_AI_Hero>().First(x => ad.Contains(x.ChampionName));
             //Obj_AI_Base.OnCreate += Obj_AI_Base_OnCreate;
         }
 
+        static void Game_OnGameProcessPacket(GamePacketEventArgs args)
+        {
+            GamePacket p = new GamePacket(args.PacketData);
+            if (p.Header == Packet.S2C.TowerAggro.Header)
+            {
+                if (Packet.S2C.TowerAggro.Decoded(args.PacketData).TargetNetworkId == ObjectManager.Player.NetworkId)
+                {
+                    if (Game.Time - foundturret > 20 && !recalling)
+                    {
+                        var turret2 =
+                            ObjectManager.Get<Obj_AI_Turret>()
+                                .Where(x => x.Distance(ObjectManager.Player) < 8000 && x.IsAlly);
+
+                        if (turret2.Any())
+                        {
+                            stopdoingshit = true;
+                            turret = turret2.First();
+                            foundturret = Game.Time;
+                        }
+                    }
+
+
+                    if (stopdoingshit && !recalling)
+                    {
+                        ObjectManager.Player.IssueOrder(GameObjectOrder.MoveTo, turret);
+                        if (ObjectManager.Player.Distance(turret) <= 350 && Game.Time - count > 15)
+                        {
+                            Game.Say(stufftosay[saycounter]);
+                            saycounter++;
+                            ObjectManager.Player.Spellbook.CastSpell(SpellSlot.Recall);
+
+                            recalling = true;
+                            count = Game.Time;
+                        }
+                    } 
+                }
+            }
+        }
+
         private static void Game_OnGameUpdate(EventArgs args)
         {
-           
             //if (Utility.InShopRange())
             //{
             //   stopdoingshit = false;
@@ -125,14 +164,14 @@ namespace TeachingLeagueSharp
             // }
             //follow = ObjectManager.Get<Obj_AI_Hero>().First(x => menu.Item(x.ChampionName).GetValue<bool>());
 
-            foreach (var c in _WardSpots.Where(x=>x.Distance(ObjectManager.Player.Position) < 600))
+            foreach (var c in _WardSpots.Where(x => x.Distance(ObjectManager.Player.Position) < 600))
             {
                 InventorySlot wardSlot = Wards.GetWardSlot();
 
                 if (wardSlot != null && wardSlot.Id != ItemId.Unknown)
                 {
                     wardSlot.UseItem(c);
-                } 
+                }
             }
 
             foreach (var c in _SafeWardSpots.Where(x => x.WardPosition.Distance(ObjectManager.Player.Position) < 600))//x.Distance(ObjectManager.Player.Position) < 600))
@@ -172,6 +211,8 @@ namespace TeachingLeagueSharp
             if (Game.Time - followtime > 40 && followpos.Distance(follow.Position) <= 30)
             {
                 follow = ObjectManager.Get<Obj_AI_Hero>().First(x => x.IsAlly && ap.Contains(x.ChampionName));
+                followpos = follow.Position;
+                followtime = Game.Time;
             }
 
             if (follow.IsDead)
@@ -183,7 +224,7 @@ namespace TeachingLeagueSharp
             if ((follow.IsDead ||
                  (follow.Distance(ObjectManager.Player.Position) > 5000 && !Utility.InShopRange() &&
                   spawn.Distance(follow.Position) < 1500) ||
-                 ObjectManager.Player.Health/ObjectManager.Player.MaxHealth*100 <
+                 ObjectManager.Player.Health / ObjectManager.Player.MaxHealth * 100 <
                  menu.Item("hpb").GetValue<Slider>().Value))
             {
 
@@ -230,11 +271,11 @@ namespace TeachingLeagueSharp
                     ObjectManager.Get<Obj_AI_Hero>()
                         .Where(
                             x =>
-                                x.IsAlly && x.Health/x.MaxHealth*100 < menu.Item("allyhpw").GetValue<Slider>().Value &&
+                                x.IsAlly && x.Health / x.MaxHealth * 100 < menu.Item("allyhpw").GetValue<Slider>().Value &&
                                 !x.IsDead && x.Distance(ObjectManager.Player.Position) < 550);
                 var objAiHeroes = allies2 as Obj_AI_Hero[] ?? allies2.ToArray();
                 if (objAiHeroes.Any() &&
-                    ObjectManager.Player.Health/ObjectManager.Player.MaxHealth*100 >
+                    ObjectManager.Player.Health / ObjectManager.Player.MaxHealth * 100 >
                     menu.Item("wabovehp").GetValue<Slider>().Value)
                     W.Cast(objAiHeroes.First());
             }
@@ -245,7 +286,7 @@ namespace TeachingLeagueSharp
                     ObjectManager.Get<Obj_AI_Hero>()
                         .Where(
                             x =>
-                                x.IsAlly && x.Health/x.MaxHealth*100 < menu.Item("allyhpr").GetValue<Slider>().Value &&
+                                x.IsAlly && x.Health / x.MaxHealth * 100 < menu.Item("allyhpr").GetValue<Slider>().Value &&
                                 !x.IsDead);
                 if (allies.Any())
                 {
@@ -261,17 +302,17 @@ namespace TeachingLeagueSharp
                 if (!follow.IsDead)
                 {
                     if (W.IsReady() && menu.Item("usew").GetValue<bool>() &&
-                        ObjectManager.Player.Health/ObjectManager.Player.MaxHealth*100 >
+                        ObjectManager.Player.Health / ObjectManager.Player.MaxHealth * 100 >
                         menu.Item("wabovehp").GetValue<Slider>().Value)
                     {
-                        if (follow.Health/follow.MaxHealth*100 < menu.Item("allyhpw").GetValue<Slider>().Value &&
+                        if (follow.Health / follow.MaxHealth * 100 < menu.Item("allyhpw").GetValue<Slider>().Value &&
                             follow.Distance(ObjectManager.Player.Position) < 550 &&
-                            ObjectManager.Player.Health/ObjectManager.Player.MaxHealth*100 >
+                            ObjectManager.Player.Health / ObjectManager.Player.MaxHealth * 100 >
                             menu.Item("wabovehp").GetValue<Slider>().Value)
                         {
                             W.Cast(follow);
                         }
-                        else if (follow.Health/follow.MaxHealth*100 < menu.Item("allyhpw").GetValue<Slider>().Value &&
+                        else if (follow.Health / follow.MaxHealth * 100 < menu.Item("allyhpw").GetValue<Slider>().Value &&
                                  follow.Distance(ObjectManager.Player.Position) > 550)
                         {
                             ObjectManager.Player.IssueOrder(GameObjectOrder.MoveTo, follow.Position);
@@ -291,10 +332,10 @@ namespace TeachingLeagueSharp
                     if (follow.Distance(ObjectManager.Player.Position) > 350)
                     {
                         Random x = new Random();
-                        var xPos = ((spawn.X - follow.Position.X)/Vector3.Distance(follow.Position, spawn))*300 +
+                        var xPos = ((spawn.X - follow.Position.X) / Vector3.Distance(follow.Position, spawn)) * 300 +
                                    follow.Position.X -
                                    x.Next(25, 150);
-                        var yPos = ((spawn.Y - follow.Position.Y)/Vector3.Distance(follow.Position, spawn))*300 +
+                        var yPos = ((spawn.Y - follow.Position.Y) / Vector3.Distance(follow.Position, spawn)) * 300 +
                                    follow.Position.Y -
                                    x.Next(25, 150);
                         var vec = new Vector3(xPos, yPos, follow.Position.Z);
@@ -312,10 +353,10 @@ namespace TeachingLeagueSharp
                     var turret =
                         ObjectManager.Get<Obj_AI_Turret>()
                             .First(x => x.Distance(ObjectManager.Player) < 2000 && x.IsAlly);
-                    var xPos = ((spawn.X - turret.Position.X)/Vector3.Distance(turret.Position, spawn))*300 +
+                    var xPos = ((spawn.X - turret.Position.X) / Vector3.Distance(turret.Position, spawn)) * 300 +
                                turret.Position.X -
                                y.Next(25, 150);
-                    var yPos = ((spawn.Y - turret.Position.Y)/Vector3.Distance(turret.Position, spawn))*300 +
+                    var yPos = ((spawn.Y - turret.Position.Y) / Vector3.Distance(turret.Position, spawn)) * 300 +
                                turret.Position.Y -
                                y.Next(25, 150);
 
@@ -688,7 +729,7 @@ namespace TeachingLeagueSharp
             }
         }
 
-        
+
     }
 
     internal class Wards
