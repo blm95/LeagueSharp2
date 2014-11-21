@@ -108,167 +108,173 @@ namespace TeachingLeagueSharp
                 saycounter = 0;
             //if (menu.Item("on").GetValue<KeyBind>().Active)
             //{
-                // Game.PrintChat(index.ToString());
-                if (Items.HasItem(ids[index]))
-                    index++;
-                Console.WriteLine("Recalling = " + recalling);
+            // Game.PrintChat(index.ToString());
+            if (Items.HasItem(ids[index]))
+                index++;
+            Console.WriteLine("Recalling = " + recalling);
 
-                Console.WriteLine("stop: " + stopdoingshit);
-                // Game.PrintChat(follow.ChampionName);
-                if (Game.Time - foundturret > 25)
-                    stopdoingshit = false;
-                if (Utility.InShopRange())
+            Console.WriteLine("stop: " + stopdoingshit);
+            // Game.PrintChat(follow.ChampionName);
+            if (Game.Time - foundturret > 25)
+                stopdoingshit = false;
+            if (Utility.InShopRange())
+            {
+                if (!Items.HasItem(ids[index]))
                 {
-                    if (!Items.HasItem(ids[index]))
-                    {
-                        Packet.C2S.BuyItem.Encoded(new Packet.C2S.BuyItem.Struct(ids[index])).Send();
+                    Packet.C2S.BuyItem.Encoded(new Packet.C2S.BuyItem.Struct(ids[index])).Send();
 
+                }
+            }
+
+            follow = ObjectManager.Get<Obj_AI_Hero>().First(x => menu.Item(x.ChampionName).GetValue<bool>());
+
+            if (follow.IsDead)
+            {
+                follow = ObjectManager.Get<Obj_AI_Hero>().First(x => x.Distance(ObjectManager.Player) < 1300);
+            }
+
+            Console.WriteLine(follow.IsDead);
+            if ((follow.IsDead ||
+                 (follow.Distance(ObjectManager.Player.Position) > 5000 && !Utility.InShopRange() &&
+                  spawn.Distance(follow.Position) < 1500) ||
+                 ObjectManager.Player.Health/ObjectManager.Player.MaxHealth*100 <
+                 menu.Item("hpb").GetValue<Slider>().Value))
+            {
+
+                if (Game.Time - foundturret > 20 && !recalling)
+                {
+                    var turret2 =
+                        ObjectManager.Get<Obj_AI_Turret>()
+                            .Where(x => x.Distance(ObjectManager.Player) < 5000 && x.IsAlly);
+
+                    if (turret2.Any())
+                    {
+                        stopdoingshit = true;
+                        turret = turret2.First();
+                        foundturret = Game.Time;
                     }
                 }
 
-                follow = ObjectManager.Get<Obj_AI_Hero>().First(x => menu.Item(x.ChampionName).GetValue<bool>());
-                Console.WriteLine(follow.IsDead);
-                if ((follow.IsDead ||
-                     (follow.Distance(ObjectManager.Player.Position) > 5000 && !Utility.InShopRange() &&
-                      spawn.Distance(follow.Position) < 1500) ||
-                     ObjectManager.Player.Health / ObjectManager.Player.MaxHealth * 100 <
-                     menu.Item("hpb").GetValue<Slider>().Value))
+
+                if (stopdoingshit && !recalling)
                 {
-
-                    if (Game.Time - foundturret > 20 && !recalling)
+                    ObjectManager.Player.IssueOrder(GameObjectOrder.MoveTo, turret);
+                    if (ObjectManager.Player.Distance(turret) <= 350 && Game.Time - count > 15)
                     {
-                        var turret2 =
-                            ObjectManager.Get<Obj_AI_Turret>()
-                                .Where(x => x.Distance(ObjectManager.Player) < 5000 && x.IsAlly);
+                        Game.Say(stufftosay[saycounter]);
+                        saycounter++;
+                        ObjectManager.Player.Spellbook.CastSpell(SpellSlot.Recall);
 
-                        if (turret2.Any())
-                        {
-                            stopdoingshit = true;
-                            turret = turret2.First();
-                            foundturret = Game.Time;
-                        }
-                    }
-
-
-                    if (stopdoingshit && !recalling)
-                    {
-                        ObjectManager.Player.IssueOrder(GameObjectOrder.MoveTo, turret);
-                        if (ObjectManager.Player.Distance(turret) <= 350 && Game.Time - count > 15)
-                        {
-                            Game.Say(stufftosay[saycounter]);
-                            saycounter++;
-                            ObjectManager.Player.Spellbook.CastSpell(SpellSlot.Recall);
-
-                            recalling = true;
-                            count = Game.Time;
-                        }
+                        recalling = true;
+                        count = Game.Time;
                     }
                 }
+            }
 
-                //Game.PrintChat((Game.Time - count).ToString());
-                if ((Game.Time - count > 15 && Game.Time - count < 17)) //|| Utility.InShopRange())
+            //Game.PrintChat((Game.Time - count).ToString());
+            if ((Game.Time - count > 15 && Game.Time - count < 17)) //|| Utility.InShopRange())
+            {
+                stopdoingshit = false;
+                recalling = false;
+            }
+
+            if (!recalling && !stopdoingshit && W.IsReady())
+            {
+                var allies2 =
+                    ObjectManager.Get<Obj_AI_Hero>()
+                        .Where(
+                            x =>
+                                x.IsAlly && x.Health/x.MaxHealth*100 < menu.Item("allyhpw").GetValue<Slider>().Value &&
+                                !x.IsDead && x.Distance(ObjectManager.Player.Position) < 550);
+                var objAiHeroes = allies2 as Obj_AI_Hero[] ?? allies2.ToArray();
+                if (objAiHeroes.Any() &&
+                    ObjectManager.Player.Health/ObjectManager.Player.MaxHealth*100 >
+                    menu.Item("wabovehp").GetValue<Slider>().Value)
+                    W.Cast(objAiHeroes.First());
+            }
+
+            if (menu.Item("user").GetValue<bool>() && R.IsReady())
+            {
+                var allies =
+                    ObjectManager.Get<Obj_AI_Hero>()
+                        .Where(
+                            x =>
+                                x.IsAlly && x.Health/x.MaxHealth*100 < menu.Item("allyhpr").GetValue<Slider>().Value &&
+                                !x.IsDead);
+                if (allies.Any())
                 {
-                    stopdoingshit = false;
-                    recalling = false;
+                    if (R.IsReady())
+                        R.Cast();
                 }
+            }
 
-                if (!recalling && !stopdoingshit && W.IsReady())
+            if (!recalling && !stopdoingshit)
+            {
+                if (follow.Distance(ObjectManager.Player.Position) > 500)
+                    ObjectManager.Player.IssueOrder(GameObjectOrder.MoveTo, follow);
+                if (!follow.IsDead)
                 {
-                    var allies2 =
-                        ObjectManager.Get<Obj_AI_Hero>()
-                            .Where(
-                                x =>
-                                    x.IsAlly && x.Health / x.MaxHealth * 100 < menu.Item("allyhpw").GetValue<Slider>().Value &&
-                                    !x.IsDead && x.Distance(ObjectManager.Player.Position) < 550);
-                    var objAiHeroes = allies2 as Obj_AI_Hero[] ?? allies2.ToArray();
-                    if (objAiHeroes.Any() &&
-                        ObjectManager.Player.Health / ObjectManager.Player.MaxHealth * 100 >
+                    if (W.IsReady() && menu.Item("usew").GetValue<bool>() &&
+                        ObjectManager.Player.Health/ObjectManager.Player.MaxHealth*100 >
                         menu.Item("wabovehp").GetValue<Slider>().Value)
-                        W.Cast(objAiHeroes.First());
-                }
-
-                if (menu.Item("user").GetValue<bool>() && R.IsReady())
-                {
-                    var allies =
-                        ObjectManager.Get<Obj_AI_Hero>()
-                            .Where(
-                                x =>
-                                    x.IsAlly && x.Health / x.MaxHealth * 100 < menu.Item("allyhpr").GetValue<Slider>().Value &&
-                                    !x.IsDead);
-                    if (allies.Any())
                     {
-                        if (R.IsReady())
-                            R.Cast();
-                    }
-                }
-
-                if (!recalling && !stopdoingshit)
-                {
-                    if (follow.Distance(ObjectManager.Player.Position) > 500)
-                        ObjectManager.Player.IssueOrder(GameObjectOrder.MoveTo, follow);
-                    if (!follow.IsDead)
-                    {
-                        if (W.IsReady() && menu.Item("usew").GetValue<bool>() &&
-                            ObjectManager.Player.Health / ObjectManager.Player.MaxHealth * 100 >
+                        if (follow.Health/follow.MaxHealth*100 < menu.Item("allyhpw").GetValue<Slider>().Value &&
+                            follow.Distance(ObjectManager.Player.Position) < 550 &&
+                            ObjectManager.Player.Health/ObjectManager.Player.MaxHealth*100 >
                             menu.Item("wabovehp").GetValue<Slider>().Value)
                         {
-                            if (follow.Health / follow.MaxHealth * 100 < menu.Item("allyhpw").GetValue<Slider>().Value &&
-                                follow.Distance(ObjectManager.Player.Position) < 550 &&
-                                ObjectManager.Player.Health / ObjectManager.Player.MaxHealth * 100 >
-                                menu.Item("wabovehp").GetValue<Slider>().Value)
-                            {
-                                W.Cast(follow);
-                            }
-                            else if (follow.Health / follow.MaxHealth * 100 < menu.Item("allyhpw").GetValue<Slider>().Value &&
-                                     follow.Distance(ObjectManager.Player.Position) > 550)
-                            {
-                                ObjectManager.Player.IssueOrder(GameObjectOrder.MoveTo, follow.Position);
-                            }
+                            W.Cast(follow);
                         }
-
-                        if (ts.Target.Distance(ObjectManager.Player) < Q.Range && Q.IsReady())
+                        else if (follow.Health/follow.MaxHealth*100 < menu.Item("allyhpw").GetValue<Slider>().Value &&
+                                 follow.Distance(ObjectManager.Player.Position) > 550)
                         {
-                            Q.Cast(ts.Target);
+                            ObjectManager.Player.IssueOrder(GameObjectOrder.MoveTo, follow.Position);
                         }
-
-                        if (ts.Target.Distance(ObjectManager.Player) < E.Range && E.IsReady())
-                        {
-                            E.Cast(ts.Target);
-                        }
-
-                        Random x = new Random();
-                        var xPos = ((spawn.X - follow.Position.X) / Vector3.Distance(follow.Position, spawn)) * 300 +
-                                   follow.Position.X -
-                                   x.Next(25, 150);
-                        var yPos = ((spawn.Y - follow.Position.Y) / Vector3.Distance(follow.Position, spawn)) * 300 +
-                                   follow.Position.Y -
-                                   x.Next(25, 150);
-                        var vec = new Vector3(xPos, yPos, follow.Position.Z);
-                        if (
-                            NavMesh.GetCollisionFlags(
-                                vec.To2D().Extend(ObjectManager.Player.Position.To2D(), 150).To3D())
-                                .HasFlag(CollisionFlags.None))
-                            ObjectManager.Player.IssueOrder(GameObjectOrder.MoveTo, vec);
                     }
 
-                    else
+                    if (ts.Target.Distance(ObjectManager.Player) < Q.Range && Q.IsReady())
                     {
-                        Random y = new Random();
-                        var turret =
-                            ObjectManager.Get<Obj_AI_Turret>()
-                                .First(x => x.Distance(ObjectManager.Player) < 2000 && x.IsAlly);
-                        var xPos = ((spawn.X - turret.Position.X) / Vector3.Distance(turret.Position, spawn)) * 300 +
-                                   turret.Position.X -
-                                   y.Next(25, 150);
-                        var yPos = ((spawn.Y - turret.Position.Y) / Vector3.Distance(turret.Position, spawn)) * 300 +
-                                   turret.Position.Y -
-                                   y.Next(25, 150);
-
-                        var vec = new Vector3(xPos, yPos, follow.Position.Z);
-                        ObjectManager.Player.IssueOrder(GameObjectOrder.MoveTo, vec);
+                        Q.Cast(ts.Target);
                     }
+
+                    if (ts.Target.Distance(ObjectManager.Player) < E.Range && E.IsReady())
+                    {
+                        E.Cast(ts.Target);
+                    }
+
+                    Random x = new Random();
+                    var xPos = ((spawn.X - follow.Position.X)/Vector3.Distance(follow.Position, spawn))*300 +
+                               follow.Position.X -
+                               x.Next(25, 150);
+                    var yPos = ((spawn.Y - follow.Position.Y)/Vector3.Distance(follow.Position, spawn))*300 +
+                               follow.Position.Y -
+                               x.Next(25, 150);
+                    var vec = new Vector3(xPos, yPos, follow.Position.Z);
+                    if (
+                        NavMesh.GetCollisionFlags(
+                            vec.To2D().Extend(ObjectManager.Player.Position.To2D(), 150).To3D())
+                            .HasFlag(CollisionFlags.None))
+                        ObjectManager.Player.IssueOrder(GameObjectOrder.MoveTo, vec);
                 }
-            
+
+                else
+                {
+                    Random y = new Random();
+                    var turret =
+                        ObjectManager.Get<Obj_AI_Turret>()
+                            .First(x => x.Distance(ObjectManager.Player) < 2000 && x.IsAlly);
+                    var xPos = ((spawn.X - turret.Position.X)/Vector3.Distance(turret.Position, spawn))*300 +
+                               turret.Position.X -
+                               y.Next(25, 150);
+                    var yPos = ((spawn.Y - turret.Position.Y)/Vector3.Distance(turret.Position, spawn))*300 +
+                               turret.Position.Y -
+                               y.Next(25, 150);
+
+                    var vec = new Vector3(xPos, yPos, follow.Position.Z);
+                    ObjectManager.Player.IssueOrder(GameObjectOrder.MoveTo, vec);
+                }
+            }
+
         }
     }
 
