@@ -31,6 +31,10 @@ namespace TeachingLeagueSharp
         private static Obj_AI_Turret turret;
         private static string[] stufftosay;
         private static int saycounter = 0;
+        private static double timedead;
+        private static double gamestart;
+        private static List<Obj_AI_Hero> allies;
+        private static int i = 0;
 
 
         public static List<Vector3> _WardSpots;
@@ -62,6 +66,7 @@ namespace TeachingLeagueSharp
             if (ObjectManager.Player.ChampionName != "Soraka") return;
             InitializeSafeWardSpots();
             InitializeWardSpots();
+            allies = new List<Obj_AI_Hero>();
             BushRevealer c = new BushRevealer();
             Q = new Spell(SpellSlot.Q, 970);
             W = new Spell(SpellSlot.W, 550);
@@ -85,6 +90,7 @@ namespace TeachingLeagueSharp
             menu.AddSubMenu(new Menu("Follow:", "follower"));
             foreach (var ally in ObjectManager.Get<Obj_AI_Hero>().Where(x => x.IsAlly))
             {
+                allies.Add(ally);
                 if (ad.Contains(ally.ChampionName))
                     menu.SubMenu("follower").AddItem(new MenuItem(ally.ChampionName, ally.ChampionName).SetValue(true));
                 else
@@ -92,11 +98,11 @@ namespace TeachingLeagueSharp
             }
             var sequence = new[] { 1, 2, 3, 2, 2, 4, 2, 1, 2, 3, 4, 3, 3, 1, 1, 4, 1, 3 };
             var level = new AutoLevel(sequence);
-
+            gamestart = Game.Time;
             menu.AddToMainMenu();
             ids = new[] { 3096, 1004, 1004, 1033, 1001, 3028, 3174, 3009, 1028, 3067, 1028, 3211, 3065, 3069, 1028, 2049, 2045 };
 
-            follow = ObjectManager.Get<Obj_AI_Hero>().First(x => menu.Item(x.ChampionName).GetValue<bool>());
+            follow = ObjectManager.Get<Obj_AI_Hero>().First(x => menu.Item(x.ChampionName).GetValue<bool>()) ?? ObjectManager.Get<Obj_AI_Hero>().First(x=>ap.Contains(x.ChampionName));
             followpos = follow.Position;
             followtime = Game.Time;
             foreach (var item in ids)
@@ -109,12 +115,18 @@ namespace TeachingLeagueSharp
             Packet.C2S.BuyItem.Encoded(new Packet.C2S.BuyItem.Struct(2003)).Send();
             Packet.C2S.BuyItem.Encoded(new Packet.C2S.BuyItem.Struct(2003)).Send();
             Packet.C2S.BuyItem.Encoded(new Packet.C2S.BuyItem.Struct(2003)).Send();
+            //Game.OnGameNotifyEvent += Game_OnGameNotifyEvent;
             Game.OnGameProcessPacket += Game_OnGameProcessPacket;
             Game.OnGameUpdate += Game_OnGameUpdate;
 
             //follow = ObjectManager.Get<Obj_AI_Hero>().First(x => ad.Contains(x.ChampionName));
             //Obj_AI_Base.OnCreate += Obj_AI_Base_OnCreate;
         }
+
+        //static void Game_OnGameNotifyEvent(GameNotifyEventArgs args)
+        //{
+        //    args.
+        //}
 
         static void Game_OnGameProcessPacket(GamePacketEventArgs args)
         {
@@ -164,6 +176,19 @@ namespace TeachingLeagueSharp
             // }
             //follow = ObjectManager.Get<Obj_AI_Hero>().First(x => menu.Item(x.ChampionName).GetValue<bool>());
 
+            if (Game.Time - gamestart > 480)
+            {
+                follow = allies[i];
+                i++;
+                gamestart = Game.Time;
+            }
+
+            if (ObjectManager.Player.IsDead && Game.Time - timedead > 80)
+            {
+                Game.Say("oops");
+                timedead = Game.Time;
+            }
+
             foreach (var c in _WardSpots.Where(x => x.Distance(ObjectManager.Player.Position) < 600))
             {
                 InventorySlot wardSlot = Wards.GetWardSlot();
@@ -205,8 +230,6 @@ namespace TeachingLeagueSharp
 
                 }
             }
-
-            follow = ObjectManager.Get<Obj_AI_Hero>().First(x => menu.Item(x.ChampionName).GetValue<bool>());
 
             if (Game.Time - followtime > 40 && followpos.Distance(follow.Position) <= 30)
             {
