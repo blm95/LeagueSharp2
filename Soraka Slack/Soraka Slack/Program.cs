@@ -111,7 +111,7 @@ namespace TeachingLeagueSharp
             foreach (var item in ids)
             {
                 if (Items.HasItem(item))
-                    index++;
+                    index = item;
             }
             Packet.C2S.BuyItem.Encoded(new Packet.C2S.BuyItem.Struct(3301)).Send();
             Packet.C2S.BuyItem.Encoded(new Packet.C2S.BuyItem.Struct(3340)).Send();
@@ -215,6 +215,17 @@ namespace TeachingLeagueSharp
                 }
             }
 
+            foreach (var item in ids)
+            {
+                if (Items.HasItem(item))
+                {
+                    if (item > index)
+                    {
+                        index = item;
+                    }
+                }
+            }
+
             if (saycounter == 3)
                 saycounter = 0;
             //if (menu.Item("on").GetValue<KeyBind>().Active)
@@ -233,7 +244,7 @@ namespace TeachingLeagueSharp
                 if (!Items.HasItem(ids[index]))
                 {
                     Packet.C2S.BuyItem.Encoded(new Packet.C2S.BuyItem.Struct(ids[index])).Send();
-
+                    index++;
                 }
             }
 
