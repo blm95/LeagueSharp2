@@ -36,8 +36,17 @@ namespace TeachingLeagueSharp
             "Ashe", "Caitlyn", "Corki", "Draven", "Ezreal", "Graves", "KogMaw",
             "MissFortune", "Quinn", "Sivir", "Tristana", "Twitch", "Varus", "Vayne", "Jinx", "Lucian"
         };
-
+        private static readonly string[] ap =
+        {
+            "Ahri", "Akali", "Anivia", "Annie", "Brand", "Cassiopeia", "Diana",
+            "FiddleSticks", "Fizz", "Gragas", "Heimerdinger", "Karthus", "Kassadin", "Katarina", "Kayle", "Kennen",
+            "Leblanc", "Lissandra", "Lux", "Malzahar", "Mordekaiser", "Morgana", "Nidalee", "Orianna", "Ryze", "Sion",
+            "Swain", "Syndra", "Teemo", "TwistedFate", "Veigar", "Viktor", "Vladimir", "Xerath", "Ziggs", "Zyra",
+            "Velkoz"
+        };
+        private static Vector3 followpos;
         private static Obj_AI_Hero follow;
+        private static double followtime;
         static void Main(string[] args)
         {
             CustomEvents.Game.OnGameLoad += Game_OnGameLoad;
@@ -80,6 +89,9 @@ namespace TeachingLeagueSharp
             menu.AddToMainMenu();
             ids = new[] { 3096, 1004, 1004, 1033, 1001, 3028, 3174, 3009, 1028, 3067, 1028, 3211, 3065, 3069, 1028, 2049, 2045 };
 
+            follow = ObjectManager.Get<Obj_AI_Hero>().First(x => menu.Item(x.ChampionName).GetValue<bool>());
+            followpos = follow.Position;
+            followtime = Game.Time;
             foreach (var item in ids)
             {
                 if (Items.HasItem(item))
@@ -98,6 +110,7 @@ namespace TeachingLeagueSharp
 
         private static void Game_OnGameUpdate(EventArgs args)
         {
+           
             //if (Utility.InShopRange())
             //{
             //   stopdoingshit = false;
@@ -127,6 +140,11 @@ namespace TeachingLeagueSharp
             }
 
             follow = ObjectManager.Get<Obj_AI_Hero>().First(x => menu.Item(x.ChampionName).GetValue<bool>());
+
+            if (Game.Time - followtime > 40 && followpos.Distance(follow.Position) <= 30)
+            {
+                follow = ObjectManager.Get<Obj_AI_Hero>().First(x => x.IsAlly && ap.Contains(x.ChampionName));
+            }
 
             if (follow.IsDead)
             {
