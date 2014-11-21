@@ -30,6 +30,8 @@ namespace TeachingLeagueSharp
         private static double foundturret;
         private static Obj_AI_Turret turret;
         private static string[] stufftosay;
+        private static string[] deaths;
+        private static int deathcounter = 0;
         private static int saycounter = 0;
         private static double timedead;
         private static double gamestart;
@@ -74,6 +76,7 @@ namespace TeachingLeagueSharp
             R = new Spell(SpellSlot.R);
             ts = new TargetSelector(1025, TargetSelector.TargetingMode.AutoPriority);
             stufftosay = new[] { "brb", "need to b", "sec" };
+            deaths = new[] {"oops", "lol", "rip", "laggg"};
             spawn =
                 ObjectManager.Get<GameObject>()
                     .First(x => x.Type == GameObjectType.obj_SpawnPoint && x.Team == ObjectManager.Player.Team)
@@ -176,6 +179,8 @@ namespace TeachingLeagueSharp
             // }
             //follow = ObjectManager.Get<Obj_AI_Hero>().First(x => menu.Item(x.ChampionName).GetValue<bool>());
 
+            if (deathcounter == 4)
+                deathcounter = 0;
             if (Game.Time - gamestart > 480)
             {
                 follow = allies[i];
@@ -185,7 +190,8 @@ namespace TeachingLeagueSharp
 
             if (ObjectManager.Player.IsDead && Game.Time - timedead > 80)
             {
-                Game.Say("oops");
+                Game.Say(deaths[deathcounter]);
+                deathcounter++;
                 timedead = Game.Time;
             }
 
