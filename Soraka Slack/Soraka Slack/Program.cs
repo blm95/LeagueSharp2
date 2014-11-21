@@ -31,6 +31,11 @@ namespace TeachingLeagueSharp
         private static Obj_AI_Turret turret;
         private static string[] stufftosay;
         private static int saycounter = 0;
+        private static readonly string[] ad =
+        {
+            "Ashe", "Caitlyn", "Corki", "Draven", "Ezreal", "Graves", "KogMaw",
+            "MissFortune", "Quinn", "Sivir", "Tristana", "Twitch", "Varus", "Vayne", "Jinx", "Lucian"
+        };
 
         private static Obj_AI_Hero follow;
         static void Main(string[] args)
@@ -65,7 +70,10 @@ namespace TeachingLeagueSharp
             menu.AddSubMenu(new Menu("Follow:", "follower"));
             foreach (var ally in ObjectManager.Get<Obj_AI_Hero>().Where(x => x.IsAlly))
             {
-                menu.SubMenu("follower").AddItem(new MenuItem(ally.ChampionName, ally.ChampionName).SetValue(false));
+                if(ad.Contains(ally.ChampionName))
+                    menu.SubMenu("follower").AddItem(new MenuItem(ally.ChampionName, ally.ChampionName).SetValue(true));
+                else
+                    menu.SubMenu("follower").AddItem(new MenuItem(ally.ChampionName, ally.ChampionName).SetValue(false));
             }
             var sequence = new[] { 1, 2, 3, 2, 2, 4, 2, 1, 2, 3, 4, 3, 3, 1, 1, 4, 1, 3 };
             var level = new AutoLevel(sequence);
@@ -79,6 +87,7 @@ namespace TeachingLeagueSharp
                     index++;
             }
             Packet.C2S.BuyItem.Encoded(new Packet.C2S.BuyItem.Struct(3301)).Send();
+            Packet.C2S.BuyItem.Encoded(new Packet.C2S.BuyItem.Struct(3340)).Send();
             Packet.C2S.BuyItem.Encoded(new Packet.C2S.BuyItem.Struct(2003)).Send();
             Packet.C2S.BuyItem.Encoded(new Packet.C2S.BuyItem.Struct(2003)).Send();
             Packet.C2S.BuyItem.Encoded(new Packet.C2S.BuyItem.Struct(2003)).Send();
