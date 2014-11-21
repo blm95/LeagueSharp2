@@ -58,7 +58,7 @@ namespace TeachingLeagueSharp
                     .First(x => x.Type == GameObjectType.obj_SpawnPoint && x.Team == ObjectManager.Player.Team)
                     .Position;
             menu = new Menu("Soraka Slack", "slack", true);
-            menu.AddItem(new MenuItem("on", "Start Slacking!").SetValue(new KeyBind(32, KeyBindType.Toggle).Active));
+            menu.AddItem(new MenuItem("on", "Start Slacking!").SetValue(new KeyBind(32, KeyBindType.Toggle)));
             menu.AddItem(new MenuItem("user", "Use R?").SetValue(true));
             menu.AddItem(new MenuItem("usew", "Use W?").SetValue(true));
             menu.AddItem(new MenuItem("allyhpw", "Ally % HP for W").SetValue(new Slider(30, 0, 93)));
@@ -106,8 +106,8 @@ namespace TeachingLeagueSharp
             //follow = ObjectManager.Get<Obj_AI_Hero>().First(x => menu.Item(x.ChampionName).GetValue<bool>());
             if (saycounter == 2)
                 saycounter = 0;
-            if (menu.Item("on").GetValue<KeyBind>().Active)
-            {
+            //if (menu.Item("on").GetValue<KeyBind>().Active)
+            //{
                 // Game.PrintChat(index.ToString());
                 if (Items.HasItem(ids[index]))
                     index++;
@@ -268,7 +268,7 @@ namespace TeachingLeagueSharp
                         ObjectManager.Player.IssueOrder(GameObjectOrder.MoveTo, vec);
                     }
                 }
-            }
+            
         }
     }
 
