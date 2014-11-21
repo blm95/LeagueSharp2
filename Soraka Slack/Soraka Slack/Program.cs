@@ -242,19 +242,22 @@ namespace TeachingLeagueSharp
                         E.Cast(ts.Target);
                     }
 
-                    Random x = new Random();
-                    var xPos = ((spawn.X - follow.Position.X)/Vector3.Distance(follow.Position, spawn))*300 +
-                               follow.Position.X -
-                               x.Next(25, 150);
-                    var yPos = ((spawn.Y - follow.Position.Y)/Vector3.Distance(follow.Position, spawn))*300 +
-                               follow.Position.Y -
-                               x.Next(25, 150);
-                    var vec = new Vector3(xPos, yPos, follow.Position.Z);
-                    if (
-                        NavMesh.GetCollisionFlags(
-                            vec.To2D().Extend(ObjectManager.Player.Position.To2D(), 150).To3D())
-                            .HasFlag(CollisionFlags.None))
-                        ObjectManager.Player.IssueOrder(GameObjectOrder.MoveTo, vec);
+                    if (follow.Distance(ObjectManager.Player.Position) > 350)
+                    {
+                        Random x = new Random();
+                        var xPos = ((spawn.X - follow.Position.X)/Vector3.Distance(follow.Position, spawn))*300 +
+                                   follow.Position.X -
+                                   x.Next(25, 150);
+                        var yPos = ((spawn.Y - follow.Position.Y)/Vector3.Distance(follow.Position, spawn))*300 +
+                                   follow.Position.Y -
+                                   x.Next(25, 150);
+                        var vec = new Vector3(xPos, yPos, follow.Position.Z);
+                        if (
+                            NavMesh.GetCollisionFlags(
+                                vec.To2D().Extend(ObjectManager.Player.Position.To2D(), 150).To3D())
+                                .HasFlag(CollisionFlags.None))
+                            ObjectManager.Player.IssueOrder(GameObjectOrder.MoveTo, vec);
+                    }
                 }
 
                 else
