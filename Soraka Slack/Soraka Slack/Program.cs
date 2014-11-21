@@ -60,6 +60,8 @@ namespace TeachingLeagueSharp
         private static void Game_OnGameLoad(EventArgs args)
         {
             if (ObjectManager.Player.ChampionName != "Soraka") return;
+            InitializeSafeWardSpots();
+            InitializeWardSpots();
             BushRevealer c = new BushRevealer();
             Q = new Spell(SpellSlot.Q, 970);
             W = new Spell(SpellSlot.W, 550);
@@ -131,6 +133,16 @@ namespace TeachingLeagueSharp
                 {
                     wardSlot.UseItem(c);
                 } 
+            }
+
+            foreach (var c in _SafeWardSpots.Where(x => x.WardPosition.Distance(ObjectManager.Player.Position) < 600))//x.Distance(ObjectManager.Player.Position) < 600))
+            {
+                InventorySlot wardSlot = Wards.GetWardSlot();
+
+                if (wardSlot != null && wardSlot.Id != ItemId.Unknown)
+                {
+                    wardSlot.UseItem(c.WardPosition);
+                }
             }
 
             if (saycounter == 3)
