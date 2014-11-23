@@ -5,7 +5,6 @@ C:\Users\Administrator\Documents\Visual Studio 2013\Projects\Soraka Slack\Soraka
 C:\Users\Administrator\Documents\Visual Studio 2013\Projects\Soraka Slack\Soraka Slack\bin\Release\LeagueSharp.dll
 C:\Users\Administrator\Documents\Visual Studio 2013\Projects\Soraka Slack\Soraka Slack\bin\Release\SharpDX.dll
 C:\Users\Administrator\Documents\Visual Studio 2013\Projects\Soraka Slack\Soraka Slack\bin\Release\SharpDX.Direct3D9.dll
-C:\Users\Administrator\Documents\Visual Studio 2013\Projects\Soraka Slack\Soraka Slack\bin\Release\LeagueSharp.xml
 C:\Users\Administrator\Documents\Visual Studio 2013\Projects\Soraka Slack\Soraka Slack\obj\Debug\Soraka Slack.csprojResolveAssemblyReference.cache
 C:\Users\Administrator\Documents\Visual Studio 2013\Projects\Soraka Slack\Soraka Slack\obj\Debug\Soraka Slack.exe
 C:\Users\Administrator\Documents\Visual Studio 2013\Projects\Soraka Slack\Soraka Slack\obj\Debug\Soraka Slack.pdb

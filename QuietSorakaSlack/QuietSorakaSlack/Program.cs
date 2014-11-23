@@ -241,7 +241,7 @@ namespace TeachingLeagueSharp
             int counter = 0;
             foreach (var item in ids)
             {
-                if (Items.HasItem(item))
+                if (Items.HasItem(item) && counter > index)
                 {
                     index = counter;
                 }
