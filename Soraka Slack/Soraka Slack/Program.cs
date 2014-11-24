@@ -29,12 +29,14 @@ namespace TeachingLeagueSharp
         private static bool stopdoingshit = false;
         private static double foundturret;
         private static Obj_AI_Turret turret;
-        private static string[] stufftosay;
+         private static string[] stufftosay;
         private static string[] deaths;
         private static int deathcounter = 0;
-        private static int saycounter = 0;
-        private static double timedead;
+         private static int saycounter = 0;
+         private static double timedead;
         private static double gamestart;
+        private static ItemToShop nextItem;
+        private static List<ItemToShop> buyThings;
         private static List<Obj_AI_Hero> allies;
         private static int i = 0;
 
@@ -58,6 +60,7 @@ namespace TeachingLeagueSharp
         };
 
         private static Vector3 followpos;
+        public static bool canBuyItems = true;
         private static Obj_AI_Hero follow;
         private static double followtime;
 
@@ -105,13 +108,85 @@ namespace TeachingLeagueSharp
                     menu.SubMenu("follower").AddItem(new MenuItem(ally.ChampionName, ally.ChampionName).SetValue(false));
                 }
             }
+            //Game.PrintChat("hi");
+            buyThings = new List<ItemToShop>
+            {
+                new ItemToShop()
+                {
+                    goldReach = 500,
+                    itemsMustHave = new List<int>{3301},
+                    itemIds = new List<int>{3096}
+                },
+                new ItemToShop()
+                {
+                    goldReach = 360,
+                    itemsMustHave = new List<int>{3096},
+                    itemIds = new List<int>{1004,1004}
+                },
+                new ItemToShop()
+                {
+                    goldReach = 500,
+                    itemsMustHave = new List<int>{1004,1004},
+                    itemIds = new List<int>{1033}
+                },
+                new ItemToShop()
+                {
+                    goldReach = 180,
+                    itemsMustHave = new List<int>{1033,1004,1004},
+                    itemIds = new List<int>{3028}
+                },
+                new ItemToShop()
+                {
+                    goldReach = 325,
+                    itemsMustHave = new List<int>{3028},
+                    itemIds = new List<int>{1001}
+                },
+                new ItemToShop()
+                {
+                    goldReach = 675,
+                    itemsMustHave = new List<int>{1001},
+                    itemIds = new List<int>{3009}
+                },
+                new ItemToShop()
+                {
+                    goldReach = 400,
+                    itemsMustHave = new List<int>{3009},
+                    itemIds = new List<int>{1028}
+                },
+                new ItemToShop()
+                {
+                    goldReach = 450,
+                    itemsMustHave = new List<int>{1028},
+                    itemIds = new List<int>{3067}
+                },
+                new ItemToShop()
+                {
+                    goldReach = 400,
+                    itemsMustHave = new List<int>{3067},
+                    itemIds = new List<int>{1028}
+                },
+                new ItemToShop()
+                {
+                    goldReach = 800,
+                    itemsMustHave = new List<int>{1028},
+                    itemIds = new List<int>{3211}
+                },
+                new ItemToShop()
+                {
+                    goldReach = 700,
+                    itemsMustHave = new List<int>{3211},
+                    itemIds = new List<int>{3065}
+                }
+            };
+            //Game.PrintChat("hi2");
             // Game.PrintChat("in3");
             var sequence = new[] { 1, 2, 3, 2, 2, 4, 2, 1, 2, 3, 4, 3, 3, 1, 1, 4, 1, 3 };
             var level = new AutoLevel(sequence);
             gamestart = Game.Time;
             menu.AddToMainMenu();
+            nextItem = buyThings[0];
             //Game.PrintChat("in4");
-            ids = new[] { 3096, 1004, 1004, 1033, 1001, 3028, 3174, 3009, 1028, 3067, 1028, 3211, 3065, 3069, 1028, 2049, 2045 };
+            //ids = new[] { 3096, 1004, 1004, 1033, 1001, 3028, 3174, 3009, 1028, 3067, 1028, 3211, 3065, 3069, 1028, 2049, 2045 };
 
             //follow = ObjectManager.Get<Obj_AI_Hero>().First(x => x.IsAlly && menu.Item(x.ChampionName).GetValue<bool>()); //??
             //   ObjectManager.Get<Obj_AI_Hero>().First(x => !x.IsMe && x.IsAlly && ap.Contains(x.ChampionName)) ??
@@ -121,20 +196,25 @@ namespace TeachingLeagueSharp
             followtime = Game.Time;
             //Game.PrintChat("in5");
             int counter = 0;
-            foreach (var item in ids)
-            {
-                if (Items.HasItem(item))
-                {
-                    index = counter;
-                }
-                counter++;
-            }
+            //foreach (var item in ids)
+            //{
+            //    if (Items.HasItem(item) && counter > index)
+            //    {
+            //        index = counter;
+            //        Game.PrintChat(index.ToString());
+            //    }
+            //    counter++;
+            //}
             // Game.PrintChat("in6");
-            Packet.C2S.BuyItem.Encoded(new Packet.C2S.BuyItem.Struct(3301)).Send();
-            Packet.C2S.BuyItem.Encoded(new Packet.C2S.BuyItem.Struct(3340)).Send();
-            Packet.C2S.BuyItem.Encoded(new Packet.C2S.BuyItem.Struct(2003)).Send();
-            Packet.C2S.BuyItem.Encoded(new Packet.C2S.BuyItem.Struct(2003)).Send();
-            Packet.C2S.BuyItem.Encoded(new Packet.C2S.BuyItem.Struct(2003)).Send();
+
+            if (Game.Time < 50)
+            {
+                Packet.C2S.BuyItem.Encoded(new Packet.C2S.BuyItem.Struct(3301)).Send();
+                Packet.C2S.BuyItem.Encoded(new Packet.C2S.BuyItem.Struct(3340)).Send();
+                Packet.C2S.BuyItem.Encoded(new Packet.C2S.BuyItem.Struct(2003)).Send();
+                Packet.C2S.BuyItem.Encoded(new Packet.C2S.BuyItem.Struct(2003)).Send();
+                Packet.C2S.BuyItem.Encoded(new Packet.C2S.BuyItem.Struct(2003)).Send();
+            }
             //Game.OnGameNotifyEvent += Game_OnGameNotifyEvent;
             Game.OnGameProcessPacket += Game_OnGameProcessPacket;
             Game.OnGameUpdate += Game_OnGameUpdate;
@@ -158,7 +238,7 @@ namespace TeachingLeagueSharp
             {
                 var turret2 =
                     ObjectManager.Get<Obj_AI_Turret>()
-                        .Where(x => x.Distance(ObjectManager.Player) < 8000 && x.IsAlly);
+                        .Where(x => x.Distance(ObjectManager.Player) < 3500 && x.IsAlly);
 
                 if (turret2.Any())
                 {
@@ -180,6 +260,54 @@ namespace TeachingLeagueSharp
             count = Game.Time;
         }
 
+        internal class ItemToShop
+        {
+            public int goldReach;
+            public List<int> itemIds;
+            public List<int> itemsMustHave;
+        }
+
+        private static bool checkItemcount(ItemToShop its)
+        {
+            bool[] usedItems = new bool[7];
+            int itemsMatch = 0;
+            foreach (int t in its.itemsMustHave)
+            {
+                //Game.PrintChat(t.ToString());
+                for (int i = 0; i < ObjectManager.Player.InventoryItems.Count(); i++)
+                {
+                    if (usedItems[i])
+                        continue;
+                    if (t != (decimal)ObjectManager.Player.InventoryItems[i].Id) continue;
+                    usedItems[i] = true;
+                    //Game.PrintChat("iasdgfasd");
+                    itemsMatch++;
+                    break;
+                }
+            }
+            return itemsMatch == its.itemsMustHave.Count;
+        }
+
+        public static void checkItemInventory()
+        {
+
+            if (!canBuyItems)
+                return;
+            for (int i = buyThings.Count - 1; i >= 0; i--)
+            {
+                //Game.PrintChat(i.ToString());
+                if (!checkItemcount(buyThings[i])) continue;
+                nextItem = buyThings[i];
+                // Game.PrintChat("in");
+                if (i == buyThings.Count - 1)
+                {
+                    canBuyItems = false;
+                }
+
+                return;
+            }
+        }
+
         private static void Game_OnGameUpdate(EventArgs args)
         {
             //if (Utility.InShopRange())
@@ -187,15 +315,16 @@ namespace TeachingLeagueSharp
             //   stopdoingshit = false;
             //   recalling = false;
             // }
+            //Game.PrintChat("in1");
             follow =
                 ObjectManager.Get<Obj_AI_Hero>()
                     .First(x => !x.IsMe && x.IsAlly && menu.Item(x.ChampionName).GetValue<bool>()) ??
                 ObjectManager.Get<Obj_AI_Hero>().First(x => !x.IsMe && x.IsAlly && ap.Contains(x.ChampionName)) ??
                 ObjectManager.Get<Obj_AI_Hero>().First(x => x.IsAlly && !x.IsMe);
             followpos = follow.Position;
-            Game.PrintChat(follow.ChampionName);
-            if (deathcounter == 4)
-                deathcounter = 0;
+            //Game.PrintChat(follow.ChampionName);
+             if (deathcounter == 4)
+                  deathcounter = 0;
 
 
 
@@ -209,7 +338,7 @@ namespace TeachingLeagueSharp
             }
 
 
-
+            // Game.PrintChat("insadfsadfd");
 
             if (ObjectManager.Player.IsDead && Game.Time - timedead > 80)
             {
@@ -237,18 +366,66 @@ namespace TeachingLeagueSharp
             //        wardSlot.UseItem(c.WardPosition);
             //    }
             //}
-            int counter = 0;
-            foreach (var item in ids)
-            {
-                if (Items.HasItem(item) && counter > index)
-                {
-                    index = counter;
-                }
-                counter++;
-            }
 
-            //if (saycounter == 3)
-            //    saycounter = 0;
+            //foreach (var item in ids)
+            //{
+            //    if (Items.HasItem(ids[counter]) && counter < index + 1)
+            //    {
+            //        index = counter;
+            //    }
+            //    counter++;
+            //}
+
+            //if (Utility.InShopRange())
+            //{
+            //    Game.PrintChat(index.ToString());
+            //    Game.PrintChat(ids[index].ToString());
+
+            //    foreach (var item in ids)
+            //    {
+
+            //            if (!Items.HasItem(ids[index]))
+            //            {
+            //                Game.PrintChat(ids[index].ToString());
+            //                Packet.C2S.BuyItem.Encoded(new Packet.C2S.BuyItem.Struct(ids[index])).Send();
+            //                index++;
+            //                return;
+            //            }
+
+
+            //    }
+            //}
+
+
+            //foreach (var item in ids)
+            //{
+            //    if (Items.HasItem(ids[counter]) && counter < index + 1)
+            //    {
+            //        index = counter;
+            //    }
+            //    counter++;
+            //}
+
+            //Game.PrintChat("lel");
+            if (Utility.InShopRange())
+            {
+                // Game.PrintChat("in range");
+                foreach (var item in nextItem.itemIds)
+                {
+                    //Game.PrintChat(item.ToString());
+                    if (!Items.HasItem(item))
+                    {
+                        Packet.C2S.BuyItem.Encoded(new Packet.C2S.BuyItem.Struct(item, ObjectManager.Player.NetworkId))
+                            .Send();
+
+                    }
+                }
+
+                checkItemInventory();
+            }
+            //Game.PrintChat("hue");
+            if (saycounter == 3)
+                saycounter = 0;
             //if (menu.Item("on").GetValue<KeyBind>().Active)
             //{
             // Game.PrintChat(index.ToString());
@@ -260,16 +437,16 @@ namespace TeachingLeagueSharp
             // Game.PrintChat(follow.ChampionName);
             if (Game.Time - foundturret > 25)
                 stopdoingshit = false;
-            if (Utility.InShopRange())
-            {
-                //Game.PrintChat(index.ToString());
-                if (!Items.HasItem(ids[index]))
-                {
-                    Game.PrintChat(ids[index].ToString());
-                    Packet.C2S.BuyItem.Encoded(new Packet.C2S.BuyItem.Struct(ids[index])).Send();
-                    index++;
-                }
-            }
+            //if (Utility.InShopRange())
+            //{
+            //    Game.PrintChat(index.ToString());
+            //    if (!Items.HasItem(ids[index]))
+            //    {
+            //        Game.PrintChat(ids[index].ToString());
+            //        Packet.C2S.BuyItem.Encoded(new Packet.C2S.BuyItem.Struct(ids[index])).Send();
+            //        index++;
+            //    }
+            //}
 
             if (Game.Time - followtime > 40 && followpos.Distance(follow.Position) <= 100)
             {
@@ -295,7 +472,7 @@ namespace TeachingLeagueSharp
                 {
                     var turret2 =
                         ObjectManager.Get<Obj_AI_Turret>()
-                            .Where(x => x.Distance(ObjectManager.Player) < 5000 && x.IsAlly);
+                            .Where(x => x.Distance(ObjectManager.Player) < 3500 && x.IsAlly);
 
                     if (turret2.Any())
                     {
@@ -382,33 +559,31 @@ namespace TeachingLeagueSharp
                         }
                     }
 
-                    if (ts.Target.Distance(ObjectManager.Player) < Q.Range && Q.IsReady())
+                    if (ts.Target.Distance(ObjectManager.Player) < Q.Range && Q.IsReady() && !Utility.UnderTurret(ObjectManager.Player, true))
                     {
                         Q.Cast(ts.Target);
                     }
 
-                    if (ts.Target.Distance(ObjectManager.Player) < E.Range && E.IsReady())
+                    if (ts.Target.Distance(ObjectManager.Player) < E.Range && E.IsReady() && !Utility.UnderTurret(ObjectManager.Player, true))
                     {
                         E.Cast(ts.Target);
                     }
 
-                    if (follow.Distance(ObjectManager.Player.Position) > 350)
-                    {
-                        Random x = new Random();
-                        var xPos = ((spawn.X - follow.Position.X) / Vector3.Distance(follow.Position, spawn)) * 300 +
-                                   follow.Position.X -
-                                   x.Next(25, 150);
-                        var yPos = ((spawn.Y - follow.Position.Y) / Vector3.Distance(follow.Position, spawn)) * 300 +
-                                   follow.Position.Y -
-                                   x.Next(25, 150);
-                        var vec = new Vector3(xPos, yPos, follow.Position.Z);
-                        if (
-                            NavMesh.GetCollisionFlags(
-                                vec.To2D().Extend(ObjectManager.Player.Position.To2D(), 150).To3D())
-                                .HasFlag(CollisionFlags.None))
-                            ObjectManager.Player.IssueOrder(GameObjectOrder.MoveTo, vec);
-                        //Game.PrintChat("following");
-                    }
+                    if (!(follow.Distance(ObjectManager.Player.Position) > 350)) return;
+                    Random x = new Random();
+                    var xPos = ((spawn.X - follow.Position.X) / Vector3.Distance(follow.Position, spawn)) * 300 +
+                               follow.Position.X -
+                               x.Next(25, 150);
+                    var yPos = ((spawn.Y - follow.Position.Y) / Vector3.Distance(follow.Position, spawn)) * 300 +
+                               follow.Position.Y -
+                               x.Next(25, 150);
+                    var vec = new Vector3(xPos, yPos, follow.Position.Z);
+                    if (
+                        NavMesh.GetCollisionFlags(
+                            vec.To2D().Extend(ObjectManager.Player.Position.To2D(), 150).To3D())
+                            .HasFlag(CollisionFlags.None))
+                        ObjectManager.Player.IssueOrder(GameObjectOrder.MoveTo, vec);
+                    //Game.PrintChat("following");
                 }
 
                 else
@@ -416,7 +591,7 @@ namespace TeachingLeagueSharp
                     Random y = new Random();
                     var turret =
                         ObjectManager.Get<Obj_AI_Turret>()
-                            .First(x => x.Distance(ObjectManager.Player) < 2000 && x.IsAlly);
+                            .First(x => x.Distance(ObjectManager.Player) < 3500 && x.IsAlly);
                     var xPos = ((spawn.X - turret.Position.X) / Vector3.Distance(turret.Position, spawn)) * 300 +
                                turret.Position.X -
                                y.Next(25, 150);
