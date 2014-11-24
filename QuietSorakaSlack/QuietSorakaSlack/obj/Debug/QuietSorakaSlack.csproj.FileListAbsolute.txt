@@ -8,3 +8,4 @@ C:\Users\Administrator\Documents\Visual Studio 2013\Projects\QuietSorakaSlack\Qu
 C:\Users\Administrator\Documents\Visual Studio 2013\Projects\QuietSorakaSlack\QuietSorakaSlack\bin\Release\LeagueSharp.xml
 C:\Users\Administrator\Documents\Visual Studio 2013\Projects\QuietSorakaSlack\QuietSorakaSlack\obj\Debug\QuietSorakaSlack.exe
 C:\Users\Administrator\Documents\Visual Studio 2013\Projects\QuietSorakaSlack\QuietSorakaSlack\obj\Debug\QuietSorakaSlack.pdb
+C:\Users\Administrator\Documents\Visual Studio 2013\Projects\QuietSorakaSlack\QuietSorakaSlack\obj\Debug\QuietSorakaSlack.csprojResolveAssemblyReference.cache

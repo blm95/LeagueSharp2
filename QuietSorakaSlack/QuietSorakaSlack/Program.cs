@@ -176,6 +176,12 @@ namespace TeachingLeagueSharp
                     goldReach = 700,
                     itemsMustHave = new List<int>{3211},
                     itemIds = new List<int>{3065}
+                },
+                new ItemToShop()
+                {
+                    goldReach = 2900,
+                    itemsMustHave = new List<int>{},
+                    itemIds = new List<int>{3116}
                 }
             };
             //Game.PrintChat("hi2");
