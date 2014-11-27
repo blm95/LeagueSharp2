@@ -207,7 +207,7 @@ namespace TeachingLeagueSharp
             //   ObjectManager.Get<Obj_AI_Hero>().First(x => !x.IsMe && x.IsAlly && ap.Contains(x.ChampionName)) ??
             //    ObjectManager.Get<Obj_AI_Hero>().First(x => x.IsAlly && !x.IsMe);
             //if (follow != null)
-            followpos = follow.Position;
+            //followpos = follow.Position;
             followtime = Game.Time;
             //Game.PrintChat("in5");
             //int counter = 0;
