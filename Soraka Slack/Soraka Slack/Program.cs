@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.ExceptionServices;
@@ -19,19 +19,19 @@ namespace TeachingLeagueSharp
         private static Spell E;
         private static Spell R;
         private static TargetSelector ts;
-        private static GameObject ward;
+        //private static GameObject ward;
         private static Vector3 spawn;
         private static bool recalling = false;
         private static Menu menu;
-        private static int[] ids;
-        private static int index = 0;
+        //private static int[] ids;
+        //private static int index = 0;
         private static double count;
         private static bool stopdoingshit = false;
         private static double foundturret;
         private static Obj_AI_Turret turret;
          private static string[] stufftosay;
-        private static string[] deaths;
-        private static int deathcounter = 0;
+         private static string[] deaths;
+         private static int deathcounter = 0;
          private static int saycounter = 0;
          private static double timedead;
         private static double gamestart;
@@ -39,6 +39,7 @@ namespace TeachingLeagueSharp
         private static List<ItemToShop> buyThings;
         private static List<Obj_AI_Hero> allies;
         private static int i = 0;
+        private static bool stopfollowingshittarget = false;
 
 
         //public static List<Vector3> _WardSpots;
@@ -57,6 +58,14 @@ namespace TeachingLeagueSharp
             "Leblanc", "Lissandra", "Lux", "Malzahar", "Mordekaiser", "Morgana", "Nidalee", "Orianna", "Ryze", "Sion",
             "Swain", "Syndra", "Teemo", "TwistedFate", "Veigar", "Viktor", "Vladimir", "Xerath", "Ziggs", "Zyra",
             "Velkoz"
+        };
+
+        private static readonly string[] bruiser =
+        {
+            "Darius", "Elise", "Evelynn", "Fiora", "Gangplank", "Gnar", "Jayce",
+            "Pantheon", "Irelia", "JarvanIV", "Jax", "Khazix", "LeeSin", "Nocturne", "Olaf", "Poppy", "Renekton",
+            "Rengar", "Riven", "Shyvana", "Trundle", "Tryndamere", "Udyr", "Vi", "MonkeyKing", "XinZhao", "Aatrox",
+            "Rumble", "Shaco", "MasterYi"
         };
 
         private static Vector3 followpos;
@@ -108,7 +117,7 @@ namespace TeachingLeagueSharp
                     menu.SubMenu("follower").AddItem(new MenuItem(ally.ChampionName, ally.ChampionName).SetValue(false));
                 }
             }
-            //Game.PrintChat("hi");
+            // Game.PrintChat("hi");
             buyThings = new List<ItemToShop>
             {
                 new ItemToShop()
@@ -180,7 +189,7 @@ namespace TeachingLeagueSharp
                 new ItemToShop()
                 {
                     goldReach = 2900,
-                    itemsMustHave = new List<int>{},
+                    itemsMustHave = new List<int>{3065},
                     itemIds = new List<int>{3116}
                 }
             };
@@ -201,7 +210,7 @@ namespace TeachingLeagueSharp
             //followpos = follow.Position;
             followtime = Game.Time;
             //Game.PrintChat("in5");
-            int counter = 0;
+            //int counter = 0;
             //foreach (var item in ids)
             //{
             //    if (Items.HasItem(item) && counter > index)
@@ -213,7 +222,7 @@ namespace TeachingLeagueSharp
             //}
             // Game.PrintChat("in6");
 
-            if (Game.Time < 50)
+            if (Game.Time < 300)
             {
                 Packet.C2S.BuyItem.Encoded(new Packet.C2S.BuyItem.Struct(3301)).Send();
                 Packet.C2S.BuyItem.Encoded(new Packet.C2S.BuyItem.Struct(3340)).Send();
@@ -322,12 +331,16 @@ namespace TeachingLeagueSharp
             //   recalling = false;
             // }
             //Game.PrintChat("in1");
-            follow =
-                ObjectManager.Get<Obj_AI_Hero>()
-                    .First(x => !x.IsMe && x.IsAlly && menu.Item(x.ChampionName).GetValue<bool>()) ??
-                ObjectManager.Get<Obj_AI_Hero>().First(x => !x.IsMe && x.IsAlly && ap.Contains(x.ChampionName)) ??
-                ObjectManager.Get<Obj_AI_Hero>().First(x => x.IsAlly && !x.IsMe);
-            followpos = follow.Position;
+            if (!stopfollowingshittarget)
+            {
+                follow =
+                    ObjectManager.Get<Obj_AI_Hero>()
+                        .First(x => !x.IsMe && x.IsAlly && menu.Item(x.ChampionName).GetValue<bool>()) ??
+                    ObjectManager.Get<Obj_AI_Hero>().First(x => !x.IsMe && x.IsAlly && ap.Contains(x.ChampionName)) ??
+                    ObjectManager.Get<Obj_AI_Hero>().First(x => !x.IsMe && x.IsAlly && bruiser.Contains(x.ChampionName)) ??
+                    ObjectManager.Get<Obj_AI_Hero>().First(x => x.IsAlly && !x.IsMe);
+                followpos = follow.Position;
+            }
             //Game.PrintChat(follow.ChampionName);
              if (deathcounter == 4)
                   deathcounter = 0;
@@ -348,9 +361,9 @@ namespace TeachingLeagueSharp
 
             if (ObjectManager.Player.IsDead && Game.Time - timedead > 80)
             {
-                Game.Say(deaths[deathcounter]);
-                deathcounter++;
-                timedead = Game.Time;
+                 Game.Say(deaths[deathcounter]);
+                 deathcounter++;
+                 timedead = Game.Time;
             }
 
             //foreach (var c in _WardSpots.Where(x => x.Distance(ObjectManager.Player.Position) < 600))
@@ -418,7 +431,7 @@ namespace TeachingLeagueSharp
                 // Game.PrintChat("in range");
                 foreach (var item in nextItem.itemIds)
                 {
-                    //Game.PrintChat(item.ToString());
+                    // Game.PrintChat(item.ToString());
                     if (!Items.HasItem(item))
                     {
                         Packet.C2S.BuyItem.Encoded(new Packet.C2S.BuyItem.Struct(item, ObjectManager.Player.NetworkId))
@@ -430,8 +443,8 @@ namespace TeachingLeagueSharp
                 checkItemInventory();
             }
             //Game.PrintChat("hue");
-            if (saycounter == 3)
-                saycounter = 0;
+            //if (saycounter == 3)
+            //    saycounter = 0;
             //if (menu.Item("on").GetValue<KeyBind>().Active)
             //{
             // Game.PrintChat(index.ToString());
@@ -456,9 +469,10 @@ namespace TeachingLeagueSharp
 
             if (Game.Time - followtime > 40 && followpos.Distance(follow.Position) <= 100)
             {
-                follow = ObjectManager.Get<Obj_AI_Hero>().First(x => !x.IsMe && x.IsAlly && ap.Contains(x.ChampionName));
+                follow = ObjectManager.Get<Obj_AI_Hero>().First(x => !x.IsMe && x.IsAlly && ap.Contains(x.ChampionName)) ?? ObjectManager.Get<Obj_AI_Hero>().First(x => !x.IsMe && x.IsAlly && bruiser.Contains(x.ChampionName));
                 followpos = follow.Position;
                 followtime = Game.Time;
+                stopfollowingshittarget = true;
             }
 
             if (follow.IsDead)
