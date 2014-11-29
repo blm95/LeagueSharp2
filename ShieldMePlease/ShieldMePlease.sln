@@ -1,9 +1,9 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2013
-VisualStudioVersion = 12.0.30501.0
+VisualStudioVersion = 12.0.30723.0
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ShieldMePlease", "ShieldMePlease\ShieldMePlease.csproj", "{367E0F31-91F3-4C27-A655-C1458FFE2F52}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ShieldMePlease", "ShieldMePlease\ShieldMePlease.csproj", "{5688F7ED-89B7-4F2A-ADFD-25C1C4E927F1}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -11,10 +11,10 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{367E0F31-91F3-4C27-A655-C1458FFE2F52}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{367E0F31-91F3-4C27-A655-C1458FFE2F52}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{367E0F31-91F3-4C27-A655-C1458FFE2F52}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{367E0F31-91F3-4C27-A655-C1458FFE2F52}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5688F7ED-89B7-4F2A-ADFD-25C1C4E927F1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5688F7ED-89B7-4F2A-ADFD-25C1C4E927F1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5688F7ED-89B7-4F2A-ADFD-25C1C4E927F1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5688F7ED-89B7-4F2A-ADFD-25C1C4E927F1}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
