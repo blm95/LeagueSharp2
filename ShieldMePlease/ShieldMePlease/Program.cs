@@ -1,15 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-//using System.Linq;
-//using System.Text;
-//using System.Threading.Tasks;
 using System.Linq;
 using System.Linq.Expressions;
 using LeagueSharp;
-//using LeagueSharp.Common;
-//using dmgLib;
-//using SharpDX.Direct3D9;
-using dmgLib2;
 using LeagueSharp.Common;
 using SharpDX;
 
@@ -39,6 +32,7 @@ namespace SpellNamesandSlots
         private static Spell Item4;
         private static Spell Item5;
         private static Spell Item6;
+        public static string[] spells;
         //private static readonly List<Enemy> EnemyList = new List<Enemy>();
 
         //public class spellData
@@ -77,6 +71,7 @@ namespace SpellNamesandSlots
         {
             try
             {
+                
                 Q = new Spell(SpellSlot.Q);
                 W = new Spell(SpellSlot.W);
                 E = new Spell(SpellSlot.E);
@@ -859,23 +854,32 @@ namespace SpellNamesandSlots
                 int d = 0;
                 spellList = new string[spellData.Keys.Count];
                 onlyuse5 = new string[spellData.Keys.Count];
+                spells = new string[spellData.Keys.Count];
                 buffNames = new[]
                 {
                     "buffname1", "buffname2", "buffname3"
                 };
-                foreach (var c in spellData.Keys)
+                foreach (var c in spellData.Values)
                 {
-                    spellList[d] = c;
+                    Console.WriteLine(c.ToString());
+                    spellList[d] = c.ToString();
                     //onlyuse5[d] = c;
                     d++;
                     //menu.SubMenu("always").AddItem(new MenuItem(c.Key, c.Key)).SetValue(false);
                 }
+                int q = 0;
+                foreach (var k in spellData.Keys)
+                {
+                    spells[q] = k;
+                    q++;
+                }
 
                 for (int i = 0; i < spellList.Length; i++)
                 {
-                    allysupp.SubMenu("onlyallies").AddItem(new MenuItem(spellList[i], spellList[i]).SetValue(false));
-                    onlyshield.AddItem(new MenuItem(spellList[i], spellList[i]).SetValue(false));
-                    menu.SubMenu("always").AddItem(new MenuItem(spellList[i], spellList[i])).SetValue(false);
+                    Console.WriteLine(spellList[i].ToString());
+                    allysupp.SubMenu("onlyallies").AddItem(new MenuItem(spells[i] + spellList[i].ToString(), spells[i] + spellList[i].ToString()).SetValue(false));
+                    onlyshield.AddItem(new MenuItem(spells[i] + spellList[i].ToString(), spells[i] + spellList[i].ToString()).SetValue(false));
+                    menu.SubMenu("always").AddItem(new MenuItem(spells[i] + spellList[i].ToString(), spells[i] + spellList[i].ToString())).SetValue(false);
                 }
                 menu.AddSubMenu(onlyshield);
                 menu.AddSubMenu(allysupp);
@@ -952,7 +956,7 @@ namespace SpellNamesandSlots
                     Items.UseItem(3157);
                 }
             }
-            if (spellList.Any(str => str.Contains(args.SData.Name)) && menu.Item(args.SData.Name).GetValue<bool>())
+            if (spells.Any(str => str.Contains(args.SData.Name)) && menu.Item(args.SData.Name + spellData[args.SData.Name]).GetValue<bool>())
             {
                 if ((Vector3.Distance(ObjectManager.Player.Position, args.End) <= 200 &&
                      menu.Item("skillshots").GetValue<bool>()) ||
@@ -1051,16 +1055,16 @@ namespace SpellNamesandSlots
                           menu.Item("php").GetValue<Slider>().Value)) || !menu.Item("checkhp").GetValue<bool>())
                     {
                         if ((onlyuse5.Any(str => str.Contains(args.SData.Name)) &&
-                             menu.Item(args.SData.Name).GetValue<bool>() && menu.Item("onlyuse").GetValue<bool>()) ||
+                             menu.Item(args.SData.Name + spellData[args.SData.Name]).GetValue<bool>() && menu.Item("onlyuse").GetValue<bool>()) ||
                             !menu.Item("onlyuse").GetValue<bool>())
                         {
                             //Game.PrintChat("spell in range");
                             var percenthp = ((ObjectManager.Player.Health -
-                                              dmgLib2.Class1.calcDmg(y, spellData[args.SData.Name], ObjectManager.Player)) /
+                                              Damage.GetSpellDamage(y,ObjectManager.Player,spellData[args.SData.Name])) / //dmgLib2.Class1.calcDmg(y, spellData[args.SData.Name], ObjectManager.Player)) /
                                              ObjectManager.Player.MaxHealth) * 100;
                             if (percenthp >= menu.Item("percent").GetValue<Slider>().Value ||
                                 (menu.Item("killable").GetValue<bool>() &&
-                                 dmgLib2.Class1.calcDmg(y, spellData[args.SData.Name], ObjectManager.Player) >
+                                 Damage.GetSpellDamage(y,ObjectManager.Player,spellData[args.SData.Name]) >
                                  ObjectManager.Player.Health))
                             {
                                 //Game.PrintChat("using key");
@@ -1160,8 +1164,8 @@ namespace SpellNamesandSlots
                     {
                         if (menu.Item("shield" + c.ChampionName).GetValue<bool>())
                         {
-                            if ((spellList.Any(str => str.Contains(args.SData.Name)) &&
-                                 menu.Item(args.SData.Name).GetValue<bool>() && menu.Item("aonlyuse").GetValue<bool>()) ||
+                            if ((spells.Any(str => str.Contains(args.SData.Name)) &&
+                                 menu.Item(args.SData.Name + spellData[args.SData.Name]).GetValue<bool>() && menu.Item("aonlyuse").GetValue<bool>()) ||
                                 !menu.Item("aonlyuse").GetValue<bool>())
                             {
                                 if (menu.Item("acheckhp").GetValue<bool>())

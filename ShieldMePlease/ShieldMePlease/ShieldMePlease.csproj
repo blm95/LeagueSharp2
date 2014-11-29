@@ -4,7 +4,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Release</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{367E0F31-91F3-4C27-A655-C1458FFE2F52}</ProjectGuid>
+    <ProjectGuid>{5688F7ED-89B7-4F2A-ADFD-25C1C4E927F1}</ProjectGuid>
     <OutputType>Exe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>ShieldMePlease</RootNamespace>
@@ -35,20 +35,14 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="clipper_library">
-      <HintPath>C:\Users\Brennan\Downloads\LeagueSharp5\\System\clipper_library.dll</HintPath>
-    </Reference>
-    <Reference Include="dmgLib2">
-      <HintPath>C:\Users\Brennan\Downloads\LeagueSharp5\\System\dmgLib2.dll</HintPath>
-    </Reference>
     <Reference Include="LeagueSharp">
-      <HintPath>C:\Users\Brennan\Downloads\LeagueSharp5\\System\LeagueSharp.dll</HintPath>
+      <HintPath>C:\Users\blm951\Downloads\LeagueSharp\\System\LeagueSharp.dll</HintPath>
     </Reference>
     <Reference Include="LeagueSharp.Common">
-      <HintPath>C:\Users\Brennan\Downloads\LeagueSharp5\\System\LeagueSharp.Common.dll</HintPath>
+      <HintPath>C:\Users\blm951\Downloads\LeagueSharp\\System\LeagueSharp.Common.dll</HintPath>
     </Reference>
     <Reference Include="SharpDX">
-      <HintPath>C:\Users\Brennan\Downloads\LeagueSharp5\\System\SharpDX.dll</HintPath>
+      <HintPath>C:\Users\blm951\Downloads\LeagueSharp\\System\SharpDX.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
