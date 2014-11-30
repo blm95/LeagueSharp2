@@ -331,8 +331,8 @@ namespace TeachingLeagueSharp
             if (Utility.InShopRange() && (int)ObjectManager.Player.Health == (int)ObjectManager.Player.MaxHealth && Game.Time > 120 && follow != null)
             {
                 ObjectManager.Player.IssueOrder(GameObjectOrder.MoveTo, follow);
-                stopdoingshit = false;
-                recalling = false;
+                //stopdoingshit = false;
+                //recalling = false;
             }
             //Game.PrintChat("in1");
             if (!stopfollowingshittarget)
