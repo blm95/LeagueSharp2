@@ -327,7 +327,7 @@ namespace TeachingLeagueSharp
 
         private static void Game_OnGameUpdate(EventArgs args)
         {
-            if (Utility.InShopRange() && (int)ObjectManager.Player.Health == (int)ObjectManager.Player.MaxHealth)
+            if (Utility.InShopRange() && (int)ObjectManager.Player.Health == (int)ObjectManager.Player.MaxHealth && Game.Time > 120 && follow != null)
             {
                ObjectManager.Player.IssueOrder(GameObjectOrder.MoveTo, follow);
                stopdoingshit = false;
