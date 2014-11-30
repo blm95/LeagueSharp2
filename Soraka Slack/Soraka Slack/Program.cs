@@ -344,6 +344,15 @@ namespace TeachingLeagueSharp
                     ObjectManager.Get<Obj_AI_Hero>().First(x => x.IsAlly && !x.IsMe);
                 //followpos = follow.Position;
             }
+            else
+            {
+                follow =
+                    ObjectManager.Get<Obj_AI_Hero>()
+                        .First(x => !(x == follow) && !x.IsMe && x.IsAlly && menu.Item(x.ChampionName).GetValue<bool>()) ??
+                    ObjectManager.Get<Obj_AI_Hero>().First(x => !(x == follow) && !x.IsMe && x.IsAlly && ap.Contains(x.ChampionName)) ??
+                    ObjectManager.Get<Obj_AI_Hero>().First(x => !(x == follow) && !x.IsMe && x.IsAlly && bruiser.Contains(x.ChampionName)) ??
+                    ObjectManager.Get<Obj_AI_Hero>().First(x => !(x == follow) && x.IsAlly && !x.IsMe); 
+            }
             //Game.PrintChat(follow.ChampionName);
              if (deathcounter == 4)
                   deathcounter = 0;
