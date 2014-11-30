@@ -209,6 +209,7 @@ namespace TeachingLeagueSharp
             //if (follow != null)
            // followpos = follow.Position;
             followtime = Game.Time;
+            Game.PrintChat("NEWEST Soraka Slack loaded");
             //Game.PrintChat("in5");
             //int counter = 0;
             //foreach (var item in ids)
