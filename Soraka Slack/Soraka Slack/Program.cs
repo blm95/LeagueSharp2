@@ -29,11 +29,11 @@ namespace TeachingLeagueSharp
         private static bool stopdoingshit = false;
         private static double foundturret;
         private static Obj_AI_Turret turret;
-         private static string[] stufftosay;
-         private static string[] deaths;
-         private static int deathcounter = 0;
-         private static int saycounter = 0;
-         private static double timedead;
+        private static string[] stufftosay;
+        private static string[] deaths;
+        private static int deathcounter = 0;
+        private static int saycounter = 0;
+        private static double timedead;
         private static double gamestart;
         private static ItemToShop nextItem;
         private static List<ItemToShop> buyThings;
@@ -91,8 +91,8 @@ namespace TeachingLeagueSharp
             R = new Spell(SpellSlot.R);
             //Game.PrintChat("in1");
             ts = new TargetSelector(1025, TargetSelector.TargetingMode.AutoPriority);
-             stufftosay = new[] { "brb", "need to b", "sec" };
-             deaths = new[] {"oops", "lol", "rip", "laggg"};
+            stufftosay = new[] { "brb", "need to b", "sec" };
+            deaths = new[] { "oops", "lol", "rip", "laggg" };
             spawn =
                 ObjectManager.Get<GameObject>()
                     .First(x => x.Type == GameObjectType.obj_SpawnPoint && x.Team == ObjectManager.Player.Team)
@@ -207,7 +207,7 @@ namespace TeachingLeagueSharp
             //   ObjectManager.Get<Obj_AI_Hero>().First(x => !x.IsMe && x.IsAlly && ap.Contains(x.ChampionName)) ??
             //    ObjectManager.Get<Obj_AI_Hero>().First(x => x.IsAlly && !x.IsMe);
             //if (follow != null)
-           // followpos = follow.Position;
+            // followpos = follow.Position;
             followtime = Game.Time;
             Game.PrintChat("NEWEST Soraka Slack loaded");
             //Game.PrintChat("in5");
@@ -223,7 +223,7 @@ namespace TeachingLeagueSharp
             //}
             // Game.PrintChat("in6");
 
-            if(!Items.HasItem(3301))
+            if (!Items.HasItem(3301))
             {
                 Packet.C2S.BuyItem.Encoded(new Packet.C2S.BuyItem.Struct(3301)).Send();
                 Packet.C2S.BuyItem.Encoded(new Packet.C2S.BuyItem.Struct(3340)).Send();
@@ -231,7 +231,7 @@ namespace TeachingLeagueSharp
                 Packet.C2S.BuyItem.Encoded(new Packet.C2S.BuyItem.Struct(2003)).Send();
                 Packet.C2S.BuyItem.Encoded(new Packet.C2S.BuyItem.Struct(2003)).Send();
             }
-            
+
             //Game.OnGameNotifyEvent += Game_OnGameNotifyEvent;
             Game.OnGameProcessPacket += Game_OnGameProcessPacket;
             Game.OnGameUpdate += Game_OnGameUpdate;
@@ -254,13 +254,12 @@ namespace TeachingLeagueSharp
             if (Game.Time - foundturret > 20 && !recalling)
             {
                 var turret2 =
-                    ObjectManager.Get<Obj_AI_Turret>()
-                        .Where(x => x.Distance(ObjectManager.Player) < 3500 && x.IsAlly);
+                    ObjectManager.Get<Obj_AI_Turret>().OrderBy(x=>Vector3.Distance(ObjectManager.Player.Position,x.Position)).FirstOrDefault();
 
-                if (turret2.Any())
+                if (turret2 != null)
                 {
                     stopdoingshit = true;
-                    turret = turret2.First();
+                    turret = turret2;
                     foundturret = Game.Time;
                 }
             }
@@ -269,8 +268,8 @@ namespace TeachingLeagueSharp
             if (!stopdoingshit || recalling) return;
             ObjectManager.Player.IssueOrder(GameObjectOrder.MoveTo, turret);
             if (!(ObjectManager.Player.Distance(turret) <= 350) || !(Game.Time - count > 15)) return;
-                           Game.Say(stufftosay[saycounter]);
-                           saycounter++;
+            Game.Say(stufftosay[saycounter]);
+            saycounter++;
             ObjectManager.Player.Spellbook.CastSpell(SpellSlot.Recall);
 
             recalling = true;
@@ -329,9 +328,9 @@ namespace TeachingLeagueSharp
         {
             if (Utility.InShopRange() && (int)ObjectManager.Player.Health == (int)ObjectManager.Player.MaxHealth && Game.Time > 120 && follow != null)
             {
-               ObjectManager.Player.IssueOrder(GameObjectOrder.MoveTo, follow);
-               stopdoingshit = false;
-               recalling = false;
+                ObjectManager.Player.IssueOrder(GameObjectOrder.MoveTo, follow);
+                stopdoingshit = false;
+                recalling = false;
             }
             //Game.PrintChat("in1");
             if (!stopfollowingshittarget)
@@ -351,11 +350,11 @@ namespace TeachingLeagueSharp
                         .First(x => !(x == follow) && !x.IsMe && x.IsAlly && menu.Item(x.ChampionName).GetValue<bool>()) ??
                     ObjectManager.Get<Obj_AI_Hero>().First(x => !(x == follow) && !x.IsMe && x.IsAlly && ap.Contains(x.ChampionName)) ??
                     ObjectManager.Get<Obj_AI_Hero>().First(x => !(x == follow) && !x.IsMe && x.IsAlly && bruiser.Contains(x.ChampionName)) ??
-                    ObjectManager.Get<Obj_AI_Hero>().First(x => !(x == follow) && x.IsAlly && !x.IsMe); 
+                    ObjectManager.Get<Obj_AI_Hero>().First(x => !(x == follow) && x.IsAlly && !x.IsMe);
             }
             //Game.PrintChat(follow.ChampionName);
-             if (deathcounter == 4)
-                  deathcounter = 0;
+            if (deathcounter == 4)
+                deathcounter = 0;
 
 
 
@@ -373,9 +372,9 @@ namespace TeachingLeagueSharp
 
             if (ObjectManager.Player.IsDead && Game.Time - timedead > 80)
             {
-                 Game.Say(deaths[deathcounter]);
-                 deathcounter++;
-                 timedead = Game.Time;
+                Game.Say(deaths[deathcounter]);
+                deathcounter++;
+                timedead = Game.Time;
             }
 
             //foreach (var c in _WardSpots.Where(x => x.Distance(ObjectManager.Player.Position) < 600))
@@ -503,13 +502,12 @@ namespace TeachingLeagueSharp
                 if (Game.Time - foundturret > 20 && !recalling)
                 {
                     var turret2 =
-                        ObjectManager.Get<Obj_AI_Turret>()
-                            .Where(x => x.Distance(ObjectManager.Player) < 3500 && x.IsAlly);
+                        ObjectManager.Get<Obj_AI_Turret>().OrderBy(x => Vector3.Distance(ObjectManager.Player.Position, x.Position)).FirstOrDefault();
 
-                    if (turret2.Any())
+                    if (turret2 != null)
                     {
                         stopdoingshit = true;
-                        turret = turret2.First();
+                        turret = turret2;
                         foundturret = Game.Time;
                     }
                 }
@@ -520,8 +518,8 @@ namespace TeachingLeagueSharp
                     ObjectManager.Player.IssueOrder(GameObjectOrder.MoveTo, turret);
                     if (ObjectManager.Player.Distance(turret) <= 350 && Game.Time - count > 15)
                     {
-                         Game.Say(stufftosay[saycounter]);
-                          saycounter++;
+                        Game.Say(stufftosay[saycounter]);
+                        saycounter++;
                         ObjectManager.Player.Spellbook.CastSpell(SpellSlot.Recall);
 
                         recalling = true;
@@ -622,8 +620,7 @@ namespace TeachingLeagueSharp
                 {
                     Random y = new Random();
                     var turret =
-                        ObjectManager.Get<Obj_AI_Turret>()
-                            .First(x => x.Distance(ObjectManager.Player) < 3500 && x.IsAlly);
+                        ObjectManager.Get<Obj_AI_Turret>().OrderBy(x => Vector3.Distance(ObjectManager.Player.Position, x.Position)).FirstOrDefault();
                     var xPos = ((spawn.X - turret.Position.X) / Vector3.Distance(turret.Position, spawn)) * 300 +
                                turret.Position.X -
                                y.Next(25, 150);
