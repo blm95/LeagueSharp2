@@ -250,19 +250,21 @@ namespace TeachingLeagueSharp
         private static void Game_OnGameProcessPacket(GamePacketEventArgs args)
         {
             GamePacket p = new GamePacket(args.PacketData);
-            if (p.Header != Packet.S2C.TowerAggro.Header) return;
-            if (Packet.S2C.TowerAggro.Decoded(args.PacketData).TargetNetworkId != ObjectManager.Player.NetworkId)
-                return;
-            if (Game.Time - foundturret > 20 && !recalling)
+            if (p.Header == Packet.S2C.TowerAggro.Header) 
             {
-                var turret2 =
-                    ObjectManager.Get<Obj_AI_Turret>().Where(x => x.IsAlly).OrderBy(x => Vector3.Distance(ObjectManager.Player.Position, x.Position)).FirstOrDefault();
-
-                if (turret2 != null)
+                if (Packet.S2C.TowerAggro.Decoded(args.PacketData).TargetNetworkId != ObjectManager.Player.NetworkId)
+                    return;
+                if (Game.Time - foundturret > 20 && !recalling)
                 {
-                    stopdoingshit = true;
-                    turret = turret2;
-                    foundturret = Game.Time;
+                    var turret2 =
+                        ObjectManager.Get<Obj_AI_Turret>().Where(x => x.IsAlly).OrderBy(x => Vector3.Distance(ObjectManager.Player.Position, x.Position)).FirstOrDefault();
+    
+                    if (turret2 != null)
+                    {
+                        stopdoingshit = true;
+                        turret = turret2;
+                        foundturret = Game.Time;
+                    }
                 }
             }
 
