@@ -40,6 +40,8 @@ namespace TeachingLeagueSharp
         private static List<Obj_AI_Hero> allies;
         private static int i = 0;
         private static bool stopfollowingshittarget = false;
+        private static bool timeinspawn;
+        private static double timecheck = 0;
 
 
         //public static List<Vector3> _WardSpots;
@@ -254,7 +256,7 @@ namespace TeachingLeagueSharp
             if (Game.Time - foundturret > 20 && !recalling)
             {
                 var turret2 =
-                    ObjectManager.Get<Obj_AI_Turret>().OrderBy(x=>Vector3.Distance(ObjectManager.Player.Position,x.Position)).FirstOrDefault();
+                    ObjectManager.Get<Obj_AI_Turret>().Where(x => x.IsAlly).OrderBy(x => Vector3.Distance(ObjectManager.Player.Position, x.Position)).FirstOrDefault();
 
                 if (turret2 != null)
                 {
@@ -347,10 +349,10 @@ namespace TeachingLeagueSharp
             {
                 follow =
                     ObjectManager.Get<Obj_AI_Hero>()
-                        .First(x => !(x == follow) && !x.IsMe && x.IsAlly && menu.Item(x.ChampionName).GetValue<bool>()) ??
-                    ObjectManager.Get<Obj_AI_Hero>().First(x => !(x == follow) && !x.IsMe && x.IsAlly && ap.Contains(x.ChampionName)) ??
-                    ObjectManager.Get<Obj_AI_Hero>().First(x => !(x == follow) && !x.IsMe && x.IsAlly && bruiser.Contains(x.ChampionName)) ??
-                    ObjectManager.Get<Obj_AI_Hero>().First(x => !(x == follow) && x.IsAlly && !x.IsMe);
+                        .First(x => x != follow && !x.IsMe && x.IsAlly && menu.Item(x.ChampionName).GetValue<bool>()) ??
+                    ObjectManager.Get<Obj_AI_Hero>().First(x => x != follow && !x.IsMe && x.IsAlly && ap.Contains(x.ChampionName)) ??
+                    ObjectManager.Get<Obj_AI_Hero>().First(x => x != follow && !x.IsMe && x.IsAlly && bruiser.Contains(x.ChampionName)) ??
+                    ObjectManager.Get<Obj_AI_Hero>().First(x => x != follow && x.IsAlly && !x.IsMe);
             }
             //Game.PrintChat(follow.ChampionName);
             if (deathcounter == 4)
@@ -478,17 +480,31 @@ namespace TeachingLeagueSharp
             //    }
             //}
 
-            if (Game.Time - followtime > 40 && followpos.Distance(follow.Position) <= 100)
+            if (Game.Time > 60 && follow.Distance(spawn) <= 500 && !timeinspawn)
             {
-                follow = ObjectManager.Get<Obj_AI_Hero>().First(x => !x.IsMe && x.IsAlly && ap.Contains(x.ChampionName)) ?? ObjectManager.Get<Obj_AI_Hero>().First(x => !x.IsMe && x.IsAlly && bruiser.Contains(x.ChampionName));
-                followpos = follow.Position;
-                followtime = Game.Time;
+                //follow = ObjectManager.Get<Obj_AI_Hero>().First(x => !x.IsMe && x.IsAlly && ap.Contains(x.ChampionName)) ?? ObjectManager.Get<Obj_AI_Hero>().First(x => !x.IsMe && x.IsAlly && bruiser.Contains(x.ChampionName));
+                //followpos = follow.Position;
+                //followtime = Game.Time;
+                //stopfollowingshittarget = true;
+                timeinspawn = true;
+                timecheck = Game.Time;
+            }
+
+            if (Game.Time - timecheck > 30)
+            {
                 stopfollowingshittarget = true;
             }
 
             if (follow.IsDead)
             {
                 follow = ObjectManager.Get<Obj_AI_Hero>().First(x => !x.IsMe && x.Distance(ObjectManager.Player) < 1300);
+            }
+
+            if (Utility.UnderTurret(ObjectManager.Player, true))
+            {
+                var turret2 =
+                         ObjectManager.Get<Obj_AI_Turret>().Where(x=> x.IsAlly).OrderBy(x => Vector3.Distance(ObjectManager.Player.Position, x.Position)).FirstOrDefault();
+                ObjectManager.Player.IssueOrder(GameObjectOrder.MoveTo, turret2);
             }
 
             Console.WriteLine(follow.IsDead);
@@ -502,7 +518,7 @@ namespace TeachingLeagueSharp
                 if (Game.Time - foundturret > 20 && !recalling)
                 {
                     var turret2 =
-                        ObjectManager.Get<Obj_AI_Turret>().OrderBy(x => Vector3.Distance(ObjectManager.Player.Position, x.Position)).FirstOrDefault();
+                        ObjectManager.Get<Obj_AI_Turret>().Where(x => x.IsAlly).OrderBy(x => Vector3.Distance(ObjectManager.Player.Position, x.Position)).FirstOrDefault();
 
                     if (turret2 != null)
                     {
@@ -620,7 +636,7 @@ namespace TeachingLeagueSharp
                 {
                     Random y = new Random();
                     var turret =
-                        ObjectManager.Get<Obj_AI_Turret>().OrderBy(x => Vector3.Distance(ObjectManager.Player.Position, x.Position)).FirstOrDefault();
+                        ObjectManager.Get<Obj_AI_Turret>().Where(x => x.IsAlly).OrderBy(x => Vector3.Distance(ObjectManager.Player.Position, x.Position)).FirstOrDefault();
                     var xPos = ((spawn.X - turret.Position.X) / Vector3.Distance(turret.Position, spawn)) * 300 +
                                turret.Position.X -
                                y.Next(25, 150);
