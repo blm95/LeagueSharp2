@@ -327,11 +327,12 @@ namespace TeachingLeagueSharp
 
         private static void Game_OnGameUpdate(EventArgs args)
         {
-            //if (Utility.InShopRange())
-            //{
-            //   stopdoingshit = false;
-            //   recalling = false;
-            // }
+            if (Utility.InShopRange() && (int)ObjectManager.Player.Health == (int)ObjectManager.Player.MaxHealth)
+            {
+               ObjectManager.Player.IssueOrder(GameObjectOrder.MoveTo, follow);
+               stopdoingshit = false;
+               recalling = false;
+            }
             //Game.PrintChat("in1");
             if (!stopfollowingshittarget)
             {
