@@ -474,14 +474,9 @@ namespace TeachingLeagueSharp
             if (Utility.InShopRange())
             {
                 // Game.PrintChat("in range");
-                foreach (var item in nextItem.itemIds)
-                {
-                    // Game.PrintChat(item.ToString());
-                    if (!Items.HasItem(item))
-                    {
-                        Packet.C2S.BuyItem.Encoded(new Packet.C2S.BuyItem.Struct(item, ObjectManager.Player.NetworkId))
-                            .Send();
-                    }
+                foreach (var item in nextItem.itemIds.Where(item => !Items.HasItem(item))) {
+                    Packet.C2S.BuyItem.Encoded(new Packet.C2S.BuyItem.Struct(item, ObjectManager.Player.NetworkId))
+                        .Send();
                 }
 
                 checkItemInventory();
@@ -572,7 +567,7 @@ namespace TeachingLeagueSharp
                     ObjectManager.Player.IssueOrder(GameObjectOrder.MoveTo, turret);
                     if (ObjectManager.Player.Distance(turret) <= 350 && Game.Time - count > 15)
                     {
-                        Game.Say(stufftosay[saycounter]);
+                        Talk(stufftosay[saycounter]);
                         saycounter++;
                         ObjectManager.Player.Spellbook.CastSpell(SpellSlot.Recall);
 
