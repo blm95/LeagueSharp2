@@ -1,14 +1,13 @@
+#region
+
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Runtime.ExceptionServices;
-using System.Security.Cryptography;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Input;
 using LeagueSharp;
 using LeagueSharp.Common;
 using SharpDX;
+
+#endregion
 
 namespace TeachingLeagueSharp
 {
@@ -21,27 +20,27 @@ namespace TeachingLeagueSharp
         private static TargetSelector ts;
         //private static GameObject ward;
         private static Vector3 spawn;
-        private static bool recalling = false;
+        private static bool recalling;
         private static Menu menu;
         //private static int[] ids;
         //private static int index = 0;
         private static double count;
-        private static bool stopdoingshit = false;
+        private static bool stopdoingshit;
         private static double foundturret;
         private static Obj_AI_Turret turret;
         private static string[] stufftosay;
         private static string[] deaths;
-        private static int deathcounter = 0;
-        private static int saycounter = 0;
+        private static int deathcounter;
+        private static int saycounter;
         private static double timedead;
         private static double gamestart;
         private static ItemToShop nextItem;
         private static List<ItemToShop> buyThings;
         private static List<Obj_AI_Hero> allies;
-        private static int i = 0;
-        private static bool stopfollowingshittarget = false;
+        private static int i;
+        private static bool stopfollowingshittarget;
         private static bool timeinspawn;
-        private static double timecheck = 0;
+        private static double timecheck;
 
 
         //public static List<Vector3> _WardSpots;
@@ -82,7 +81,10 @@ namespace TeachingLeagueSharp
 
         private static void Game_OnGameLoad(EventArgs args)
         {
-            if (ObjectManager.Player.ChampionName != "Soraka") return;
+            if (ObjectManager.Player.ChampionName != "Soraka")
+            {
+                return;
+            }
             //InitializeSafeWardSpots();
             //InitializeWardSpots();
             allies = new List<Obj_AI_Hero>();
@@ -107,13 +109,16 @@ namespace TeachingLeagueSharp
             menu.AddItem(new MenuItem("wabovehp", "Use W when my hp > x%").SetValue(new Slider(20, 0, 99)));
             menu.AddItem(new MenuItem("allyhpr", "Ally % HP for R").SetValue(new Slider(30, 0, 50)));
             menu.AddItem(new MenuItem("hpb", "B if hp < %").SetValue(new Slider(15, 0, 80)));
+            menu.AddItem(new MenuItem("talk", "Talk").SetValue(true));
             //Game.PrintChat("in2");
             menu.AddSubMenu(new Menu("Follow:", "follower"));
             foreach (var ally in ObjectManager.Get<Obj_AI_Hero>().Where(x => x.IsAlly && !x.IsMe))
             {
                 allies.Add(ally);
                 if (ad.Contains(ally.ChampionName))
+                {
                     menu.SubMenu("follower").AddItem(new MenuItem(ally.ChampionName, ally.ChampionName).SetValue(true));
+                }
                 else
                 {
                     menu.SubMenu("follower").AddItem(new MenuItem(ally.ChampionName, ally.ChampionName).SetValue(false));
@@ -122,77 +127,77 @@ namespace TeachingLeagueSharp
             // Game.PrintChat("hi");
             buyThings = new List<ItemToShop>
             {
-                new ItemToShop()
+                new ItemToShop
                 {
                     goldReach = 500,
-                    itemsMustHave = new List<int>{3301},
-                    itemIds = new List<int>{3096}
+                    itemsMustHave = new List<int> { 3301 },
+                    itemIds = new List<int> { 3096 }
                 },
-                new ItemToShop()
+                new ItemToShop
                 {
                     goldReach = 360,
-                    itemsMustHave = new List<int>{3096},
-                    itemIds = new List<int>{1004,1004}
+                    itemsMustHave = new List<int> { 3096 },
+                    itemIds = new List<int> { 1004, 1004 }
                 },
-                new ItemToShop()
+                new ItemToShop
                 {
                     goldReach = 500,
-                    itemsMustHave = new List<int>{1004,1004},
-                    itemIds = new List<int>{1033}
+                    itemsMustHave = new List<int> { 1004, 1004 },
+                    itemIds = new List<int> { 1033 }
                 },
-                new ItemToShop()
+                new ItemToShop
                 {
                     goldReach = 180,
-                    itemsMustHave = new List<int>{1033,1004,1004},
-                    itemIds = new List<int>{3028}
+                    itemsMustHave = new List<int> { 1033, 1004, 1004 },
+                    itemIds = new List<int> { 3028 }
                 },
-                new ItemToShop()
+                new ItemToShop
                 {
                     goldReach = 325,
-                    itemsMustHave = new List<int>{3028},
-                    itemIds = new List<int>{1001}
+                    itemsMustHave = new List<int> { 3028 },
+                    itemIds = new List<int> { 1001 }
                 },
-                new ItemToShop()
+                new ItemToShop
                 {
                     goldReach = 675,
-                    itemsMustHave = new List<int>{1001},
-                    itemIds = new List<int>{3009}
+                    itemsMustHave = new List<int> { 1001 },
+                    itemIds = new List<int> { 3009 }
                 },
-                new ItemToShop()
+                new ItemToShop
                 {
                     goldReach = 400,
-                    itemsMustHave = new List<int>{3009},
-                    itemIds = new List<int>{1028}
+                    itemsMustHave = new List<int> { 3009 },
+                    itemIds = new List<int> { 1028 }
                 },
-                new ItemToShop()
+                new ItemToShop
                 {
                     goldReach = 450,
-                    itemsMustHave = new List<int>{1028},
-                    itemIds = new List<int>{3067}
+                    itemsMustHave = new List<int> { 1028 },
+                    itemIds = new List<int> { 3067 }
                 },
-                new ItemToShop()
+                new ItemToShop
                 {
                     goldReach = 400,
-                    itemsMustHave = new List<int>{3067},
-                    itemIds = new List<int>{1028}
+                    itemsMustHave = new List<int> { 3067 },
+                    itemIds = new List<int> { 1028 }
                 },
-                new ItemToShop()
+                new ItemToShop
                 {
                     goldReach = 800,
-                    itemsMustHave = new List<int>{1028},
-                    itemIds = new List<int>{3211}
+                    itemsMustHave = new List<int> { 1028 },
+                    itemIds = new List<int> { 3211 }
                 },
-                new ItemToShop()
+                new ItemToShop
                 {
                     goldReach = 700,
-                    itemsMustHave = new List<int>{3211},
-                    itemIds = new List<int>{3065}
+                    itemsMustHave = new List<int> { 3211 },
+                    itemIds = new List<int> { 3065 }
                 },
-                new ItemToShop()
+                new ItemToShop
                 {
                     goldReach = 2900,
-                    itemsMustHave = new List<int>{3065},
-                    itemIds = new List<int>{3116}
+                    itemsMustHave = new List<int> { 3065 },
+                    itemIds = new List<int> { 3116 }
                 }
             };
             //Game.PrintChat("hi2");
@@ -249,14 +254,22 @@ namespace TeachingLeagueSharp
 
         private static void Game_OnGameProcessPacket(GamePacketEventArgs args)
         {
-            GamePacket p = new GamePacket(args.PacketData);
-            if (p.Header != Packet.S2C.TowerAggro.Header) return;
-            if (Packet.S2C.TowerAggro.Decoded(args.PacketData).TargetNetworkId != ObjectManager.Player.NetworkId)
+            var p = new GamePacket(args.PacketData);
+            if (p.Header != Packet.S2C.TowerAggro.Header)
+            {
                 return;
+            }
+            if (Packet.S2C.TowerAggro.Decoded(args.PacketData).TargetNetworkId != ObjectManager.Player.NetworkId)
+            {
+                return;
+            }
             if (Game.Time - foundturret > 20 && !recalling)
             {
                 var turret2 =
-                    ObjectManager.Get<Obj_AI_Turret>().Where(x => x.IsAlly).OrderBy(x => Vector3.Distance(ObjectManager.Player.Position, x.Position)).FirstOrDefault();
+                    ObjectManager.Get<Obj_AI_Turret>()
+                        .Where(x => x.IsAlly)
+                        .OrderBy(x => Vector3.Distance(ObjectManager.Player.Position, x.Position))
+                        .FirstOrDefault();
 
                 if (turret2 != null)
                 {
@@ -267,10 +280,18 @@ namespace TeachingLeagueSharp
             }
 
 
-            if (!stopdoingshit || recalling) return;
+            if (!stopdoingshit || recalling)
+            {
+                return;
+            }
             ObjectManager.Player.IssueOrder(GameObjectOrder.MoveTo, turret);
-            if (!(ObjectManager.Player.Distance(turret) <= 350) || !(Game.Time - count > 15)) return;
-            Game.Say(stufftosay[saycounter]);
+            if (!(ObjectManager.Player.Distance(turret) <= 350) || !(Game.Time - count > 15))
+            {
+                return;
+            }
+            
+            
+            Talk(stufftosay[saycounter]);
             saycounter++;
             ObjectManager.Player.Spellbook.CastSpell(SpellSlot.Recall);
 
@@ -278,25 +299,30 @@ namespace TeachingLeagueSharp
             count = Game.Time;
         }
 
-        internal class ItemToShop
+        private static void Talk(string chat)
         {
-            public int goldReach;
-            public List<int> itemIds;
-            public List<int> itemsMustHave;
+            if (menu.Item("talk").GetValue<bool>())
+            {
+                Game.Say(chat);
+            }
         }
-
         private static bool checkItemcount(ItemToShop its)
         {
-            bool[] usedItems = new bool[7];
-            int itemsMatch = 0;
-            foreach (int t in its.itemsMustHave)
+            var usedItems = new bool[7];
+            var itemsMatch = 0;
+            foreach (var t in its.itemsMustHave)
             {
                 //Game.PrintChat(t.ToString());
-                for (int i = 0; i < ObjectManager.Player.InventoryItems.Count(); i++)
+                for (var i = 0; i < ObjectManager.Player.InventoryItems.Count(); i++)
                 {
                     if (usedItems[i])
+                    {
                         continue;
-                    if (t != (decimal)ObjectManager.Player.InventoryItems[i].Id) continue;
+                    }
+                    if (t != (decimal) ObjectManager.Player.InventoryItems[i].Id)
+                    {
+                        continue;
+                    }
                     usedItems[i] = true;
                     //Game.PrintChat("iasdgfasd");
                     itemsMatch++;
@@ -308,13 +334,17 @@ namespace TeachingLeagueSharp
 
         public static void checkItemInventory()
         {
-
             if (!canBuyItems)
+            {
                 return;
-            for (int i = buyThings.Count - 1; i >= 0; i--)
+            }
+            for (var i = buyThings.Count - 1; i >= 0; i--)
             {
                 //Game.PrintChat(i.ToString());
-                if (!checkItemcount(buyThings[i])) continue;
+                if (!checkItemcount(buyThings[i]))
+                {
+                    continue;
+                }
                 nextItem = buyThings[i];
                 // Game.PrintChat("in");
                 if (i == buyThings.Count - 1)
@@ -328,7 +358,8 @@ namespace TeachingLeagueSharp
 
         private static void Game_OnGameUpdate(EventArgs args)
         {
-            if (Utility.InShopRange() && (int)ObjectManager.Player.Health == (int)ObjectManager.Player.MaxHealth && Game.Time > 120 && follow != null)
+            if (Utility.InShopRange() && (int) ObjectManager.Player.Health == (int) ObjectManager.Player.MaxHealth &&
+                Game.Time > 120 && follow != null)
             {
                 ObjectManager.Player.IssueOrder(GameObjectOrder.MoveTo, follow);
                 //stopdoingshit = false;
@@ -350,16 +381,17 @@ namespace TeachingLeagueSharp
                 follow =
                     ObjectManager.Get<Obj_AI_Hero>()
                         .First(x => x != follow && !x.IsMe && x.IsAlly && menu.Item(x.ChampionName).GetValue<bool>()) ??
-                    ObjectManager.Get<Obj_AI_Hero>().First(x => x != follow && !x.IsMe && x.IsAlly && ap.Contains(x.ChampionName)) ??
-                    ObjectManager.Get<Obj_AI_Hero>().First(x => x != follow && !x.IsMe && x.IsAlly && bruiser.Contains(x.ChampionName)) ??
+                    ObjectManager.Get<Obj_AI_Hero>()
+                        .First(x => x != follow && !x.IsMe && x.IsAlly && ap.Contains(x.ChampionName)) ??
+                    ObjectManager.Get<Obj_AI_Hero>()
+                        .First(x => x != follow && !x.IsMe && x.IsAlly && bruiser.Contains(x.ChampionName)) ??
                     ObjectManager.Get<Obj_AI_Hero>().First(x => x != follow && x.IsAlly && !x.IsMe);
             }
             //Game.PrintChat(follow.ChampionName);
             if (deathcounter == 4)
+            {
                 deathcounter = 0;
-
-
-
+            }
 
 
             if (Game.Time - gamestart > 480)
@@ -374,7 +406,7 @@ namespace TeachingLeagueSharp
 
             if (ObjectManager.Player.IsDead && Game.Time - timedead > 80)
             {
-                Game.Say(deaths[deathcounter]);
+                Talk(deaths[deathcounter]);
                 deathcounter++;
                 timedead = Game.Time;
             }
@@ -449,7 +481,6 @@ namespace TeachingLeagueSharp
                     {
                         Packet.C2S.BuyItem.Encoded(new Packet.C2S.BuyItem.Struct(item, ObjectManager.Player.NetworkId))
                             .Send();
-
                     }
                 }
 
@@ -468,7 +499,9 @@ namespace TeachingLeagueSharp
             Console.WriteLine("stop: " + stopdoingshit);
             // Game.PrintChat(follow.ChampionName);
             if (Game.Time - foundturret > 25)
+            {
                 stopdoingshit = false;
+            }
             //if (Utility.InShopRange())
             //{
             //    Game.PrintChat(index.ToString());
@@ -503,7 +536,10 @@ namespace TeachingLeagueSharp
             if (Utility.UnderTurret(ObjectManager.Player, true))
             {
                 var turret2 =
-                         ObjectManager.Get<Obj_AI_Turret>().Where(x=> x.IsAlly).OrderBy(x => Vector3.Distance(ObjectManager.Player.Position, x.Position)).FirstOrDefault();
+                    ObjectManager.Get<Obj_AI_Turret>()
+                        .Where(x => x.IsAlly)
+                        .OrderBy(x => Vector3.Distance(ObjectManager.Player.Position, x.Position))
+                        .FirstOrDefault();
                 ObjectManager.Player.IssueOrder(GameObjectOrder.MoveTo, turret2);
             }
 
@@ -514,11 +550,13 @@ namespace TeachingLeagueSharp
                  ObjectManager.Player.Health / ObjectManager.Player.MaxHealth * 100 <
                  menu.Item("hpb").GetValue<Slider>().Value))
             {
-
                 if (Game.Time - foundturret > 20 && !recalling)
                 {
                     var turret2 =
-                        ObjectManager.Get<Obj_AI_Turret>().Where(x => x.IsAlly).OrderBy(x => Vector3.Distance(ObjectManager.Player.Position, x.Position)).FirstOrDefault();
+                        ObjectManager.Get<Obj_AI_Turret>()
+                            .Where(x => x.IsAlly)
+                            .OrderBy(x => Vector3.Distance(ObjectManager.Player.Position, x.Position))
+                            .FirstOrDefault();
 
                     if (turret2 != null)
                     {
@@ -563,7 +601,9 @@ namespace TeachingLeagueSharp
                 if (objAiHeroes.Any() &&
                     ObjectManager.Player.Health / ObjectManager.Player.MaxHealth * 100 >
                     menu.Item("wabovehp").GetValue<Slider>().Value)
+                {
                     W.Cast(objAiHeroes.First());
+                }
             }
 
             if (menu.Item("user").GetValue<bool>() && R.IsReady())
@@ -577,14 +617,18 @@ namespace TeachingLeagueSharp
                 if (allies.Any())
                 {
                     if (R.IsReady())
+                    {
                         R.Cast();
+                    }
                 }
             }
 
             if (!recalling && !stopdoingshit)
             {
                 if (follow.Distance(ObjectManager.Player.Position) > 500)
+                {
                     ObjectManager.Player.IssueOrder(GameObjectOrder.MoveTo, follow);
+                }
                 if (!follow.IsDead)
                 {
                     if (W.IsReady() && menu.Item("usew").GetValue<bool>() &&
@@ -605,50 +649,61 @@ namespace TeachingLeagueSharp
                         }
                     }
 
-                    if (ts.Target.Distance(ObjectManager.Player) < Q.Range && Q.IsReady() && !Utility.UnderTurret(ObjectManager.Player, true))
+                    if (ts.Target.Distance(ObjectManager.Player) < Q.Range && Q.IsReady() &&
+                        !Utility.UnderTurret(ObjectManager.Player, true))
                     {
                         Q.Cast(ts.Target);
                     }
 
-                    if (ts.Target.Distance(ObjectManager.Player) < E.Range && E.IsReady() && !Utility.UnderTurret(ObjectManager.Player, true))
+                    if (ts.Target.Distance(ObjectManager.Player) < E.Range && E.IsReady() &&
+                        !Utility.UnderTurret(ObjectManager.Player, true))
                     {
                         E.Cast(ts.Target);
                     }
 
-                    if (!(follow.Distance(ObjectManager.Player.Position) > 350)) return;
-                    Random x = new Random();
+                    if (!(follow.Distance(ObjectManager.Player.Position) > 350))
+                    {
+                        return;
+                    }
+                    var x = new Random();
                     var xPos = ((spawn.X - follow.Position.X) / Vector3.Distance(follow.Position, spawn)) * 300 +
-                               follow.Position.X -
-                               x.Next(25, 150);
+                               follow.Position.X - x.Next(25, 150);
                     var yPos = ((spawn.Y - follow.Position.Y) / Vector3.Distance(follow.Position, spawn)) * 300 +
-                               follow.Position.Y -
-                               x.Next(25, 150);
+                               follow.Position.Y - x.Next(25, 150);
                     var vec = new Vector3(xPos, yPos, follow.Position.Z);
                     if (
-                        NavMesh.GetCollisionFlags(
-                            vec.To2D().Extend(ObjectManager.Player.Position.To2D(), 150).To3D())
+                        NavMesh.GetCollisionFlags(vec.To2D().Extend(ObjectManager.Player.Position.To2D(), 150).To3D())
                             .HasFlag(CollisionFlags.None))
+                    {
                         ObjectManager.Player.IssueOrder(GameObjectOrder.MoveTo, vec);
+                    }
                     //Game.PrintChat("following");
                 }
 
                 else
                 {
-                    Random y = new Random();
+                    var y = new Random();
                     var turret =
-                        ObjectManager.Get<Obj_AI_Turret>().Where(x => x.IsAlly).OrderBy(x => Vector3.Distance(ObjectManager.Player.Position, x.Position)).FirstOrDefault();
+                        ObjectManager.Get<Obj_AI_Turret>()
+                            .Where(x => x.IsAlly)
+                            .OrderBy(x => Vector3.Distance(ObjectManager.Player.Position, x.Position))
+                            .FirstOrDefault();
                     var xPos = ((spawn.X - turret.Position.X) / Vector3.Distance(turret.Position, spawn)) * 300 +
-                               turret.Position.X -
-                               y.Next(25, 150);
+                               turret.Position.X - y.Next(25, 150);
                     var yPos = ((spawn.Y - turret.Position.Y) / Vector3.Distance(turret.Position, spawn)) * 300 +
-                               turret.Position.Y -
-                               y.Next(25, 150);
+                               turret.Position.Y - y.Next(25, 150);
 
                     var vec = new Vector3(xPos, yPos, follow.Position.Z);
                     ObjectManager.Player.IssueOrder(GameObjectOrder.MoveTo, vec);
                 }
             }
+        }
 
+        internal class ItemToShop
+        {
+            public int goldReach;
+            public List<int> itemIds;
+            public List<int> itemsMustHave;
         }
     }
 }
