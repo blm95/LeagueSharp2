@@ -32,18 +32,15 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="clipper_library">
-      <HintPath>..\..\..\..\..\Assemblies\System\clipper_library.dll</HintPath>
-    </Reference>
     <Reference Include="LeagueSharp">
-      <HintPath>..\..\..\..\..\Assemblies\System\LeagueSharp.dll</HintPath>
+      <HintPath>..\..\..\..\..\Downloads\LeagueSharp\System\LeagueSharp.dll</HintPath>
     </Reference>
     <Reference Include="LeagueSharp.Common">
-      <HintPath>..\..\..\..\..\Assemblies\System\LeagueSharp.Common.dll</HintPath>
+      <HintPath>..\..\..\..\..\Downloads\LeagueSharp\System\LeagueSharp.Common.dll</HintPath>
     </Reference>
     <Reference Include="PresentationCore" />
     <Reference Include="SharpDX">
-      <HintPath>..\..\..\..\..\Assemblies\System\SharpDX.dll</HintPath>
+      <HintPath>..\..\..\..\..\Downloads\LeagueSharp\System\SharpDX.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
