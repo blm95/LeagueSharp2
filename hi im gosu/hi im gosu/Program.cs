@@ -54,7 +54,8 @@ namespace hi_im_gosu
             orbwalker = new Orbwalking.Orbwalker(menu.SubMenu("Orbwalker"));
             //TS
             var TargetSelectorMenu = new Menu("Target Selector", "Target Selector");
-            SimpleTs.AddToMenu(TargetSelectorMenu);
+            TargetSelector.AddToMenu(TargetSelectorMenu);
+           // SimpleTs.AddToMenu(TargetSelectorMenu);
             menu.AddSubMenu(TargetSelectorMenu);
 
             //menu.AddSubMenu(new Menu("Combo", "combo"));
@@ -140,7 +141,7 @@ namespace hi_im_gosu
             }
         }
 
-        public static void Orbwalking_AfterAttack(Obj_AI_Base unit, Obj_AI_Base target)
+        public static void Orbwalking_AfterAttack(AttackableUnit unit, AttackableUnit target)
         {
 
             if (unit.IsMe)
@@ -149,7 +150,7 @@ namespace hi_im_gosu
 
                 if (menu.Item("UseEaa").GetValue<KeyBind>().Active)
                 {
-                    E.Cast(target);
+                    E.Cast((Obj_AI_Base)target);
                     menu.Item("UseEaa").SetValue<KeyBind>(new KeyBind("G".ToCharArray()[0], KeyBindType.Toggle));
                 }
 
