@@ -38,7 +38,7 @@ namespace BankPlank
             Menu = new Menu("BankPlank", "BankPlank", true);
 
             var TargetSelectorMenu = new Menu("Target Selector", "Target Selector");
-            SimpleTs.AddToMenu(TargetSelectorMenu);
+            TargetSelector.AddToMenu(TargetSelectorMenu);
             Menu.AddSubMenu(TargetSelectorMenu);
 
 
@@ -103,7 +103,7 @@ namespace BankPlank
 
             /*if (ignite)
             {
-                var t = SimpleTs.GetTarget(600, SimpleTs.DamageType.Physical);
+                var t = TargetSelector.GetTarget(600, TargetSelector.DamageType.Physical);
                 var igniteDmg = DamageLib.getDmg(t, DamageLib.SpellType.IGNITE);
                 if (t != null && SumIgnite != SpellSlot.Unknown &&
                                 ObjectManager.Player.SummonerSpellbook.CanUseSpell(SumIgnite) == SpellState.Ready)
@@ -119,7 +119,7 @@ namespace BankPlank
             if (useQ5 && Q.IsReady())
             {
                 //Game.PrintChat("inQ");
-                var t = SimpleTs.GetTarget(625, SimpleTs.DamageType.Physical);
+                var t = TargetSelector.GetTarget(625, TargetSelector.DamageType.Physical);
                 if (t.IsValidTarget())
                 {
                     //PredictionInput p = new PredictionInput();
