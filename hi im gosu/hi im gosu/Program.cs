@@ -179,6 +179,22 @@ namespace hi_im_gosu
             {
                 E.Cast(hero);
             }
+
+            if (args.SData.Name.ToLower() == "zedult" && args.Target.IsMe)
+            {
+                if (Items.CanUseItem(3140))
+                {
+                    Utility.DelayAction.Add(1000, () => Items.UseItem(3140));
+                }
+                else if (Items.CanUseItem(3139))
+                {
+                    Utility.DelayAction.Add(1000, () => Items.UseItem(3139));
+                }
+                else if (cleanse != null && cleanse.IsReady())
+                {
+                    Utility.DelayAction.Add(1000, () => cleanse.Cast());
+                }
+            }
         }
 
         public static void Orbwalking_AfterAttack(AttackableUnit unit, AttackableUnit target)
