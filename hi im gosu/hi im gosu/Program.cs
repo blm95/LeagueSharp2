@@ -88,7 +88,7 @@ namespace hi_im_gosu
             botrk.AddItem(new MenuItem("theirhp", "Use if enemy HP < %")).SetValue(new Slider(20, 0, 100));
             Itemsmenu.AddItem(new MenuItem("Ghostblade", "Use Ghostblade").SetValue(true));
             Itemsmenu.AddItem(new MenuItem("QSS", "Use QSS/Merc Scimitar/Cleanse").SetValue(true));
-            qss = menu.SubMenu("Items").AddSubMenu(new Menu("QSS/Merc/Clease Settings", "useqss"));
+            qss = menu.SubMenu("Items").AddSubMenu(new Menu("QSS/Merc/Cleanse Settings", "useqss"));
 
             buffs = new[]
             {
@@ -214,7 +214,7 @@ namespace hi_im_gosu
             }
             if (Itemsmenu.Item("BOTRK").GetValue<bool>() && ((tar.Health / tar.MaxHealth) < botrk.Item("theirhp").GetValue<Slider>().Value) && ((ObjectManager.Player.Health / ObjectManager.Player.MaxHealth) < botrk.Item("myhp").GetValue<Slider>().Value))
             {
-                Game.PrintChat("in");
+                //Game.PrintChat("in");
                 if (Items.CanUseItem(3153))
                 {
                     Items.UseItem(3153, tar);
