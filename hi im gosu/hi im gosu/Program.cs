@@ -80,6 +80,7 @@ namespace hi_im_gosu
             menu.AddSubMenu(new Menu("Gapcloser List", "gap"));
             menu.AddSubMenu(new Menu("Gapcloser List 2", "gap2"));
             menu.AddSubMenu(new Menu("Interrupt List", "int"));
+            menu.AddItem(new MenuItem("restrictq", "Restrict Q usage?").SetValue(true));
 
             Itemsmenu = menu.AddSubMenu(new Menu("Items", "Items"));
             Itemsmenu.AddItem(new MenuItem("BOTRK", "Use BOTRK").SetValue(true));
@@ -238,18 +239,26 @@ namespace hi_im_gosu
             if (((orbwalker.ActiveMode.ToString() != "Combo" || !menu.Item("UseQC").GetValue<bool>()) &&
                  ((orbwalker.ActiveMode.ToString() != "Mixed" || !menu.Item("hq").GetValue<bool>()) || !Q.IsReady())))
                 return;
-            var after = ObjectManager.Player.Position +
-                        Normalize(Game.CursorPos - ObjectManager.Player.Position) * 300;
-            //Game.PrintChat("After: {0}", after);
-            var disafter = Vector3.DistanceSquared(after, tar.Position);
-            //Game.PrintChat("DisAfter: {0}", disafter);
-            //Game.PrintChat("first calc: {0}", (disafter) - (630*630));
-            if ((disafter < 630 * 630) && disafter > 150 * 150)
+
+            if (menu.Item("restrictq").GetValue<bool>())
             {
-                Q.Cast(Game.CursorPos);
+                var after = ObjectManager.Player.Position +
+                            Normalize(Game.CursorPos - ObjectManager.Player.Position)*300;
+                //Game.PrintChat("After: {0}", after);
+                var disafter = Vector3.DistanceSquared(after, tar.Position);
+                //Game.PrintChat("DisAfter: {0}", disafter);
+                //Game.PrintChat("first calc: {0}", (disafter) - (630*630));
+                if ((disafter < 630*630) && disafter > 150*150)
+                {
+                    Q.Cast(Game.CursorPos);
+                }
+                if (Vector3.DistanceSquared(tar.Position, ObjectManager.Player.Position) > 630*630 &&
+                    disafter < 630*630)
+                {
+                    Q.Cast(Game.CursorPos);
+                }
             }
-            if (Vector3.DistanceSquared(tar.Position, ObjectManager.Player.Position) > 630 * 630 &&
-                disafter < 630 * 630)
+            else
             {
                 Q.Cast(Game.CursorPos);
             }
