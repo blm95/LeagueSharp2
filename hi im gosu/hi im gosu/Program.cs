@@ -206,7 +206,7 @@ namespace hi_im_gosu
         {
             //Game.PrintChat(args.SData.Name);
             if (menu.Item("UseEInterrupt").GetValue<bool>()  && interrupt.Any(x=>x.Contains(args.SData.Name)) &&
-                menu.Item(args.SData.Name).GetValue<bool>())
+                menu.Item(args.SData.Name).GetValue<bool>() && Player.Distance(hero) <= 550)
             {
                // Game.PrintChat("in");
                 //if (interrupt.Any(str => str.Contains(args.SData.Name)))
@@ -216,7 +216,7 @@ namespace hi_im_gosu
                 //}
             }
 
-            if (gapcloser.Any(str => str.Contains(args.SData.Name)) && menu.Item(args.SData.Name).GetValue<bool>())
+            if (gapcloser.Any(str => str.Contains(args.SData.Name)) && menu.Item(args.SData.Name).GetValue<bool>() && args.Target.IsMe)
             {
                 E.Cast(hero);
             }
