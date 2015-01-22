@@ -34,7 +34,7 @@ namespace nasus
 
 
             var TargetSelectorMenu = new Menu("Target Selector", "Target Selector");
-            SimpleTs.AddToMenu(TargetSelectorMenu);
+            TargetSelector.AddToMenu(TargetSelectorMenu);
             Menu.AddSubMenu(TargetSelectorMenu);
 
 
@@ -72,7 +72,7 @@ namespace nasus
 
 
             foreach (var enemy in ObjectManager.Get<Obj_AI_Hero>().Where(enemy => enemy.IsEnemy))
-                lel.AddItem(new MenuItem("DontW" + enemy.BaseSkinName, enemy.BaseSkinName).SetValue(false));
+                lel.AddItem(new MenuItem("DontW" + enemy.ChampionName, enemy.ChampionName).SetValue(false));
 
 
             Menu.AddToMainMenu();
@@ -136,7 +136,7 @@ namespace nasus
 
             if (useW && W.IsReady())
             {
-                var rTarget = SimpleTs.GetTarget(W.Range, SimpleTs.DamageType.Physical);
+                var rTarget = TargetSelector.GetTarget(W.Range, TargetSelector.DamageType.Physical);
                 if (rTarget != null)
                     useW = (Menu.Item("DontW" + rTarget.BaseSkinName) != null &&
                             Menu.Item("DontW" + rTarget.BaseSkinName).GetValue<bool>() == false);
@@ -148,7 +148,7 @@ namespace nasus
 
             if (useQ5 && Q.IsReady())
             {
-                var t = SimpleTs.GetTarget(300, SimpleTs.DamageType.Physical);
+                var t = TargetSelector.GetTarget(300, TargetSelector.DamageType.Physical);
                 if (t.IsValidTarget())
                 {
                     Q.Cast();
@@ -157,7 +157,7 @@ namespace nasus
 
             if (useE && E.IsReady())
             {
-                var t = SimpleTs.GetTarget(E.Range, SimpleTs.DamageType.Physical);
+                var t = TargetSelector.GetTarget(E.Range, TargetSelector.DamageType.Physical);
                 if (t.IsValidTarget())
                 {
                     var pred = E.GetPrediction(t);
@@ -166,7 +166,7 @@ namespace nasus
             }
 
             if (useR && R.IsReady() &&
-                Menu.Item("CountR").GetValue<Slider>().Value >= LeagueSharp.Common.Utility.CountEnemysInRange(650) &&
+                Menu.Item("CountR").GetValue<Slider>().Value >= ObjectManager.Player.CountEnemysInRange(650) &&
                 Menu.Item("HPForR").GetValue<Slider>().Value >= ((Player.Health / Player.MaxHealth) * 100))
             {
                 R.Cast();

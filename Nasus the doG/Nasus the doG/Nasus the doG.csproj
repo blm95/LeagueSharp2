@@ -52,7 +52,7 @@
     </Reference>
     <Reference Include="LeagueSharp, Version=1.0.0.25, Culture=neutral, processorArchitecture=x86">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\..\L#Loader\System\LeagueSharp.dll</HintPath>
+      <HintPath>..\..\..\..\..\Downloads\LeagueSharp\System\LeagueSharp.dll</HintPath>
     </Reference>
     <Reference Include="LeagueSharp.AppDomainManager">
       <HintPath>..\..\..\..\..\Assemblies\System\LeagueSharp.AppDomainManager.dll</HintPath>
@@ -65,7 +65,7 @@
       <HintPath>..\..\..\..\..\Assemblies\System\LibGit2Sharp.dll</HintPath>
     </Reference>
     <Reference Include="SharpDX">
-      <HintPath>..\..\..\..\..\Assemblies\System\SharpDX.dll</HintPath>
+      <HintPath>..\..\..\..\..\Downloads\LeagueSharp\System\SharpDX.dll</HintPath>
     </Reference>
     <Reference Include="SharpDX.Direct3D9">
       <HintPath>..\..\..\..\..\Assemblies\System\SharpDX.Direct3D9.dll</HintPath>
