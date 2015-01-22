@@ -126,6 +126,9 @@ namespace hi_im_gosu
             menu.AddSubMenu(new Menu("Interrupt List", "int"));
             menu.AddItem(new MenuItem("restrictq", "Restrict Q usage?").SetValue(true));
 
+            menu.AddItem(new MenuItem("walltumble", "Wall Tumble"))
+                .SetValue(new KeyBind("U".ToCharArray()[0], KeyBindType.Press));
+
             Itemsmenu = menu.AddSubMenu(new Menu("Items", "Items"));
             Itemsmenu.AddItem(new MenuItem("BOTRK", "Use BOTRK").SetValue(true));
             botrk = Itemsmenu.AddSubMenu(new Menu("BOTRK Settings", "usebotrk"));
@@ -317,6 +320,10 @@ namespace hi_im_gosu
 
         public static void Game_OnGameUpdate(EventArgs args)
         {
+            if (menu.Item("walltumble").GetValue<KeyBind>().Active)
+            {
+                TumbleHandler();
+            }
             if (menu.Item("aaqaa").GetValue<KeyBind>().Active)
             {
                 Orbwalking.Orbwalk(TargetSelector.GetTarget(625, TargetSelector.DamageType.Physical),Game.CursorPos);
