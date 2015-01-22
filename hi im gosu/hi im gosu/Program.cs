@@ -31,6 +31,50 @@ namespace hi_im_gosu
         private static Menu botrk;
         private static Menu qss;
 
+        /* Asuna VayneHunter Copypasta */
+        private static readonly Vector2 midPos = new Vector2(6707.485f, 8802.744f);
+        private static readonly Vector2 dragPos = new Vector2(11514, 4462);
+        private static float LastMoveC;
+
+        private static void TumbleHandler()
+        {
+            if (Player.Distance(midPos) >= Player.Distance(dragPos))
+            {
+                if (Player.Position.X < 12000 || Player.Position.X > 12070 || Player.Position.Y < 4800 ||
+                Player.Position.Y > 4872)
+                {
+                    MoveToLimited(new Vector2(12050, 4827).To3D());
+                }
+                else
+                {
+                    MoveToLimited(new Vector2(12050, 4827).To3D());
+                    Q.Cast(dragPos, true);
+                }
+            }
+            else
+            {
+                if (Player.Position.X < 6908 || Player.Position.X > 6978 || Player.Position.Y < 8917 ||
+                Player.Position.Y > 8989)
+                {
+                    MoveToLimited(new Vector2(6958, 8944).To3D());
+                }
+                else
+                {
+                    MoveToLimited(new Vector2(6958, 8944).To3D());
+                    Q.Cast(midPos, true);
+                }
+            }
+        }
+        private static void MoveToLimited(Vector3 where)
+        {
+            if (Environment.TickCount - LastMoveC < 80)
+            {
+                return;
+            }
+            LastMoveC = Environment.TickCount;
+            Player.IssueOrder(GameObjectOrder.MoveTo, where);
+        }
+        /* End Asuna VayneHunter Copypasta */
 
         static void Main(string[] args)
         {
