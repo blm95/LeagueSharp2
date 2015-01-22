@@ -205,7 +205,7 @@ namespace hi_im_gosu
         public static void Game_ProcessSpell(Obj_AI_Base hero, GameObjectProcessSpellCastEventArgs args)
         {
             //Game.PrintChat(args.SData.Name);
-            if (menu.Item("UseEInterrupt").GetValue<bool>() &&
+            if (menu.Item("UseEInterrupt").GetValue<bool>()  && interrupt.Any(x=>x.Contains(args.SData.Name)) &&
                 menu.Item(args.SData.Name).GetValue<bool>())
             {
                // Game.PrintChat("in");
@@ -324,10 +324,12 @@ namespace hi_im_gosu
             {
                 TumbleHandler();
             }
+
             if (menu.Item("aaqaa").GetValue<KeyBind>().Active)
             {
                 Orbwalking.Orbwalk(TargetSelector.GetTarget(625, TargetSelector.DamageType.Physical),Game.CursorPos);
             }
+
             if (Itemsmenu.Item("QSS").GetValue<bool>())
             {
                 for (int i = 0; i < buffs.Length; i++)
