@@ -168,8 +168,7 @@ namespace SpellNamesandSlots
         //}
 
 
-
-        public static void Game_OnGameUpdate(EventArgs args)
+        private static void Game_OnGameUpdate(EventArgs args)
         {
             bool green = false;
             bool orange = false;
@@ -225,94 +224,81 @@ namespace SpellNamesandSlots
                 }
                 //Game.PrintChat(h.ChampionName);
                 var spells = k.Spellbook.Spells;
-                foreach (var c in spells)
+                foreach (var c in spells.Where(c => c.State != SpellState.NotLearned))
                 {
-                    if (c.State != SpellState.NotLearned)
+                    theircost += c.ManaCost;
+                    if (k.Mana >= theircost)
                     {
-                        theircost += c.ManaCost;
-                        if (k.Mana >= theircost)
+                        if (c.CooldownExpires - Game.Time <= theircd)
                         {
-                            if (c.CooldownExpires - Game.Time <= theircd)
+                            if (c.Cooldown < theircd)
                             {
-                                if (c.Cooldown < theircd)
-                                {
-                                    alldmg += Damage.GetSpellDamage(k, ObjectManager.Player, c.Slot);
-                                    //* (theircd / c.Cooldown);
-                                }
-                                //if (c.SData.CastRange[0] > longestspell)
-                                //{
-                                //    longestspell = c.SData.CastRange[0];
-                                //}
-                                else
-                                {
-                                    // alldmg += dmgLib2.Class1.calcDmg(k, c.Slot, ObjectManager.Player);
-                                    alldmg += Damage.GetSpellDamage(k, ObjectManager.Player, c.Slot);
-                                }
-
+                                alldmg += Damage.GetSpellDamage(k, ObjectManager.Player, c.Slot);
+                                //* (theircd / c.Cooldown);
+                            }
+                            //if (c.SData.CastRange[0] > longestspell)
+                            //{
+                            //    longestspell = c.SData.CastRange[0];
+                            //}
+                            else
+                            {
+                                // alldmg += dmgLib2.Class1.calcDmg(k, c.Slot, ObjectManager.Player);
+                                alldmg += k.GetSpellDamage(ObjectManager.Player, c.Slot);
                             }
 
-                            if (c.CooldownExpires - Game.Time <= theircd2)
-                            {
-                                if (c.Cooldown < theircd2)
-                                {
-                                    soondmg += Damage.GetSpellDamage(k, ObjectManager.Player, c.Slot);
-                                    //*(theircd2 / c.Cooldown);
-                                }
+                        }
 
-                                else
-                                {
-                                    soondmg += Damage.GetSpellDamage(k, ObjectManager.Player, c.Slot);
-                                }
+                        if (c.CooldownExpires - Game.Time <= theircd2)
+                        {
+                            if (c.Cooldown < theircd2)
+                            {
+                                soondmg += k.GetSpellDamage(ObjectManager.Player, c.Slot);
+                                //*(theircd2 / c.Cooldown);
+                            }
+
+                            else
+                            {
+                                soondmg += k.GetSpellDamage(ObjectManager.Player, c.Slot);
                             }
                         }
                     }
                 }
-                foreach (var c in ObjectManager.Player.Spellbook.Spells)
+                foreach (var c in ObjectManager.Player.Spellbook.Spells.Where(c => c.State != SpellState.NotLearned))
                 {
-
-                    if (c.State != SpellState.NotLearned)
+                    mycost += c.ManaCost;
+                    //Game.PrintChat("{0} counted", c.Slot);
+                    if (!(ObjectManager.Player.Mana >= mycost)) continue;
+                    if (c.CooldownExpires - Game.Time <= lthan)
                     {
-                        mycost += c.ManaCost;
-                        //Game.PrintChat("{0} counted", c.Slot);
-                        if (ObjectManager.Player.Mana >= mycost)
+                        if (c.Cooldown < lthan)
                         {
-                            if (c.CooldownExpires - Game.Time <= lthan)
-                            {
-                                if (c.Cooldown < lthan)
-                                {
-                                    mydmg += Damage.GetSpellDamage(ObjectManager.Player, k, c.Slot);
-                                    //* (lthan / c.Cooldown);
-                                    //mydmg += dmgLib2.Class1.calcDmg(ObjectManager.Player, c.Slot, k) * (lthan / c.Cooldown);
-                                }
-                                //if (c.SData.CastRange[0] > mylongestspell)
-                                //{
-                                //    mylongestspell = c.SData.CastRange[0];
-                                //}
-                                else
-                                {
-                                    mydmg += Damage.GetSpellDamage(ObjectManager.Player, k, c.Slot);
-                                }
-                                //Game.PrintChat("MyDmg from {0} = {1}", c.Slot, dmgLib2.Class1.calcDmg(ObjectManager.Player, c.Slot, h));
-
-                                //Game.PrintChat("my dmg: {0} vs: {1}", mydmg, h.ChampionName);
-                            }
-
-                            if (c.CooldownExpires - Game.Time <= gthan)
-                            {
-                                if (c.Cooldown < gthan)
-                                {
-                                    dmgnow += Damage.GetSpellDamage(ObjectManager.Player, k, c.Slot);
-                                    //* (gthan / c.Cooldown);
-                                }
-                                else
-                                {
-                                    dmgnow += Damage.GetSpellDamage(ObjectManager.Player, k, c.Slot);
-                                }
-                            }
+                            mydmg += ObjectManager.Player.GetSpellDamage(k, c.Slot);
+                            //* (lthan / c.Cooldown);
+                            //mydmg += dmgLib2.Class1.calcDmg(ObjectManager.Player, c.Slot, k) * (lthan / c.Cooldown);
                         }
+                        //if (c.SData.CastRange[0] > mylongestspell)
+                        //{
+                        //    mylongestspell = c.SData.CastRange[0];
+                        //}
+                        else
+                        {
+                            mydmg += ObjectManager.Player.GetSpellDamage(k, c.Slot);
+                        }
+                        //Game.PrintChat("MyDmg from {0} = {1}", c.Slot, dmgLib2.Class1.calcDmg(ObjectManager.Player, c.Slot, h));
+
+                        //Game.PrintChat("my dmg: {0} vs: {1}", mydmg, h.ChampionName);
                     }
 
-
+                    if (!(c.CooldownExpires - Game.Time <= gthan)) continue;
+                    if (c.Cooldown < gthan)
+                    {
+                        dmgnow += ObjectManager.Player.GetSpellDamage(k, c.Slot);
+                        //* (gthan / c.Cooldown);
+                    }
+                    else
+                    {
+                        dmgnow += ObjectManager.Player.GetSpellDamage(k, c.Slot);
+                    }
                 }
 
                 //if (longestspell >= Vector3.Distance(ObjectManager.Player.Position, k.Position))
@@ -393,21 +379,18 @@ namespace SpellNamesandSlots
 
                     else
                     {
-                        foreach (var g in calcdmg2)
+                        foreach (var g in calcdmg2.Where(g => g.Value > g.Key.Health))
                         {
-                            if (g.Value > g.Key.Health)
-                            {
-                                //Drawing.DrawCircle(ObjectManager.Player.Position, ObjectManager.Player.AttackRange,
-                                //System.Drawing.Color.Green);
-                                green = true;
-                                var y = Drawing.WorldToScreen(ObjectManager.Player.Position);
-                                Drawing.DrawText(y[0], y[1], System.Drawing.Color.LimeGreen, "{0} is killable",
-                                    g.Key.ChampionName);
-                                //Utility.DrawCircle(g.Key.Position, ObjectManager.Player.AttackRange,
-                                //System.Drawing.Color.Red);
-                                tred = true;
-                                //break;
-                            }
+                            //Drawing.DrawCircle(ObjectManager.Player.Position, ObjectManager.Player.AttackRange,
+                            //System.Drawing.Color.Green);
+                            green = true;
+                            var y = Drawing.WorldToScreen(ObjectManager.Player.Position);
+                            Drawing.DrawText(y[0], y[1], System.Drawing.Color.LimeGreen, "{0} is killable",
+                                g.Key.ChampionName);
+                            //Utility.DrawCircle(g.Key.Position, ObjectManager.Player.AttackRange,
+                            //System.Drawing.Color.Red);
+                            tred = true;
+                            //break;
                         }
                     }
 

@@ -50,11 +50,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="dmgLib2">
-      <HintPath>C:\Users\blm951\Downloads\LeagueSharp\\System\dmgLib2.dll</HintPath>
-    </Reference>
-    <Reference Include="LeagueSharp">
-      <HintPath>C:\Users\blm951\Downloads\LeagueSharp\\System\LeagueSharp.dll</HintPath>
+    <Reference Include="LeagueSharp, Version=1.0.0.25, Culture=neutral, processorArchitecture=x86">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\..\Downloads\LeagueSharp\System\LeagueSharp.dll</HintPath>
     </Reference>
     <Reference Include="LeagueSharp.Common">
       <HintPath>C:\Users\blm951\Downloads\LeagueSharp\\System\LeagueSharp.Common.dll</HintPath>
