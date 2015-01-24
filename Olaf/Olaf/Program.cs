@@ -41,7 +41,7 @@ namespace Olaf
             Menu = new Menu("Olaf", "Olaf", true);
 
             var TargetSelectorMenu = new Menu("Target Selector", "Target Selector");
-            SimpleTs.AddToMenu(TargetSelectorMenu);
+            TargetSelector.AddToMenu(TargetSelectorMenu);
             Menu.AddSubMenu(TargetSelectorMenu);
 
 
@@ -127,7 +127,7 @@ namespace Olaf
 
             if (isCCd.Class1.IsCCd(Player) && useR)
             {
-                if(LeagueSharp.Common.Utility.CountEnemysInRange(1000) > 0)
+                if(ObjectManager.Player.CountEnemysInRange(1000) > 0)
                 R.Cast();
             }
 
@@ -139,14 +139,14 @@ namespace Olaf
 
             if (ignite)
             {
-                var t = SimpleTs.GetTarget(600, SimpleTs.DamageType.Physical);
+                var t = TargetSelector.GetTarget(600, TargetSelector.DamageType.Physical);
                 var igniteDmg = ObjectManager.Player.GetSummonerSpellDamage(t, Damage.SummonerSpell.Ignite);//DamageLib.getDmg(t, DamageLib.SpellType.IGNITE);
                 if (t != null && SumIgnite != SpellSlot.Unknown &&
-                                ObjectManager.Player.SummonerSpellbook.CanUseSpell(SumIgnite) == SpellState.Ready)
+                                SumIgnite.IsReady())
                 {
                     if (igniteDmg > t.Health)
                     {
-                        ObjectManager.Player.SummonerSpellbook.CastSpell(SumIgnite, t);
+                        ObjectManager.Player.Spellbook.CastSpell(SumIgnite, t);
                     }
                 }
             }
@@ -154,7 +154,7 @@ namespace Olaf
             if (useQ5 && Q.IsReady())
             {
                 //Game.PrintChat("inQ");
-                var t = SimpleTs.GetTarget(1000, SimpleTs.DamageType.Physical);
+                var t = TargetSelector.GetTarget(1000, TargetSelector.DamageType.Physical);
                 if (t.IsValidTarget())
                 {
                     //PredictionInput p = new PredictionInput();
@@ -164,73 +164,10 @@ namespace Olaf
                 }
             }
 
-            
-
-
-            /* expiremental */
-            //if (ER)
-            //{
-            //    if (R.IsReady() && E.IsReady())
-            //    {
-            //        var t = SimpleTs.GetTarget(E.Range, SimpleTs.DamageType.Physical);
-            //        if (t.IsValidTarget())
-            //        {
-            //            var dmg = DamageLib.CalcPhysicalDmg(E.GetDamage(t), t);
-            //            if (dmg > t.Health)
-            //                return;
-            //            //var lvl = R.Level;
-            //            var rdmg = new int();
-
-            //            switch (R.Level)
-            //            {
-            //                case 1:
-            //                    rdmg = 40;
-            //                    break;
-            //                case 2:
-            //                    rdmg = 60;
-            //                    break;
-            //                case 3:
-            //                    rdmg = 80;
-            //                    break;
-            //            }
-
-            //            var eandrdmg = dmg + (rdmg*.40);
-
-            //            if (eandrdmg > t.Health)
-            //            {
-            //                R.Cast();
-            //                E.Cast(t);
-            //            }
-            //        }
-            //    }
-            //}
-
-            /* expiremental */
-
-
-
-            /*
-             * if(R.level == 1)
-             * {
-             * 
-             * }
-             * 
-             * elseif(R.level == 2)
-             * {
-             * 
-             * }
-             * 
-             * elseif(R.level == 3)
-             * {
-             * 
-             * }
-             * 
-             */
-
 
             if (useW && W.IsReady())
             {
-                var rTarget = SimpleTs.GetTarget(225, SimpleTs.DamageType.Physical);
+                var rTarget = TargetSelector.GetTarget(225, TargetSelector.DamageType.Physical);
 
                 if (rTarget.IsValidTarget())
                 {
@@ -240,7 +177,7 @@ namespace Olaf
 
             if (useE && E.IsReady())
             {
-                var t = SimpleTs.GetTarget(E.Range, SimpleTs.DamageType.Physical);
+                var t = TargetSelector.GetTarget(E.Range, TargetSelector.DamageType.Physical);
                 if (t.IsValidTarget())
                 {
                     E.Cast(t);

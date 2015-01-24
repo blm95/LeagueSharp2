@@ -10,3 +10,11 @@ C:\Users\blm951\Documents\Visual Studio 2013\Projects\DmgCalculator\DmgCalculato
 C:\Users\blm951\Documents\Visual Studio 2013\Projects\DmgCalculator\DmgCalculator\obj\Debug\DmgCalculator.csprojResolveAssemblyReference.cache
 C:\Users\blm951\Documents\Visual Studio 2013\Projects\DmgCalculator\DmgCalculator\obj\Debug\1v1 Me Bro.exe
 C:\Users\blm951\Documents\Visual Studio 2013\Projects\DmgCalculator\DmgCalculator\obj\Debug\1v1 Me Bro.pdb
+C:\Users\Brennan\Documents\GitHub\LeagueSharp2\1v1MeBro\DmgCalculator\bin\Release\1v1 Me Bro.exe.config
+C:\Users\Brennan\Documents\GitHub\LeagueSharp2\1v1MeBro\DmgCalculator\obj\Debug\1v1 Me Bro.exe
+C:\Users\Brennan\Documents\GitHub\LeagueSharp2\1v1MeBro\DmgCalculator\obj\Debug\1v1 Me Bro.pdb
+C:\Users\Brennan\Documents\GitHub\LeagueSharp2\1v1MeBro\DmgCalculator\bin\Release\1v1 Me Bro.exe
+C:\Users\Brennan\Documents\GitHub\LeagueSharp2\1v1MeBro\DmgCalculator\bin\Release\1v1 Me Bro.pdb
+C:\Users\Brennan\Documents\GitHub\LeagueSharp2\1v1MeBro\DmgCalculator\bin\Release\LeagueSharp.dll
+C:\Users\Brennan\Documents\GitHub\LeagueSharp2\1v1MeBro\DmgCalculator\bin\Release\LeagueSharp.xml
+C:\Users\Brennan\Documents\GitHub\LeagueSharp2\1v1MeBro\DmgCalculator\obj\Debug\DmgCalculator.csprojResolveAssemblyReference.cache

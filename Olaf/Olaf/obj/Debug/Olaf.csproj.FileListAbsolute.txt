@@ -1,0 +1,10 @@
+C:\Users\Brennan\Documents\GitHub\LeagueSharp2\Olaf\Olaf\bin\Debug\Olaf.exe.config
+C:\Users\Brennan\Documents\GitHub\LeagueSharp2\Olaf\Olaf\bin\Debug\Olaf.exe
+C:\Users\Brennan\Documents\GitHub\LeagueSharp2\Olaf\Olaf\bin\Debug\Olaf.pdb
+C:\Users\Brennan\Documents\GitHub\LeagueSharp2\Olaf\Olaf\bin\Debug\LeagueSharp.Common.dll
+C:\Users\Brennan\Documents\GitHub\LeagueSharp2\Olaf\Olaf\bin\Debug\LeagueSharp.dll
+C:\Users\Brennan\Documents\GitHub\LeagueSharp2\Olaf\Olaf\bin\Debug\SharpDX.dll
+C:\Users\Brennan\Documents\GitHub\LeagueSharp2\Olaf\Olaf\bin\Debug\LeagueSharp.xml
+C:\Users\Brennan\Documents\GitHub\LeagueSharp2\Olaf\Olaf\obj\Debug\Olaf.csprojResolveAssemblyReference.cache
+C:\Users\Brennan\Documents\GitHub\LeagueSharp2\Olaf\Olaf\obj\Debug\Olaf.exe
+C:\Users\Brennan\Documents\GitHub\LeagueSharp2\Olaf\Olaf\obj\Debug\Olaf.pdb
