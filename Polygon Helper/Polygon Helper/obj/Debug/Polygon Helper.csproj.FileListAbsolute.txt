@@ -1,0 +1,12 @@
+c:\users\brennan\documents\visual studio 2013\Projects\Polygon Helper\Polygon Helper\bin\Debug\Polygon Helper.exe.config
+c:\users\brennan\documents\visual studio 2013\Projects\Polygon Helper\Polygon Helper\bin\Debug\Polygon Helper.exe
+c:\users\brennan\documents\visual studio 2013\Projects\Polygon Helper\Polygon Helper\bin\Debug\Polygon Helper.pdb
+c:\users\brennan\documents\visual studio 2013\Projects\Polygon Helper\Polygon Helper\bin\Debug\LeagueSharp.Common.dll
+c:\users\brennan\documents\visual studio 2013\Projects\Polygon Helper\Polygon Helper\bin\Debug\LeagueSharp.dll
+c:\users\brennan\documents\visual studio 2013\Projects\Polygon Helper\Polygon Helper\bin\Debug\SharpDX.dll
+c:\users\brennan\documents\visual studio 2013\Projects\Polygon Helper\Polygon Helper\bin\Debug\SharpDX.Direct3D9.dll
+c:\users\brennan\documents\visual studio 2013\Projects\Polygon Helper\Polygon Helper\bin\Debug\clipper_library.dll
+c:\users\brennan\documents\visual studio 2013\Projects\Polygon Helper\Polygon Helper\bin\Debug\LeagueSharp.xml
+c:\users\brennan\documents\visual studio 2013\Projects\Polygon Helper\Polygon Helper\obj\Debug\Polygon Helper.csprojResolveAssemblyReference.cache
+c:\users\brennan\documents\visual studio 2013\Projects\Polygon Helper\Polygon Helper\obj\Debug\Polygon Helper.exe
+c:\users\brennan\documents\visual studio 2013\Projects\Polygon Helper\Polygon Helper\obj\Debug\Polygon Helper.pdb
