@@ -1,0 +1,11 @@
+C:\Users\Administrator\Documents\Visual Studio 2013\Projects\QuietSorakaSlack\QuietSorakaSlack\bin\Release\QuietSorakaSlack.exe.config
+C:\Users\Administrator\Documents\Visual Studio 2013\Projects\QuietSorakaSlack\QuietSorakaSlack\bin\Release\QuietSorakaSlack.exe
+C:\Users\Administrator\Documents\Visual Studio 2013\Projects\QuietSorakaSlack\QuietSorakaSlack\bin\Release\QuietSorakaSlack.pdb
+C:\Users\Administrator\Documents\Visual Studio 2013\Projects\QuietSorakaSlack\QuietSorakaSlack\bin\Release\LeagueSharp.Common.dll
+C:\Users\Administrator\Documents\Visual Studio 2013\Projects\QuietSorakaSlack\QuietSorakaSlack\bin\Release\LeagueSharp.dll
+C:\Users\Administrator\Documents\Visual Studio 2013\Projects\QuietSorakaSlack\QuietSorakaSlack\bin\Release\SharpDX.dll
+C:\Users\Administrator\Documents\Visual Studio 2013\Projects\QuietSorakaSlack\QuietSorakaSlack\bin\Release\SharpDX.Direct3D9.dll
+C:\Users\Administrator\Documents\Visual Studio 2013\Projects\QuietSorakaSlack\QuietSorakaSlack\bin\Release\LeagueSharp.xml
+C:\Users\Administrator\Documents\Visual Studio 2013\Projects\QuietSorakaSlack\QuietSorakaSlack\obj\Debug\QuietSorakaSlack.exe
+C:\Users\Administrator\Documents\Visual Studio 2013\Projects\QuietSorakaSlack\QuietSorakaSlack\obj\Debug\QuietSorakaSlack.pdb
+C:\Users\Administrator\Documents\Visual Studio 2013\Projects\QuietSorakaSlack\QuietSorakaSlack\obj\Debug\QuietSorakaSlack.csprojResolveAssemblyReference.cache

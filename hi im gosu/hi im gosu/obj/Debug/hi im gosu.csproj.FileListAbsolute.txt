@@ -1,0 +1,12 @@
+c:\users\brennan\documents\visual studio 2013\Projects\hi im gosu\hi im gosu\bin\Release\hi im gosu.exe.config
+c:\users\brennan\documents\visual studio 2013\Projects\hi im gosu\hi im gosu\bin\Release\hi im gosu.exe
+c:\users\brennan\documents\visual studio 2013\Projects\hi im gosu\hi im gosu\bin\Release\hi im gosu.pdb
+c:\users\brennan\documents\visual studio 2013\Projects\hi im gosu\hi im gosu\bin\Release\LeagueSharp.Common.dll
+c:\users\brennan\documents\visual studio 2013\Projects\hi im gosu\hi im gosu\bin\Release\LeagueSharp.dll
+c:\users\brennan\documents\visual studio 2013\Projects\hi im gosu\hi im gosu\bin\Release\SharpDX.dll
+c:\users\brennan\documents\visual studio 2013\Projects\hi im gosu\hi im gosu\bin\Release\SharpDX.Direct3D9.dll
+c:\users\brennan\documents\visual studio 2013\Projects\hi im gosu\hi im gosu\bin\Release\clipper_library.dll
+c:\users\brennan\documents\visual studio 2013\Projects\hi im gosu\hi im gosu\bin\Release\LeagueSharp.xml
+c:\users\brennan\documents\visual studio 2013\Projects\hi im gosu\hi im gosu\obj\Debug\hi im gosu.csprojResolveAssemblyReference.cache
+c:\users\brennan\documents\visual studio 2013\Projects\hi im gosu\hi im gosu\obj\Debug\hi im gosu.exe
+c:\users\brennan\documents\visual studio 2013\Projects\hi im gosu\hi im gosu\obj\Debug\hi im gosu.pdb

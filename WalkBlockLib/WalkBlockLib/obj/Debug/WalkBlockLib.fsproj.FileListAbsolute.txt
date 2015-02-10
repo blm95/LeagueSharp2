@@ -1,0 +1,12 @@
+c:\users\brennan\documents\visual studio 2013\Projects\WalkBlockLib\WalkBlockLib\bin\Debug\WalkBlockLib.XML
+c:\users\brennan\documents\visual studio 2013\Projects\WalkBlockLib\WalkBlockLib\bin\Debug\WalkBlockLib.dll
+c:\users\brennan\documents\visual studio 2013\Projects\WalkBlockLib\WalkBlockLib\bin\Debug\WalkBlockLib.pdb
+c:\users\brennan\documents\visual studio 2013\Projects\WalkBlockLib\WalkBlockLib\bin\Debug\FSharp.Core.dll
+c:\users\brennan\documents\visual studio 2013\Projects\WalkBlockLib\WalkBlockLib\bin\Debug\LeagueSharp.Common.dll
+c:\users\brennan\documents\visual studio 2013\Projects\WalkBlockLib\WalkBlockLib\bin\Debug\LeagueSharp.dll
+c:\users\brennan\documents\visual studio 2013\Projects\WalkBlockLib\WalkBlockLib\bin\Debug\SharpDX.dll
+c:\users\brennan\documents\visual studio 2013\Projects\WalkBlockLib\WalkBlockLib\bin\Debug\SharpDX.Direct3D9.dll
+c:\users\brennan\documents\visual studio 2013\Projects\WalkBlockLib\WalkBlockLib\bin\Debug\LeagueSharp.xml
+c:\users\brennan\documents\visual studio 2013\Projects\WalkBlockLib\WalkBlockLib\bin\Debug\FSharp.Core.xml
+c:\users\brennan\documents\visual studio 2013\Projects\WalkBlockLib\WalkBlockLib\obj\Debug\WalkBlockLib.dll
+c:\users\brennan\documents\visual studio 2013\Projects\WalkBlockLib\WalkBlockLib\obj\Debug\WalkBlockLib.pdb

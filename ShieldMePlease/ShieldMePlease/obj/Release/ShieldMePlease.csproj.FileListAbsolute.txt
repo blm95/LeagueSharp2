@@ -1,0 +1,13 @@
+C:\Users\Brennan\Documents\Visual Studio 2013\Projects\ShieldMePlease\ShieldMePlease\bin\Release\ShieldMePlease.exe.config
+C:\Users\Brennan\Documents\Visual Studio 2013\Projects\ShieldMePlease\ShieldMePlease\bin\Release\ShieldMePlease.exe
+C:\Users\Brennan\Documents\Visual Studio 2013\Projects\ShieldMePlease\ShieldMePlease\bin\Release\ShieldMePlease.pdb
+C:\Users\Brennan\Documents\Visual Studio 2013\Projects\ShieldMePlease\ShieldMePlease\bin\Release\clipper_library.dll
+C:\Users\Brennan\Documents\Visual Studio 2013\Projects\ShieldMePlease\ShieldMePlease\bin\Release\dmgLib2.dll
+C:\Users\Brennan\Documents\Visual Studio 2013\Projects\ShieldMePlease\ShieldMePlease\bin\Release\LeagueSharp.Common.dll
+C:\Users\Brennan\Documents\Visual Studio 2013\Projects\ShieldMePlease\ShieldMePlease\bin\Release\LeagueSharp.dll
+C:\Users\Brennan\Documents\Visual Studio 2013\Projects\ShieldMePlease\ShieldMePlease\bin\Release\SharpDX.dll
+C:\Users\Brennan\Documents\Visual Studio 2013\Projects\ShieldMePlease\ShieldMePlease\bin\Release\SharpDX.Direct3D9.dll
+C:\Users\Brennan\Documents\Visual Studio 2013\Projects\ShieldMePlease\ShieldMePlease\bin\Release\LeagueSharp.xml
+C:\Users\Brennan\Documents\Visual Studio 2013\Projects\ShieldMePlease\ShieldMePlease\obj\Release\ShieldMePlease.csprojResolveAssemblyReference.cache
+C:\Users\Brennan\Documents\Visual Studio 2013\Projects\ShieldMePlease\ShieldMePlease\obj\Release\ShieldMePlease.exe
+C:\Users\Brennan\Documents\Visual Studio 2013\Projects\ShieldMePlease\ShieldMePlease\obj\Release\ShieldMePlease.pdb

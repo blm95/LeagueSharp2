@@ -1,0 +1,28 @@
+c:\users\brennan\documents\visual studio 2013\Projects\Nasus the doG\Nasus the doG\bin\Debug\Nasus the doG.exe.config
+c:\users\brennan\documents\visual studio 2013\Projects\Nasus the doG\Nasus the doG\bin\Debug\Nasus the doG.exe
+c:\users\brennan\documents\visual studio 2013\Projects\Nasus the doG\Nasus the doG\bin\Debug\Nasus the doG.pdb
+c:\users\brennan\documents\visual studio 2013\Projects\Nasus the doG\Nasus the doG\bin\Debug\clipper_library.dll
+c:\users\brennan\documents\visual studio 2013\Projects\Nasus the doG\Nasus the doG\bin\Debug\LeagueSharp.AppDomainManager.dll
+c:\users\brennan\documents\visual studio 2013\Projects\Nasus the doG\Nasus the doG\bin\Debug\LeagueSharp.Common.dll
+c:\users\brennan\documents\visual studio 2013\Projects\Nasus the doG\Nasus the doG\bin\Debug\LeagueSharp.dll
+c:\users\brennan\documents\visual studio 2013\Projects\Nasus the doG\Nasus the doG\bin\Debug\LibGit2Sharp.dll
+c:\users\brennan\documents\visual studio 2013\Projects\Nasus the doG\Nasus the doG\bin\Debug\SharpDX.Direct3D9.dll
+c:\users\brennan\documents\visual studio 2013\Projects\Nasus the doG\Nasus the doG\bin\Debug\SharpDX.dll
+c:\users\brennan\documents\visual studio 2013\Projects\Nasus the doG\Nasus the doG\bin\Debug\SharpDX.Toolkit.dll
+c:\users\brennan\documents\visual studio 2013\Projects\Nasus the doG\Nasus the doG\bin\Debug\SharpDX.Toolkit.Graphics.dll
+c:\users\brennan\documents\visual studio 2013\Projects\Nasus the doG\Nasus the doG\bin\Debug\LeagueSharp.xml
+c:\users\brennan\documents\visual studio 2013\Projects\Nasus the doG\Nasus the doG\bin\Debug\SharpDX.Toolkit.xml
+c:\users\brennan\documents\visual studio 2013\Projects\Nasus the doG\Nasus the doG\bin\Debug\SharpDX.Toolkit.Graphics.xml
+c:\users\brennan\documents\visual studio 2013\Projects\Nasus the doG\Nasus the doG\obj\Debug\Nasus the doG.csprojResolveAssemblyReference.cache
+c:\users\brennan\documents\visual studio 2013\Projects\Nasus the doG\Nasus the doG\obj\Debug\Nasus the doG.exe
+c:\users\brennan\documents\visual studio 2013\Projects\Nasus the doG\Nasus the doG\obj\Debug\Nasus the doG.pdb
+C:\Users\Brennan\Documents\GitHub\LeagueSharp2\Nasus the doG\Nasus the doG\bin\Debug\Nasus the doG.exe.config
+C:\Users\Brennan\Documents\GitHub\LeagueSharp2\Nasus the doG\Nasus the doG\bin\Debug\Nasus the doG.exe
+C:\Users\Brennan\Documents\GitHub\LeagueSharp2\Nasus the doG\Nasus the doG\bin\Debug\Nasus the doG.pdb
+C:\Users\Brennan\Documents\GitHub\LeagueSharp2\Nasus the doG\Nasus the doG\bin\Debug\LeagueSharp.Common.dll
+C:\Users\Brennan\Documents\GitHub\LeagueSharp2\Nasus the doG\Nasus the doG\bin\Debug\LeagueSharp.dll
+C:\Users\Brennan\Documents\GitHub\LeagueSharp2\Nasus the doG\Nasus the doG\bin\Debug\SharpDX.dll
+C:\Users\Brennan\Documents\GitHub\LeagueSharp2\Nasus the doG\Nasus the doG\bin\Debug\LeagueSharp.xml
+C:\Users\Brennan\Documents\GitHub\LeagueSharp2\Nasus the doG\Nasus the doG\obj\Debug\Nasus the doG.csprojResolveAssemblyReference.cache
+C:\Users\Brennan\Documents\GitHub\LeagueSharp2\Nasus the doG\Nasus the doG\obj\Debug\Nasus the doG.exe
+C:\Users\Brennan\Documents\GitHub\LeagueSharp2\Nasus the doG\Nasus the doG\obj\Debug\Nasus the doG.pdb
