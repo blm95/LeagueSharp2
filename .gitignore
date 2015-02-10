@@ -35,4 +35,6 @@ Icon
 .Spotlight-V100
 .Trashes
 
+*.FileListAbsolute.txt
+
 !WalkBlockLib/WalkBlockLib/bin/Debug/WalkBlockLib.dll
