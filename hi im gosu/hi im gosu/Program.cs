@@ -197,7 +197,7 @@ namespace hi_im_gosu
             menu.SubMenu("harass").AddItem(new MenuItem("he", "Use E Harass").SetValue(true));
             E.SetTargetted(0.25f, 2200f);
             Obj_AI_Base.OnProcessSpellCast += Game_ProcessSpell;
-            Game.OnGameUpdate += Game_OnGameUpdate;
+            Game.OnUpdate += Game_OnGameUpdate;
             Orbwalking.AfterAttack += Orbwalking_AfterAttack;
             menu.AddToMainMenu();
         }
