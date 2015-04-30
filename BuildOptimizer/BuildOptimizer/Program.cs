@@ -61,7 +61,7 @@ namespace BuildOptimizer
 
                 if (k.TotalMagicalDamage != APstats[k.ChampionName])
                 {
-                    APstats[k.ChampionName] = k.TotalAttackDamage;
+                    APstats[k.ChampionName] = k.TotalMagicalDamage;
                 }
 
                 if (k.Armor != ArmorStats[k.ChampionName])
