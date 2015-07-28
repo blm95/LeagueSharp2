@@ -29,7 +29,7 @@ namespace Polygon_Helper
 
                 foreach (var d in polygonPoints.ToList())
                 {
-                    sb.Append("new Vector3(" + d.X + "," + d.Y + "," + d.Z + "),");
+                    sb.Append("new Vector3(" + d.X + "f," + d.Y + "f," + d.Z + "f),");
                 }
 
                 Clipboard.SetText(sb.ToString());
