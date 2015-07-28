@@ -86,7 +86,7 @@ namespace Polygon_Helper
         {
             if (polygonPoints.Count > 1)
             {
-                for (int i = 0; i < polygonPoints.Count; i++)
+                for (int i = 0; i < polygonPoints.Count-1; i++)
                 {
                     var q = Drawing.WorldToScreen(new Vector3(new Vector2(polygonPoints[i].X, polygonPoints[i].Y),
                         polygonPoints[i].Z));
