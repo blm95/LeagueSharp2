@@ -18,7 +18,7 @@ namespace Polygon_Helper
         {
             Drawing.OnDraw += Drawing_OnDraw;
             CustomEvents.Game.OnGameLoad += Game_OnGameLoad;
-            Game.OnGameUpdate += Game_OnGameUpdate;
+            Game.OnUpdate += Game_OnGameUpdate;
         }
 
         static void Game_OnGameUpdate(EventArgs args)
