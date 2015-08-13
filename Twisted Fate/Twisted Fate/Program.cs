@@ -469,7 +469,6 @@ namespace TwistedFate
                             {
                                 CardSelector.StartSelecting(Cards.Red);
                             }
-                            CardSelector.StartSelecting(Cards.Red);
                             break;
                     }
                 }
