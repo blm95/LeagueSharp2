@@ -463,6 +463,12 @@ namespace TwistedFate
                             }
                             break;
                         case 2:
+                            if (
+                                MinionManager.GetMinions(SOW.GetTarget().Position, 100f, MinionTypes.All,
+                                    MinionTeam.Enemy).Count > Config.Item("RedMinions").GetValue<Slider>().Value)
+                            {
+                                CardSelector.StartSelecting(Cards.Red);
+                            }
                             CardSelector.StartSelecting(Cards.Red);
                             break;
                     }
