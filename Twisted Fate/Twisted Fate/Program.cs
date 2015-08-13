@@ -126,6 +126,7 @@ namespace TwistedFate
             var misc = new Menu("Misc", "Misc");
             {
                 misc.AddItem(new MenuItem("PingLH", "Ping low health enemies (Only local)").SetValue(true));
+                misc.AddItem(new MenuItem("DisplayLH", "Notify on low health enemies").SetValue(false));
                 Config.AddSubMenu(misc);
             }
 
@@ -210,19 +211,35 @@ namespace TwistedFate
             switch (Config.Item("SelectCard").GetValue<Slider>().Value)
             {
                 case 0:
-                    Drawing.DrawText(screenPos.X,screenPos.Y,Color.White,"Blue Card");
+                    Drawing.DrawText(screenPos.X,screenPos.Y,Color.Blue,"Blue Card");
                     break;
                 case 1:
-                    Drawing.DrawText(screenPos.X,screenPos.Y,Color.White,"Red Card");
+                    Drawing.DrawText(screenPos.X,screenPos.Y,Color.Red,"Red Card");
                     break;
                 case 2:
-                    Drawing.DrawText(screenPos.X, screenPos.Y, Color.White, "Yellow Card");
+                    Drawing.DrawText(screenPos.X, screenPos.Y, Color.Yellow, "Yellow Card");
                     break;
             }
 
             if (Config.Item("AlwaysGold").GetValue<bool>())
             {
                 Drawing.DrawText(screenPos.X, screenPos.Y+13, Color.Yellow, "Always Combo Gold");
+            }
+
+            if (Config.Item("DisplayLH").GetValue<bool>())
+            {
+                var ydiff = 13;
+                foreach (
+                    var enemy in
+                        ObjectManager.Get<Obj_AI_Hero>()
+                            .Where(
+                                h =>
+                                    ObjectManager.Player.Spellbook.CanUseSpell(SpellSlot.R) == SpellState.Ready &&
+                                    h.IsValidTarget() && ComboDamage(h) > h.Health))
+                {
+                    Drawing.DrawText(screenPos.X, screenPos.Y + ydiff + 13, Color.Red, enemy.Name);
+                    ydiff += 13;
+                }
             }
         }
 
