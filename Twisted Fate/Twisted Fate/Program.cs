@@ -103,7 +103,7 @@ namespace TwistedFate
                     new MenuItem("AlwaysBlue", "Always use Blue card in farm if mana < x%").SetValue(new Slider(20, 0,
                         100)));
                 w.AddItem(new MenuItem("RedMinions", "Only use Red Card for farm if > X minions in range"))
-                    .SetValue(new Slider(1, 1, 5));
+                    .SetValue(new Slider(1, 0, 5));
 
                 w.AddItem(new MenuItem("AlwaysGold", "Always use Gold Card in Combo?").SetValue(false));
                 w.AddItem(new MenuItem("ToggleGold", "^ toggle on/off").SetValue(new KeyBind('G', KeyBindType.Toggle)));
@@ -456,7 +456,7 @@ namespace TwistedFate
                             break;
                         case 1:
                             if (
-                                MinionManager.GetMinions(SOW.GetTarget().Position, 100f, MinionTypes.All,
+                                MinionManager.GetMinions(SOW.GetTarget().Position, 125f, MinionTypes.All,
                                     MinionTeam.Enemy).Count > Config.Item("RedMinions").GetValue<Slider>().Value)
                             {
                                 CardSelector.StartSelecting(Cards.Red);
@@ -464,7 +464,7 @@ namespace TwistedFate
                             break;
                         case 2:
                             if (
-                                MinionManager.GetMinions(SOW.GetTarget().Position, 100f, MinionTypes.All,
+                                MinionManager.GetMinions(SOW.GetTarget().Position, 125f, MinionTypes.All,
                                     MinionTeam.Enemy).Count > Config.Item("RedMinions").GetValue<Slider>().Value)
                             {
                                 CardSelector.StartSelecting(Cards.Red);
