@@ -76,18 +76,18 @@ namespace TwistedFate
             /* Q */
             var q = new Menu("Q - Wildcards", "Q");
             {
-                q.AddItem(new MenuItem("AutoQI", "Auto-Q immobile").SetValue(true));
-                q.AddItem(new MenuItem("AutoQD", "Auto-Q dashing").SetValue(true));
+                q.AddItem(new MenuItem("AutoQI", "Auto-Q Immobile").SetValue(true));
+                q.AddItem(new MenuItem("AutoQD", "Auto-Q Dashing").SetValue(true));
                 q.AddItem(
-                    new MenuItem("CastQ", "Cast Q (tap)").SetValue(new KeyBind('U', KeyBindType.Press)));
+                    new MenuItem("CastQ", "Cast Q (Tap)").SetValue(new KeyBind('U', KeyBindType.Press)));
                 Config.AddSubMenu(q);
             }
 
             /* W */
-            var w = new Menu("W - Pick a card", "W");
+            var w = new Menu("W - Pick a Card", "W");
             {
                 w.AddItem(new MenuItem("SelectCard", "Card to Pick").SetValue(new Slider(2, 0, 2)));
-                w.AddItem(new MenuItem("Info", "0 = blue, 1 = red, 2 = gold"));
+                w.AddItem(new MenuItem("Info", "0 = Blue, 1 = Red, 2 = Gold"));
                 //w.AddItem(
                 //    new MenuItem("SelectYellow", "Select Yellow").SetValue(new KeyBind("W".ToCharArray()[0],
                 //        KeyBindType.Press)));
@@ -100,40 +100,40 @@ namespace TwistedFate
 
                 w.AddItem(new MenuItem("WFarm", "W Farm Key").SetValue(new KeyBind('V', KeyBindType.Press)));
                 w.AddItem(
-                    new MenuItem("AlwaysBlue", "Always use Blue card in farm if mana < x%").SetValue(new Slider(20, 0,
+                    new MenuItem("AlwaysBlue", "Always use Blue Card to Farm if Mana < x%").SetValue(new Slider(20, 0,
                         100)));
-                w.AddItem(new MenuItem("RedMinions", "Only use Red Card for farm if > X minions in range"))
+                w.AddItem(new MenuItem("RedMinions", "Only use Red Card to Farm if > X Minions in Range"))
                     .SetValue(new Slider(1, 0, 5));
 
                 w.AddItem(new MenuItem("AlwaysGold", "Always use Gold Card in Combo?").SetValue(false));
-                w.AddItem(new MenuItem("ToggleGold", "^ toggle on/off").SetValue(new KeyBind('G', KeyBindType.Toggle)));
+                w.AddItem(new MenuItem("ToggleGold", "^ Toggle ON/OFF").SetValue(new KeyBind('G', KeyBindType.Toggle)));
             }
 
             var menuItems = new Menu("Items", "Items");
             {
-                menuItems.AddItem(new MenuItem("itemBotrk", "Botrk").SetValue(true));
+                menuItems.AddItem(new MenuItem("itemBotrk", "BotRK").SetValue(true));
                 menuItems.AddItem(new MenuItem("itemYoumuu", "Youmuu").SetValue(true));
                 menuItems.AddItem(
-                    new MenuItem("itemMode", "Use items on").SetValue(
-                        new StringList(new[] { "No", "Mixed mode", "Combo mode", "Both" }, 2)));
+                    new MenuItem("itemMode", "Use Items On").SetValue(
+                        new StringList(new[] { "No", "Mixed-mode", "Combo-mode", "Both" }, 2)));
                 Config.AddSubMenu(menuItems);
             }
 
             var r = new Menu("R - Destiny", "R");
             {
-                r.AddItem(new MenuItem("AutoY", "Select yellow card after R").SetValue(true));
+                r.AddItem(new MenuItem("AutoY", "Select Gold Card after R").SetValue(true));
                 Config.AddSubMenu(r);
             }
 
             var misc = new Menu("Misc", "Misc");
             {
-                misc.AddItem(new MenuItem("PingLH", "Ping low health enemies (Only local)").SetValue(true));
-                misc.AddItem(new MenuItem("DisplayLH", "Notify on low health enemies").SetValue(false));
+                misc.AddItem(new MenuItem("PingLH", "Ping Low Health Enemies (only local)").SetValue(true));
+                misc.AddItem(new MenuItem("DisplayLH", "Notify on Low Health Enemies").SetValue(false));
                 Config.AddSubMenu(misc);
             }
 
             //Damage after combo:
-            var dmgAfterComboItem = new MenuItem("DamageAfterCombo", "Draw damage after combo").SetValue(true);
+            var dmgAfterComboItem = new MenuItem("DamageAfterCombo", "Draw Damage after Combo").SetValue(true);
             Utility.HpBarDamageIndicator.DamageToUnit = ComboDamage;
             Utility.HpBarDamageIndicator.Enabled = dmgAfterComboItem.GetValue<bool>();
             dmgAfterComboItem.ValueChanged += delegate (object sender, OnValueChangeEventArgs eventArgs)
@@ -149,7 +149,7 @@ namespace TwistedFate
                 drawings.AddItem(
                     new MenuItem("Rcircle", "R Range").SetValue(new Circle(true, Color.FromArgb(100, 255, 255, 255))));
                 drawings.AddItem(
-                    new MenuItem("Rcircle2", "R Range (minimap)").SetValue(new Circle(true,
+                    new MenuItem("Rcircle2", "R Range (on minimap)").SetValue(new Circle(true,
                         Color.FromArgb(255, 255, 255, 255))));
                 drawings.AddItem(dmgAfterComboItem);
                 Config.AddSubMenu(drawings);
@@ -219,7 +219,7 @@ namespace TwistedFate
                     Drawing.DrawText(screenPos.X,screenPos.Y,Color.Red,"Red Card");
                     break;
                 case 2:
-                    Drawing.DrawText(screenPos.X, screenPos.Y, Color.Yellow, "Yellow Card");
+                    Drawing.DrawText(screenPos.X, screenPos.Y, Color.Yellow, "Gold Card");
                     break;
             }
 
