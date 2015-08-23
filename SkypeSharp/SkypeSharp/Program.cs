@@ -139,6 +139,7 @@ namespace SkypeSharp
             var d = args.Input;
             if (d.Contains("/sm"))
             {
+                args.Process = false;
                 string[] msg = d.Split(' ');
                 //var q = d.Substring(d.LastIndexOf(' ') + 1);
                 var q = msg[1];
@@ -157,6 +158,7 @@ namespace SkypeSharp
 
             if (d.Contains("/sr"))
             {
+                args.Process = false;
                 string[] msg = d.Split(' ');
                 string l = null;
                 float gameTime = Game.ClockTime;
