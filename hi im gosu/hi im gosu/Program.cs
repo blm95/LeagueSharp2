@@ -225,16 +225,9 @@ namespace hi_im_gosu
                 Vector3.Distance(args.End, ObjectManager.Player.Position) <= 300 && hero.IsValidTarget(550f) &&
                 menu.Item(args.SData.Name).GetValue<bool>())
             {
-                if(!args.SData.Name == "GravesMove")
+                if(ObjectManager.Player.Distance(args.End) < ObjectManager.Player.Distance(hero.Position))
                 {
                     E.Cast(hero);
-                }
-                else
-                {
-                    if(ObjectManager.Player.Distance(args.End) < ObjectManager.Player.Distance(hero.Position))
-                    {
-                        E.Cast(hero);
-                    }
                 }
             }
 
