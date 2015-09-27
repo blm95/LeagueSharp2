@@ -429,7 +429,7 @@ namespace SharpVision
             {
                 foreach (var k in wards)
                 {
-                    Drawing.DrawCircle(k, 200, System.Drawing.Color.Red);
+                    Drawing.DrawCircle(k, 130, System.Drawing.Color.Red);
                 }
             }
 
@@ -439,7 +439,7 @@ namespace SharpVision
                 {
                     foreach (var k in wards)
                     {
-                        Drawing.DrawCircle(k, 200, System.Drawing.Color.Red);
+                        Drawing.DrawCircle(k, 130, System.Drawing.Color.Red);
                     }
                 }
                 var wardslot = Items.GetWardSlot();
