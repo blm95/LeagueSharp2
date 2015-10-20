@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -161,7 +161,8 @@ namespace SharpVision
             new Vector3(5345.119f,9201.656f,-71.24072f), //baron bush
             new Vector3(9330.775f,5683.915f,-71.24084f) //drag bush
         };
-         
+
+        private static bool EnemyHasStealthedUnit = false;
         public Vision()
         {
             wards.AddRange(btbj);
@@ -180,7 +181,21 @@ namespace SharpVision
             menu.AddItem(new MenuItem("keypressward", "Auto-Ward on Combo").SetValue(new KeyBind(32, KeyBindType.Press)));
             menu.AddItem(new MenuItem("toggleward", "Toggle Auto-Ward").SetValue(new KeyBind('T', KeyBindType.Toggle)));
             menu.AddItem(new MenuItem("permashow", "Permashow Ward Positions?")).SetValue(true);
+            menu.AddItem(new MenuItem("autobuywards", "Auto buy wards?")).SetValue(false);
+            var g = menu.AddSubMenu(new Menu("troll", "I really don't recommend doing this."));
+            var k = g.AddSubMenu(new Menu("lol", "Ok... if you insist..."));
+            k.AddItem(new MenuItem("legacymode", "Legacy Mode").SetValue(false));
+            
             menu.AddToMainMenu();
+
+            string[] stealthunits = new[] {"Kha'Zix", "LeBlanc", "Renger", "Shaco", "Talon", "Twitch", "Vayne", "Wukong"};
+            foreach (var l in ObjectManager.Get<Obj_AI_Hero>().Where(x => x.IsEnemy))
+            {
+                if (stealthunits.Contains(l.ChampionName))
+                {
+                    EnemyHasStealthedUnit = true;
+                }
+            }
             lastwardtime = Environment.TickCount;
             Drawing.OnDraw += Game_OnDraw;
             //Game.OnUpdate += Game_OnUpdate;
@@ -373,6 +388,22 @@ namespace SharpVision
 
         private void Game_OnDraw(EventArgs args)
         {
+            var Player = ObjectManager.Player;
+            if (Player.InFountain() && menu.Item("autobuywards").GetValue<bool>() && Game.Time > 200)
+            {
+                if (Player.Gold < 135)
+                {
+                    if (EnemyHasStealthedUnit && Player.Gold > 99)
+                    {
+                        Player.BuyItem((ItemId) 2043);
+                    }
+
+                    if (Player.Gold > 74)
+                    {
+                        Player.BuyItem((ItemId) 2044);
+                    }
+                }
+            }
             foreach (var k in blinkpos)
             {
                 if (Environment.TickCount - k.Key < 3000)
@@ -390,7 +421,7 @@ namespace SharpVision
             }
             foreach (var enemy in ObjectManager.Get<Obj_AI_Hero>().Where(x => x.IsEnemy && !x.IsDead))
             {
-                if (enemy.Distance(ObjectManager.Player.ServerPosition) <= 1200) //check real ward range later
+                if (enemy.Distance(Player.ServerPosition) <= 1200) //check real ward range later
                 {
                     int radius = 165;
 
@@ -399,7 +430,7 @@ namespace SharpVision
                     if (bestWardPos != enemy.ServerPosition && bestWardPos != Vector3.Zero)
                     {
                         if (!enemy.IsVisible && (lastTimeWarded == 0 || Environment.TickCount - lastTimeWarded > 1000) &&
-                            Vector3.Distance(ObjectManager.Player.Position, bestWardPos) <= 600 &&
+                            Vector3.Distance(Player.Position, bestWardPos) <= 600 &&
                             menu.Item("keypressward").GetValue<KeyBind>().Active)
                         {
                             var wardslot = Items.GetWardSlot();
@@ -429,7 +460,7 @@ namespace SharpVision
             {
                 foreach (var k in wards)
                 {
-                    Drawing.DrawCircle(k, 130, System.Drawing.Color.Red);
+                    Drawing.DrawCircle(k, 125, System.Drawing.Color.Red);
                 }
             }
 
@@ -439,7 +470,7 @@ namespace SharpVision
                 {
                     foreach (var k in wards)
                     {
-                        Drawing.DrawCircle(k, 130, System.Drawing.Color.Red);
+                        Drawing.DrawCircle(k, 100, System.Drawing.Color.Red);
                     }
                 }
                 var wardslot = Items.GetWardSlot();
@@ -474,6 +505,26 @@ namespace SharpVision
                         }
                         Items.UseItem((int)wardslot.Id, wardpos);
                         lastwardtime = Environment.TickCount;
+                    }
+                }
+            }
+
+            if (menu.Item("legacymode").GetValue<bool>())
+            {
+                var wardslot = Items.GetWardSlot();
+                if (wardslot != null && wardslot.Id != (ItemId) 2050 && wardslot.Id != (ItemId) 3154 &&
+                    wardslot.Id != (ItemId) 3350)
+                {
+                    if (Environment.TickCount - lastwardtime > 800)
+                    {
+                        foreach (var k in wards)
+                        {
+                            if (k.Distance(Player.Position) < 650)
+                            {
+                                Items.UseItem((int) wardslot.Id, k);
+                                lastwardtime = Environment.TickCount;
+                            }
+                        }
                     }
                 }
             }
