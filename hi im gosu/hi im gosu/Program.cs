@@ -92,6 +92,12 @@ namespace hi_im_gosu
 
         public static void Game_OnGameLoad(EventArgs args)
         {
+            Game.PrintChat("I won't delete my repo, but I would like everyone to know that L# is detected, and the administration is attempting to hide this fact.");
+            Game.PrintChat("Because I called them out on this fact, I was demoted.");
+            Game.PrintChat("I am not recommending to move to a different site.");
+            Game.PrintChat("Instead, users ought to move to a different game altogether, or quit scripting.");
+            Game.PrintChat("The banwaves will just continue to increase, and the incompetency of staff will remain the same.");
+            Game.PrintChat("With that, I bid everyone adieu.");
             Player = ObjectManager.Player;
             //Utils.PrintMessage("Vayne loaded");
             if (Player.ChampionName != ChampName) return;
